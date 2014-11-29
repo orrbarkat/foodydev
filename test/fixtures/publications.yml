@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  publication_version: 1
+  publication_title: MyText
+  publication_address: MyText
+  publication_type_of_collecting: 1
+  publication_latitude: 9.99
+  publication_longitude: 9.99
+  publication_starting_date: 2014-11-27 00:09:29
+  publication_ending_date: 2014-11-27 00:09:29
+  publication_contact_info: MyText
+  is_on_air: false
+  reporting_device_uuid: MyText
+
+two:
+  publication_version: 1
+  publication_title: MyText
+  publication_address: MyText
+  publication_type_of_collecting: 1
+  publication_latitude: 9.99
+  publication_longitude: 9.99
+  publication_starting_date: 2014-11-27 00:09:29
+  publication_ending_date: 2014-11-27 00:09:29
+  publication_contact_info: MyText
+  is_on_air: false
+  reporting_device_uuid: MyText

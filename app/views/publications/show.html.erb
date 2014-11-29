@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Publication version:</strong>
+  <%= @publication.publication_version %>
+</p>
+
+<p>
+  <strong>Publication title:</strong>
+  <%= @publication.publication_title %>
+</p>
+
+<p>
+  <strong>Publication address:</strong>
+  <%= @publication.publication_address %>
+</p>
+
+<p>
+  <strong>Publication type of collecting:</strong>
+  <%= @publication.publication_type_of_collecting %>
+</p>
+
+<p>
+  <strong>Publication latitude:</strong>
+  <%= @publication.publication_latitude %>
+</p>
+
+<p>
+  <strong>Publication longitude:</strong>
+  <%= @publication.publication_longitude %>
+</p>
+
+<p>
+  <strong>Publication starting date:</strong>
+  <%= @publication.publication_starting_date %>
+</p>
+
+<p>
+  <strong>Publication ending date:</strong>
+  <%= @publication.publication_ending_date %>
+</p>
+
+<p>
+  <strong>Publication contact info:</strong>
+  <%= @publication.publication_contact_info %>
+</p>
+
+<p>
+  <strong>Is on air:</strong>
+  <%= @publication.is_on_air %>
+</p>
+
+<p>
+  <strong>Reporting device uuid:</strong>
+  <%= @publication.reporting_device_uuid %>
+</p>
+
+<%= link_to 'Edit', edit_publication_path(@publication) %> |
+<%= link_to 'Back', publications_path %>

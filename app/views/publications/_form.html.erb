@@ -1,0 +1,61 @@
+<%= form_for(@publication) do |f| %>
+  <% if @publication.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@publication.errors.count, "error") %> prohibited this publication from being saved:</h2>
+
+      <ul>
+      <% @publication.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :publication_version %><br>
+    <%= f.number_field :publication_version %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_title %><br>
+    <%= f.text_area :publication_title %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_address %><br>
+    <%= f.text_area :publication_address %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_type_of_collecting %><br>
+    <%= f.number_field :publication_type_of_collecting %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_latitude %><br>
+    <%= f.text_field :publication_latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_longitude %><br>
+    <%= f.text_field :publication_longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_starting_date %><br>
+    <%= f.datetime_select :publication_starting_date %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_ending_date %><br>
+    <%= f.datetime_select :publication_ending_date %>
+  </div>
+  <div class="field">
+    <%= f.label :publication_contact_info %><br>
+    <%= f.text_area :publication_contact_info %>
+  </div>
+  <div class="field">
+    <%= f.label :is_on_air %><br>
+    <%= f.check_box :is_on_air %>
+  </div>
+  <div class="field">
+    <%= f.label :reporting_device_uuid %><br>
+    <%= f.text_area :reporting_device_uuid %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
