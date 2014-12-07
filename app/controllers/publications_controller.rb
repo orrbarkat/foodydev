@@ -4,11 +4,7 @@ class PublicationsController < ApplicationController
   # GET /publications
   # GET /publications.json
   def index
-	if params[:app_id]=="af26agr86ah"
-		@publications = Publication.all
-	else 
-		render body: "Unknown user"
-	end
+	render json: Publication.all
   end
 
   # GET /publications/1
@@ -28,17 +24,25 @@ class PublicationsController < ApplicationController
   # POST /publications
   # POST /publications.json
   def create
-    @publication = Publication.new(publication_params)
-
-    respond_to do |format|
+	if params[:app_id]=="af26agr86ah"
+		@publications = Publication.new(publication_params)
+		respond_to do |format|
       if @publication.save
-        format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
-        format.json { render :show, status: :created, location: @publication }
+        #format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
+       # format.json { render :show, status: :created, location: @publication }
+	   render json:   "@publication.id, @publication.version" 
+	   render body: "success"
       else
-        format.html { render :new }
+        #format.html { render :new }
         format.json { render json: @publication.errors, status: :unprocessable_entity }
       end
     end
+	else 
+		render body: "Unknown user"
+	end
+    
+
+    
   end
 
   # PATCH/PUT /publications/1
