@@ -14,11 +14,12 @@ gem 'rails_12factor', '0.0.2'
 
 group :development, :test do
 	gem 'rspec-rails'
+  gem 'byebug'
 end
 
 group :test do
-	gem 'selenium-webdriver', '2.35.1'
-	gem 'capybara', '2.1.0'
+	gem 'selenium-webdriver'
+	gem 'capybara'
 end
 
 

@@ -1,15 +1,21 @@
-require 'spec_helper'
-
-describe "PublicationsController" do
-  context "#index" do
-    before do
-      @publication = double(Publication, title: "Some title", address: "Herzliya")
-      allow(Publication).to recieve(:all).and_return([@publication, @publication])
+RSpec.describe PublicationsController do
+  describe "#index" do
+    let(:expected) do
+      [
+        { "title" => "First Title", "address" => "First Address"},
+        { "title" => "Second Title", "address" => "Second Address"}
+      ]
     end
+
+    let(:json) { JSON.parse(response.body) }
+
+    before { Publication.create!(expected) }
 
     it "should return all publication" do
       get :index, format: :json
-      expect(JSON.parse(response.body)).to include([{title: @publication.title, address: @publication.address}])
+
+      expect(json.first).to include(expected.first)
+      expect(json.last).to include(expected.last)
     end
   end
 end
