@@ -1,35 +1,17 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:show, :edit, :update, :destroy]
 
-  # GET /publications
-  # GET /publications.json
   def index
     render json: Publication.all
   end
 
-  # POST /publications
-  # POST /publications.json
   def create
-  	if params[:app_id]=="af26agr86ah"
-  		@publications = Publication.new(publication_params)
-  		respond_to do |format|
-        if @publication.save
-          #format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
-         # format.json { render :show, status: :created, location: @publication }
-  	   render json:   "@publication.id, @publication.version"
-  	   render body: "success"
-        else
-          #format.html { render :new }
-          format.json { render json: @publication.errors, status: :unprocessable_entity }
-        end
-      end
-  	else
-  		render body: "Unknown user"
-  	end
+		publication = Publication.create!(publication_params)
+    render json: publication
+  rescue
+    render json: publication.errors, status: :unprocessable_entity
   end
 
-  # PATCH/PUT /publications/1
-  # PATCH/PUT /publications/1.json
   def update
     respond_to do |format|
       if @publication.update(publication_params)
@@ -42,8 +24,6 @@ class PublicationsController < ApplicationController
     end
   end
 
-  # DELETE /publications/1
-  # DELETE /publications/1.json
   def destroy
     @publication.destroy
     respond_to do |format|
