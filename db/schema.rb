@@ -17,45 +17,45 @@ ActiveRecord::Schema.define(version: 20141127203947) do
   enable_extension "plpgsql"
 
   create_table "active_devices", force: true do |t|
-    t.string   "remote_notification_token"
+    t.string   "remote_notification_token", limit: 64, null: false
     t.boolean  "is_ios"
-    t.decimal  "last_location_latitude"
-    t.decimal  "last_location_longitude"
-    t.string   "device_uuid"
+    t.decimal  "last_location_latitude",               null: false
+    t.decimal  "last_location_longitude",              null: false
+    t.string   "device_uuid",               limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "publication_reports", force: true do |t|
-    t.integer  "publication_unique_id"
-    t.integer  "publication_version"
+    t.integer  "unique_id",                 null: false
+    t.integer  "version",                   null: false
     t.integer  "report"
     t.date     "date_of_report"
-    t.string   "reporting_device_uuid"
+    t.string   "device_uuid",    limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "publications", force: true do |t|
-    t.integer  "version"
-    t.text     "title"
-    t.text     "address"
+    t.integer  "version",                           null: false
+    t.string   "title",                 limit: 200, null: false
+    t.string   "address",               limit: 100, null: false
     t.integer  "type_of_collecting"
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.decimal  "latitude",                          null: false
+    t.decimal  "longitude",                         null: false
     t.datetime "starting_date"
-    t.datetime "ending_date"
-    t.text     "contact_info"
+    t.datetime "ending_date",                       null: false
+    t.string   "contact_info",          limit: 100, null: false
     t.boolean  "is_on_air"
-    t.text     "reporting_device_uuid"
+    t.string   "reporting_device_uuid", limit: 64,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "registered_user_for_publications", force: true do |t|
-    t.integer  "publication_unique_id"
+    t.integer  "unique_id",                       null: false
     t.datetime "date_of_registration"
-    t.string   "device_uuid"
+    t.string   "device_uuid",          limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
