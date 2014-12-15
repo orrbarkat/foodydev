@@ -7,8 +7,14 @@ class PublicationReport < ActiveRecord::Base
   validates :device_uuid, presence: true, length: { maximum: 64 }        
 
   before_validation :set_version
-
-  def set_version
+  before_save :init_data
+  
+   def set_version
     self.version = version.to_i + 1
-  end	
+   end	
+
+
+  def init_data
+    self.date_of_report ||= Date.today if new_record?
+  end
 end

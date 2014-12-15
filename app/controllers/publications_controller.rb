@@ -13,23 +13,16 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
       if @publication.update(publication_params)
-        format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
-        format.json { render :show, status: :ok, location: @publication }
+        render json: @publication, only: [:id, :version]
       else
-        format.html { render :edit }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
+       render json: @publication.errors, status: :unprocessable_entity 
       end
-    end
   end
 
   def destroy
     @publication.destroy
-    respond_to do |format|
-      format.html { redirect_to publications_url, notice: 'Publication was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: "OK"
   end
 
   private
