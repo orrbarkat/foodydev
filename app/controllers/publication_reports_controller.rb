@@ -9,23 +9,19 @@ class PublicationReportsController < ApplicationController
 
 
   def create
-    @publication_report = PublicationReport.new(publication_report_params)
-
-      if @publication_report.save
-        render json: "OK"
-      else
-        render json: @publication_report.errors, status: :unprocessable_entity 
-      end
+    publication_report = PublicationReport.create!(publication_report_params)
+    render json: publication_report
+  rescue
+    render json: publication_report.errors, status: :unprocessable_entity 
   end
 
   # PATCH/PUT /publication_reports/1
   # PATCH/PUT /publication_reports/1.json
   def update
-      if @publication_report.update(publication_report_params)
-        render json @publication_report 
-      else
-         render json: @publication_report.errors, status: :unprocessable_entity 
-      end
+    publication_report = Publication_report.update!(publication_report_params)
+    render json publication_report 
+  rescue
+    render json: @publication_report.errors, status: :unprocessable_entity 
   end
 
   # DELETE /publication_reports/1

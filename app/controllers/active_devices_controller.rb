@@ -15,23 +15,19 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    @active_device = ActiveDevice.new(active_device_params)
-
-      if @active_device.save
-        render json: "OK"
-      else
-        render json: @active_device.errors, status: :unprocessable_entity 
-      end
+    active_device = ActiveDevice.create!(active_device_params)
+    render json: active_device
+  rescue
+    render json: active_device.errors, status: :unprocessable_entity 
   end
 
   # PATCH/PUT /active_devices/1
   # PATCH/PUT /active_devices/1.json
   def update
-      if @active_device.update(active_device_params)
-        render json: @active_device
-      else
-        render json: @active_device.errors, status: :unprocessable_entity 
-      end
+      active_device = Active_device.update!(active_device_params)
+      render json: active_device
+  rescue
+      render json: active_device.errors, status: :unprocessable_entity 
   end
 
  

@@ -7,6 +7,5 @@ class CreateRegisteredUserForPublications < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :registered_user_for_publications	:unique_id
   end
 end

@@ -13,11 +13,10 @@ class PublicationsController < ApplicationController
   end
 
   def update
-      if @publication.update(publication_params)
-        render json: @publication, only: [:id, :version]
-      else
-       render json: @publication.errors, status: :unprocessable_entity 
-      end
+    publication = Publication.update!(publication_params)
+    render json: publication, only: [:id, :version]
+  rescue
+    render json: publication.errors, status: :unprocessable_entity 
   end
 
   def destroy

@@ -11,13 +11,10 @@ class RegisteredUserForPublicationsController < ApplicationController
   # POST /registered_user_for_publications
   # POST /registered_user_for_publications.json
   def create
-    @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
-
-      if @registered_user_for_publication.save
-        render json: "OK"
-      else
-        render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
-      end
+    registered_user_for_publication = RegisteredUserForPublication.create(registered_user_for_publication_params)
+    render json: registered_user_for_publication
+  rescue
+    render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end
 
   
@@ -30,10 +27,10 @@ class RegisteredUserForPublicationsController < ApplicationController
   # PATCH/PUT /registered_user_for_publications/1
   # PATCH/PUT /registered_user_for_publications/1.json
     def update
-      if @registered_user_for_publication.update(registered_user_for_publication_params)
-        render json:  @registered_user_for_publication
-      else
-       render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
+      registered_user_for_publication = Registered_user_for_publication.update!(registered_user_for_publication_params)
+      render json:  registered_user_for_publication
+    rescue
+      render json: registered_user_for_publication.errors, status: :unprocessable_entity 
       end
     end
 
