@@ -5,7 +5,7 @@ class CreateActiveDevices < ActiveRecord::Migration
       t.boolean :is_ios
       t.decimal :last_location_latitude, { null:false }
       t.decimal :last_location_longitude, { null:false }
-      t.string :device_uuid, { limit:64 , null:false }
+      t.string :dev_uuid, { limit:64 , null:false }
 
       t.timestamps
     end
