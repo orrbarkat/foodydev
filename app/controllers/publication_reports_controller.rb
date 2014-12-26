@@ -1,4 +1,4 @@
-class PublicationReportsController < ApplicationController
+  class PublicationReportsController < ApplicationController
   before_action :set_publication_report, only: [:show, :edit, :update, :destroy]
 
   # GET /publication_reports
@@ -19,17 +19,18 @@ class PublicationReportsController < ApplicationController
   # PATCH/PUT /publication_reports/1.json
   def update
     publication_report = Publication_report.update!(publication_report_params)
-    render json publication_report 
+    #render json publication_report 
+    render json: "OK"
   rescue
     render json: @publication_report.errors, status: :unprocessable_entity 
   end
 
   # DELETE /publication_reports/1
   # DELETE /publication_reports/1.json
-  def destroy
-    @publication_report.destroy
-    render json: "OK"
-  end
+  #def destroy
+  #  @publication_report.destroy
+  #  render json: "OK"
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -16,7 +16,8 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices.json
   def create
     active_device = ActiveDevice.create!(active_device_params)
-    render json: active_device
+    #render json: active_device
+    render json: "OK"
   rescue
     render json: active_device.errors, status: :unprocessable_entity 
   end
@@ -39,9 +40,9 @@ class ActiveDevicesController < ApplicationController
 
   # DELETE /active_devices/1
   # DELETE /active_devices/1.json
-  def destroy
-    @active_device.destroy
-  end
+ #def destroy
+  #  @active_device.destroy
+ #end
 
 
     # Never trust parameters from the scary internet, only allow the white list through.

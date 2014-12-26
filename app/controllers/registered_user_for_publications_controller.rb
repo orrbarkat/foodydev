@@ -3,16 +3,17 @@ class RegisteredUserForPublicationsController < ApplicationController
 
   # GET /registered_user_for_publications
   # GET /registered_user_for_publications.json
-  def index
-   render json: RegisteredUserForPublication.all
-  end
+  #def index
+  # render json: RegisteredUserForPublication.all
+  #end
 
 
   # POST /registered_user_for_publications
   # POST /registered_user_for_publications.json
   def create
     registered_user_for_publication = RegisteredUserForPublication.create(registered_user_for_publication_params)
-    render json: registered_user_for_publication
+    #render json: registered_user_for_publication
+    render json: "OK"
   rescue
     render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end

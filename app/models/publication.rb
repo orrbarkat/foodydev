@@ -6,7 +6,7 @@ class Publication < ActiveRecord::Base
   validates :version, presence: true 
   validates :title, presence: true, length: { maximum: 200 }
   validates :address, presence: true, length: { maximum: 100 }
-  validates :type_of_collecting, presence: true
+  validates :type_of_collecting, presence: true, inclusion: { in: %w(1 2) }
   validates :latitude, presence: true  
   validates :longitude, presence: true
   validates :starting_date, presence: true
