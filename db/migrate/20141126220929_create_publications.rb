@@ -17,4 +17,5 @@ class CreatePublications < ActiveRecord::Migration
 
       t.timestamps
     end
+  end
 end
