@@ -47,6 +47,6 @@ class ActiveDevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def active_device_params
-      params.require(:active_device).permit(:remote_notification_token, :is_ios, :last_location_latitude, :last_location_longitude, :device_uuid)
+      params.require(:active_device).permit(:remote_notification_token, :is_ios, :last_location_latitude, :last_location_longitude, :dev_uuid)
     end
 end

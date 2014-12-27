@@ -32,6 +32,6 @@ class PublicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publication_params
-      params.require(:publication).permit(:publication_version, :publication_title, :publication_address, :publication_type_of_collecting, :publication_latitude, :publication_longitude, :publication_starting_date, :publication_ending_date, :publication_contact_info, :is_on_air, :reporting_device_uuid, :app_id)
+      params.require(:publication).permit(:version, :title, :subtitle, :address, :type_of_collecting, :latitude, :longitude, :starting_date, :ending_date, :contact_info, :is_on_air, :active_device_dev_uuid, :photo_url)
     end
 end

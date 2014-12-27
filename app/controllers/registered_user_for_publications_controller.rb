@@ -41,6 +41,6 @@ class RegisteredUserForPublicationsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def registered_user_for_publication_params
-      params.require(:registered_user_for_publication).permit(:publication_unique_id, :date_of_registration, :device_uuid)
+      params.require(:registered_user_for_publication).permit(:publication_id, :date_of_registration, :active_device_dev_uuid)
     end
 end
