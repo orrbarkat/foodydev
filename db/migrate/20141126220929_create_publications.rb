@@ -8,8 +8,8 @@ class CreatePublications < ActiveRecord::Migration
       t.integer :type_of_collecting
       t.decimal :latitude, { null:false } 
       t.decimal :longitude, { null:false }
-      t.datetime :starting_date
-      t.datetime :ending_date, { null:false }
+      t.decimal :starting_date
+      t.decimal :ending_date, { null:false }
       t.string :contact_info, { limit:100 , null:false }
       t.boolean :is_on_air
       t.string :active_device_dev_uuid, { limit:64 , null:false }
