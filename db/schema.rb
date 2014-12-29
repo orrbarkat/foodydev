@@ -21,41 +21,43 @@ ActiveRecord::Schema.define(version: 20141127203947) do
     t.boolean  "is_ios"
     t.decimal  "last_location_latitude",               null: false
     t.decimal  "last_location_longitude",              null: false
-    t.string   "device_uuid",               limit: 64, null: false
+    t.string   "dev_uuid",                  limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "publication_reports", force: true do |t|
-    t.integer  "unique_id",                 null: false
-    t.integer  "version",                   null: false
+    t.integer  "publication_id",                    null: false
+    t.integer  "publication_version",               null: false
     t.integer  "report"
     t.date     "date_of_report"
-    t.string   "device_uuid",    limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "publications", force: true do |t|
-    t.integer  "version",                           null: false
-    t.string   "title",                 limit: 200, null: false
-    t.string   "address",               limit: 100, null: false
+    t.integer  "version",                            null: false
+    t.string   "title",                  limit: 200, null: false
+    t.text     "subtitle"
+    t.string   "address",                limit: 100, null: false
     t.integer  "type_of_collecting"
-    t.decimal  "latitude",                          null: false
-    t.decimal  "longitude",                         null: false
-    t.datetime "starting_date"
-    t.datetime "ending_date",                       null: false
-    t.string   "contact_info",          limit: 100, null: false
+    t.decimal  "latitude",                           null: false
+    t.decimal  "longitude",                          null: false
+    t.decimal  "starting_date"
+    t.decimal  "ending_date",                        null: false
+    t.string   "contact_info",           limit: 100, null: false
     t.boolean  "is_on_air"
-    t.string   "reporting_device_uuid", limit: 64,  null: false
+    t.string   "active_device_dev_uuid", limit: 64,  null: false
+    t.string   "photo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "registered_user_for_publications", force: true do |t|
-    t.integer  "unique_id",                       null: false
+    t.integer  "publication_id",                    null: false
     t.datetime "date_of_registration"
-    t.string   "device_uuid",          limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

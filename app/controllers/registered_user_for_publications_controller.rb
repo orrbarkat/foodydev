@@ -3,21 +3,19 @@ class RegisteredUserForPublicationsController < ApplicationController
 
   # GET /registered_user_for_publications
   # GET /registered_user_for_publications.json
-  def index
-   render json: RegisteredUserForPublication.all
-  end
+  #def index
+  # render json: RegisteredUserForPublication.all
+  #end
 
 
   # POST /registered_user_for_publications
   # POST /registered_user_for_publications.json
   def create
-    @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
-
-      if @registered_user_for_publication.save
-        render json: "OK"
-      else
-        render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
-      end
+    registered_user_for_publication = RegisteredUserForPublication.create(registered_user_for_publication_params)
+    #render json: registered_user_for_publication
+    render json: "OK"
+  rescue
+    render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end
 
   
@@ -30,10 +28,10 @@ class RegisteredUserForPublicationsController < ApplicationController
   # PATCH/PUT /registered_user_for_publications/1
   # PATCH/PUT /registered_user_for_publications/1.json
     def update
-      if @registered_user_for_publication.update(registered_user_for_publication_params)
-        render json:  @registered_user_for_publication
-      else
-       render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
+      registered_user_for_publication = Registered_user_for_publication.update!(registered_user_for_publication_params)
+      render json:  registered_user_for_publication
+    rescue
+      render json: registered_user_for_publication.errors, status: :unprocessable_entity 
       end
     end
 
@@ -43,6 +41,6 @@ class RegisteredUserForPublicationsController < ApplicationController
     end
     # Never trust parameters from the scary internet, only allow the white list through.
     def registered_user_for_publication_params
-      params.require(:registered_user_for_publication).permit(:publication_unique_id, :date_of_registration, :device_uuid)
+      params.require(:registered_user_for_publication).permit(:publication_id, :date_of_registration, :active_device_dev_uuid)
     end
 end

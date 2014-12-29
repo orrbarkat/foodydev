@@ -15,23 +15,20 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    @active_device = ActiveDevice.new(active_device_params)
-
-      if @active_device.save
-        render json: "OK"
-      else
-        render json: @active_device.errors, status: :unprocessable_entity 
-      end
+    active_device = ActiveDevice.create!(active_device_params)
+    #render json: active_device
+    render json: "OK"
+  rescue
+    render json: active_device.errors, status: :unprocessable_entity 
   end
 
   # PATCH/PUT /active_devices/1
   # PATCH/PUT /active_devices/1.json
   def update
-      if @active_device.update(active_device_params)
-        render json: @active_device
-      else
-        render json: @active_device.errors, status: :unprocessable_entity 
-      end
+      active_device = Active_device.update!(active_device_params)
+      render json: active_device
+  rescue
+      render json: active_device.errors, status: :unprocessable_entity 
   end
 
  
@@ -43,13 +40,13 @@ class ActiveDevicesController < ApplicationController
 
   # DELETE /active_devices/1
   # DELETE /active_devices/1.json
-  def destroy
-    @active_device.destroy
-  end
+ #def destroy
+  #  @active_device.destroy
+ #end
 
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def active_device_params
-      params.require(:active_device).permit(:remote_notification_token, :is_ios, :last_location_latitude, :last_location_longitude, :device_uuid)
+      params.require(:active_device).permit(:remote_notification_token, :is_ios, :last_location_latitude, :last_location_longitude, :dev_uuid)
     end
 end
