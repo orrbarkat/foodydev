@@ -6,7 +6,8 @@ class PublicationsController < ApplicationController
   end
 
   def create
-		publication = Publication.create!(publication_params)
+		publication = Publication.new(publication_params)
+    publication.save!
     render json: publication, only: [:id, :version]
   rescue
     render json: publication.errors, status: :unprocessable_entity
@@ -16,7 +17,7 @@ class PublicationsController < ApplicationController
     publication = Publication.update!(publication_params)
     render json: publication, only: [:id, :version]
   rescue
-    render json: publication.errors, status: :unprocessable_entity 
+    render json: publication.errors, status: :unprocessable_entity
   end
 
   def destroy
