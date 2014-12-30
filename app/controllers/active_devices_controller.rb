@@ -7,7 +7,6 @@ class ActiveDevicesController < ApplicationController
     render json: ActiveDevice.all
   end
 
-
   # GET /active_devices/1/edit
   def edit
   end
@@ -15,11 +14,11 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    active_device = ActiveDevice.create!(active_device_params)
-    #render json: active_device
-    render json: "OK"
+    active_device = ActiveDevice.new(active_device_params)
+    active_device.save!
+    render json: active_device
   rescue
-    render json: active_device.errors, status: :unprocessable_entity 
+    render json: active_device.errors, status: :unprocessable_entity
   end
 
   # PATCH/PUT /active_devices/1
@@ -28,10 +27,10 @@ class ActiveDevicesController < ApplicationController
       active_device = Active_device.update!(active_device_params)
       render json: active_device
   rescue
-      render json: active_device.errors, status: :unprocessable_entity 
+      render json: active_device.errors, status: :unprocessable_entity
   end
 
- 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_active_device

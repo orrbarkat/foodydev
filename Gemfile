@@ -14,7 +14,7 @@ gem 'rails_12factor', '0.0.2'
 
 group :development, :test do
 	gem 'rspec-rails'
- # gem 'byebug'
+ gem 'byebug'
 end
 
 group :test do
