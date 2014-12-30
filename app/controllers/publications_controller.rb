@@ -1,5 +1,5 @@
 class PublicationsController < ApplicationController
-  before_action :set_publication, only: [:show, :edit, :update, :destroy]
+  before_action :set_publication, only: [:update, :destroy]
 
   def index
     render json: Publication.all
@@ -14,10 +14,10 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    publication = Publication.update!(publication_params)
-    render json: publication, only: [:id, :version]
+    @publication.update!(publication_params)
+    render json: @publication, only: [:id, :version]
   rescue
-    render json: publication.errors, status: :unprocessable_entity
+    render json: @publication.errors, status: :unprocessable_entity
   end
 
   def destroy
@@ -25,14 +25,12 @@ class PublicationsController < ApplicationController
     render json: "OK"
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_publication
-      @publication = Publication.find(params[:id])
-    end
+private
+  def set_publication
+    @publication = Publication.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def publication_params
-      params.require(:publication).permit(:version, :title, :subtitle, :address, :type_of_collecting, :latitude, :longitude, :starting_date, :ending_date, :contact_info, :is_on_air, :active_device_dev_uuid, :photo_url)
-    end
+  def publication_params
+    params.require(:publication).permit(:version, :title, :subtitle, :address, :type_of_collecting, :latitude, :longitude, :starting_date, :ending_date, :contact_info, :is_on_air, :active_device_dev_uuid, :photo_url)
+  end
 end
