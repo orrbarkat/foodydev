@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :registered_user_for_publications
+  
 
   #resources :publication_reports
 
@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :publications do
     resources :reports
+    resources :registered_user_for_publications
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
