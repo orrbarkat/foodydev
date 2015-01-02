@@ -1,6 +1,6 @@
 class RegisteredUserForPublication < ActiveRecord::Base
 
-  has_many 	:publication
+  has_one 	:publication
   
   validates :publication_id, presence: true  
   validates :date_of_report, presence: true
