@@ -1,7 +1,7 @@
 class Publication < ActiveRecord::Base
   belongs_to :active_device
   has_many :publication_report
-  has_many :registered_user_for_publication
+  has_many :registered_user_for_publication, foreign_key: :publication_id, primary_key: :id
 
   validates :version, presence: true
   validates :title, presence: true, length: { maximum: 200 }
