@@ -1,6 +1,6 @@
 class RegisteredUserForPublication < ActiveRecord::Base
 
-  has_one 	:publication
+  belong_to 	:publication
   
   validates :publication_id, presence: true  
   #validates :date_of_registration, presence: true
