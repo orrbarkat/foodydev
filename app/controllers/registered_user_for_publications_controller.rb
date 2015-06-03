@@ -9,6 +9,13 @@ class RegisteredUserForPublicationsController < ApplicationController
   rescue
     render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end
+  
+  #GET /publications/:id/registered_user_for_publications
+  def index
+    @publication = Publication.find(params[:publication_id])
+    @registered_user_for_publication = @publication.registered_user_for_publication
+    render json: @registered_user_for_publication
+  end
 
   
 private
