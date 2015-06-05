@@ -2,7 +2,8 @@ class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
 
   def index
-    render json: Publication.all
+    dti=(Time.now.utc).to_i
+    render json: Publication.where( "is_on_air=? AND ending_date<=?", true, dti)
   end
 
   def create
@@ -23,6 +24,11 @@ class PublicationsController < ApplicationController
   def destroy
     @publication.destroy
     render json: "OK"
+  end
+
+  def show
+    @publication = Publication.find(params[:id])
+    render json: @publication
   end
 
 private

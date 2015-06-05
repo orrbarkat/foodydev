@@ -12,12 +12,16 @@ class Publication < ActiveRecord::Base
   validates :starting_date, presence: true
   validates :ending_date, presence: true
   validates :contact_info, presence: true, length: { maximum: 100 }
-  validates :is_on_air, presence: true
   validates :active_device_dev_uuid, presence: true, length: { maximum: 64 }
 
   before_validation :set_version
+  before_save :default_values
 
   def set_version
     self.version = version.to_i + 1
+  end
+
+  def default_values
+    self.is_on_air ||= true if self.is_on_air.nil?
   end
 end

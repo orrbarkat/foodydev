@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :active_devices
 
   resources :publications do
-    resources :reports
+    resources :publication_reports
     resources :registered_user_for_publications
   end
 

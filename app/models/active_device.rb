@@ -6,5 +6,5 @@ class ActiveDevice < ActiveRecord::Base
   validates :is_ios, presence: true
   validates :last_location_latitude, presence: true
   validates :last_location_longitude, presence: true
-  validates :dev_uuid, presence: true, length: { maximum: 64 }
+  validates :dev_uuid, presence: true, length: { maximum: 64 }, uniqueness: true
 end

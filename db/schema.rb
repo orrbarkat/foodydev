@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141127203947) do
+ActiveRecord::Schema.define(version: 20150119195310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(version: 20141127203947) do
     t.integer  "publication_id",                    null: false
     t.integer  "publication_version",               null: false
     t.integer  "report"
-    t.date     "date_of_report"
     t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "date_of_report"
   end
 
   create_table "publications", force: true do |t|
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20141127203947) do
     t.decimal  "longitude",                          null: false
     t.decimal  "starting_date"
     t.decimal  "ending_date",                        null: false
-    t.string   "contact_info",           limit: 100, null: false
+    t.string   "contact_info",           limit: 100
     t.boolean  "is_on_air"
     t.string   "active_device_dev_uuid", limit: 64,  null: false
     t.string   "photo_url"
@@ -56,10 +56,11 @@ ActiveRecord::Schema.define(version: 20141127203947) do
 
   create_table "registered_user_for_publications", force: true do |t|
     t.integer  "publication_id",                    null: false
-    t.datetime "date_of_registration"
     t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "publication_version"
+    t.decimal  "date_of_registration"
   end
 
 end
