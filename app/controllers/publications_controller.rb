@@ -3,7 +3,7 @@ class PublicationsController < ApplicationController
 
   def index
     dti=(Time.now.utc).to_i
-    render json: Publication.where( "is_on_air=? AND ending_date<=?", true, dti)
+    render json: Publication.where( "is_on_air=? AND ending_date>=?", true, dti)
   end
 
   def create
