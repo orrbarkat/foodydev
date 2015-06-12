@@ -14,6 +14,12 @@ class RegisteredUserForPublicationsController < ApplicationController
     render json: @registered_user_for_publication
   end
 
+  def destroy
+    @registered_user_for_publication =  RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: params[:publication_version], active_device_dev_uuid: params[:active_device_dev_uuid])
+    @registered_user_for_publication.destroy
+    render json: "OK"
+  end
+  
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_registered_user_for_publication
