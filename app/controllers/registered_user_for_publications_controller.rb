@@ -18,7 +18,7 @@ class RegisteredUserForPublicationsController < ApplicationController
     @registered_user_for_publication =  RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
     
     render json: @registered_user_for_publication
-  #end
+  end
   
 private
   # Use callbacks to share common setup or constraints between actions.
