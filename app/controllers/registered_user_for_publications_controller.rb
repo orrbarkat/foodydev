@@ -16,7 +16,7 @@ class RegisteredUserForPublicationsController < ApplicationController
 
   def destroy
     @registered_user_for_publication =  RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
-    @registered_user_for_publication.destroy
+    @registered_user_for_publication.destroy_all
     render json: "OK"
   end
   
