@@ -9,8 +9,8 @@ class PublicationsController < ApplicationController
   def create
     publication = Publication.new(publication_params)
     publication.save!
-    render json: publication, only: [:id, :version]
     push(publication)
+    render json: publication, only: [:id, :version]
   rescue
     render json: publication.errors, status: :unprocessable_entity
   end
@@ -39,7 +39,7 @@ private
 
   def push(publication)
     require 'houston'
-    @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
+    #@devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
     certificate = File.read("#{Rails.root}/lib/assets/ck.pem")
     passphrase = “g334613334613fxct“
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
