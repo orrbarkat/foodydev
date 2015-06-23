@@ -7,7 +7,7 @@ class PublicationsController < ApplicationController
   end
 
   def create
-		publication = Publication.new(publication_params)
+    publication = Publication.new(publication_params)
     publication.save!
     render json: publication, only: [:id, :version]
     push(publication)
@@ -44,15 +44,15 @@ private
     passphrase = “g334613334613fxct“
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
-    @devices.each do |device|
-      notification = Houston::Notification.new(device: device.remote_notification_token) 
-      notification.alert = “New Publication around you #{publication.title}“
-      notification.badge = 1
-      notification.sound = ""
-      notification.category = “ARRIVED_CATEGORY“
-      notification.content_available = false
-      notification.custom_data = {’id’: publication.id, ’version’:publication.version ,’title’: publication.title}
-      connection.write(notification.message)
+    #@devices.each do |device|
+    notification = Houston::Notification.new(device:'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')  #device.remote_notification_token) 
+    notification.alert = “New Publication around you #{publication.title}“
+    notification.badge = 1
+    notification.sound = ""
+    notification.category = “ARRIVED_CATEGORY“
+    notification.content_available = false
+    notification.custom_data = {’id’: publication.id, ’version’:publication.version ,’title’: publication.title}
+    connection.write(notification.message)
     end
     connection.close
   end
