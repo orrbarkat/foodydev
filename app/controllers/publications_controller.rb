@@ -55,7 +55,6 @@ private
       connection.write(notification.message)
     end
     connection.close
-    render json: "OK"
   end
 
 
