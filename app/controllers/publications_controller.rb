@@ -53,7 +53,6 @@ private
     notification.content_available = false
     notification.custom_data = {’id’: publication.id, ’version’:publication.version ,’title’: publication.title}
     connection.write(notification.message)
-    end
     connection.close
   end
 
