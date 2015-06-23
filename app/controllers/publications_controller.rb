@@ -38,7 +38,7 @@ private
   end
 
   def push(publication)
-    require houston
+    require 'houston'
     @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
     certificate = File.read("#{Rails.root}/lib/assets/ck.pem")
     passphrase = “g334613334613fxct“
