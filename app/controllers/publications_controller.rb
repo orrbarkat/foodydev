@@ -51,7 +51,7 @@ private
     notification.sound = ""
     notification.category = “ARRIVED_CATEGORY“
     notification.content_available = false
-    notification.custom_data = {’id’: publication.id, ’version’:publication.version ,’title’: publication.title}
+    notification.custom_data = {’id’: publication.id, ’version’: publication.version ,’title’: publication.title}
     connection.write(notification.message)
     connection.close
   end
