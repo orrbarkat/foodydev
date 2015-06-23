@@ -39,22 +39,23 @@ private
 
   def push(publication)
     require houston
-    @devices = ActiveDevices.where(“is_ios = ? AND remote_notification_token != ? “ , true , null)
+    @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
     certificate = File.read("/lib/assets/ck.pem")
     passphrase = “g334613334613fxct“
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
     @devices.each do |device|
       notification = Houston::Notification.new(device: device.remote_notification_token) 
-      notification.alert = “New Publication in your area #{device.title}"
+      notification.alert = “New Publication around you #{publication.title}“
       notification.badge = 1
       notification.sound = ""
-      notification.category = “ARRIVED_CATEGORY"
+      notification.category = “ARRIVED_CATEGORY“
       notification.content_available = false
-      notification.custom_data = {'id’: publication.id, 'version’:publication.version ,’title’: publication.title}
+      notification.custom_data = {’id’: publication.id, ’version’:publication.version ,’title’: publication.title}
       connection.write(notification.message)
     end
     connection.close
+    render json: "OK"
   end
 
 
