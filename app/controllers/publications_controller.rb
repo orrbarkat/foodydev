@@ -41,7 +41,7 @@ private
     require 'houston'
     #@devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
     certificate = File.read("/app/lib/assets/ck.pem")
-    passphrase = “g334613334613fxct“
+    passphrase = "g334613334613fxct"
   #  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
  #   connection.open
     #@devices.each do |device|
