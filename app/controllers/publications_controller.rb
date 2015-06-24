@@ -47,7 +47,7 @@ private
     #@devices.each do |device|
     notification = Houston::Notification.new(device:'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')  #device.remote_notification_token) 
     notification.alert = "New Publication around you" 
-    notification.badge = 0
+    notification.badge = 1
     notification.sound = "default"
     notification.category = "ARRIVED_CATEGORY"
     notification.content_available = false
