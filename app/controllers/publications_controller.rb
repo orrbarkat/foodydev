@@ -40,7 +40,7 @@ private
   def push(publication)
     require 'houston'
     #@devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
-    certificate = File.read("#{Rails.root}/lib/assets/ck.pem")
+    certificate = File.read("../../lib/assets/ck.pem")
     passphrase = “g334613334613fxct“
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
