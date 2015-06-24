@@ -42,7 +42,7 @@ private
     #@devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
     certificate = File.read("/app/lib/assets/ck.pem")
     passphrase = “g334613334613fxct“
-    connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  #  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
  #   connection.open
     #@devices.each do |device|
     #notification = Houston::Notification.new(device:'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')  #device.remote_notification_token) 
