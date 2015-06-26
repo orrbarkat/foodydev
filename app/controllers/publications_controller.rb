@@ -39,21 +39,22 @@ private
 
   def push(publication)
     require 'houston'
-    #@devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
-    certificate = File.read("/app/lib/assets/ck.pem")
+    @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: nil)
+    certificate = File.read("/app/lib/assets/ck.pem")#ck_production
     passphrase = "g334613334613fxct"
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
-    #@devices.each do |device|
-    notification = Houston::Notification.new(device:'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')  #device.remote_notification_token) 
-    notification.alert = "New Publication around you" 
-    notification.badge = 2
-    notification.sound = "default"
-    notification.category = "ARRIVED_CATEGORY"
-    notification.content_available = false
-    notification.custom_data = {type:"new_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
-    connection.write(notification.message)
-    connection.close
+    @devices.each do |device|
+      notification = Houston::Notification.new(device: device.remote_notification_token) #'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b'
+      notification.alert = "New event around you #{publication.title}" 
+      notification.badge = 2
+      notification.sound = "default"
+      notification.category = "ARRIVED_CATEGORY"
+      notification.content_available = false
+      notification.custom_data = {type:"new_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
+      connection.write(notification.message)
+    end
+      connection.close
   end
 
 
