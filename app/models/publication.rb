@@ -28,7 +28,7 @@ class Publication < ActiveRecord::Base
   def push
     require 'houston'
     @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-    certificate = File.read("/lib/assets/ck.pem")#ck_production/app
+    certificate = File.read("/app/lib/assets/ck.pem")#ck_production/app
     passphrase = "g334613334613fxct"
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
