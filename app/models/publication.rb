@@ -28,25 +28,25 @@ class Publication < ActiveRecord::Base
   def push
     require 'houston'
     @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-    certificate = File.read("/app/lib/assets/ck.pem")#ck_production/app
+    certificate = File.read("/app/lib/assets/ck.pem")#/Users/orrbarkat/dev/foodydev/lib/assets/ck.pem")#ck_production/app
     passphrase = "g334613334613fxct"
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     connection.open
-    #@devices.each do |device|
-    notification = Houston::Notification.new(device: 'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')#device.remote_notification_token) #'
-    notification.alert = "New event around you #{publication.title}" 
-    notification.badge = 1
-    notification.sound = "default"
-    notification.category = "ARRIVED_CATEGORY"
-    notification.content_available = false
-    notification.custom_data = {type:"new_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
-    connection.write(notification.message)
-    #end
+    @devices.each do |device|
+      notification = Houston::Notification.new(device: 'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b')#device.remote_notification_token) #'
+      notification.alert = "New event around you #{self.title}" 
+      notification.badge = 1
+      notification.sound = "default"
+      notification.category = "ARRIVED_CATEGORY"
+      notification.content_available = false
+      notification.custom_data = {type:"new_publication",data:{ id:self.id,version:self.version,title:self.title}}
+      connection.write(notification.message)
+    end
     connection.close
   end
   handle_asynchronously :push
 
-  def pushDelete(publication)
+  def pushDelete
    require 'houston'
     @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
     certificate = File.read("/app/lib/assets/ck.pem")#ck_production
@@ -55,12 +55,12 @@ class Publication < ActiveRecord::Base
     connection.open
     @devices.each do |device|
       notification = Houston::Notification.new(device: device.remote_notification_token) #'fd01e0baab71ad02ffd4eb10e34daa06fbdb3352ce7286a20ef1333465bc494b'
-      notification.alert = "Event finished around you #{publication.title}" 
+      notification.alert = "Event finished around you #{self.title}" 
       notification.badge = 1
       notification.sound = "default"
       notification.category = "ARRIVED_CATEGORY"
       notification.content_available = false
-      notification.custom_data = {type:"deleted_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
+      notification.custom_data = {type:"deleted_publication",data:{ id:self.id,version:self.version,title:self.title}}
       connection.write(notification.message)
     end
     connection.close

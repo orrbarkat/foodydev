@@ -23,7 +23,7 @@ class PublicationsController < ApplicationController
   end
 
   def destroy
-    pushDelete(@publication)
+    @publication.pushDelete
     @publication.destroy
     render json: "OK"
   end
