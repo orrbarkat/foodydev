@@ -15,6 +15,9 @@ gem 'rails_12factor', '0.0.2'
 #gem for push nots
 gem 'houston'
 
+#delayed jobs
+gem 'delayed_job_active_record'
+
 group :development, :test do
 	gem 'rspec-rails'
  gem 'byebug'
