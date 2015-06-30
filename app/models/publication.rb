@@ -44,7 +44,6 @@ class Publication < ActiveRecord::Base
     end
     connection.close
   end
-  handle_asynchronously :push
 
   def pushDelete
    require 'houston'
@@ -65,6 +64,5 @@ class Publication < ActiveRecord::Base
     end
     connection.close
   end
-  handle_asynchronously :pushDelete
 
 end
