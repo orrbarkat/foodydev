@@ -1,9 +1,13 @@
 class RegisteredUserForPublicationsController < ApplicationController
   
   def create
+    require '/app/lib/push.rb'
+    require 'houston'
     registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     registered_user_for_publication.save!
+    @publication = Publication.find(params[:publication_id])
     render json: registered_user_for_publication
+    pushRegistered_User(@publication, registered_user_for_publication)
   rescue
     render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end
@@ -15,7 +19,7 @@ class RegisteredUserForPublicationsController < ApplicationController
   end
 
   def destroy
-    @registered_user_for_publication =  RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
+    @registered_user_for_publication = RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
     @registered_user_for_publication.destroy_all
     render json: "OK"
   end
