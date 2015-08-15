@@ -1,13 +1,13 @@
 def push(publication)
   @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
-  passphrase = "fdprod77457745" #"g334613334613fxct"  
+  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
+  passphrase = "g334613f@@@"#"g334613334613fxct"  
   connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   
   @devices.each do |device|
     Thread.new do
       connection.open
-      notification = Houston::Notification.new(device: device.remote_notification_token ) #8ca9c4f8cf26da318f144695c7568d32bc23460dae806469b20bfa4ff33c4241')
+      notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
       notification.alert = "New event around you #{publication.title}" 
       notification.badge = 1
       notification.sound = "default"
@@ -24,8 +24,8 @@ end
 def pushDelete(publication)
   @registered = RegisteredUserForPublication.where("publication_id = ? AND publication_version = ?" , publication.id , publication.version)
 #  @devices = @registered.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
-  passphrase = "fdprod77457745" #"g334613334613fxct"
+  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
+  passphrase = "g334613f@@@"#"g334613334613fxct"
   connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
 
  # @devices.each do |device|
@@ -34,7 +34,7 @@ def pushDelete(publication)
     unless device == nil or device.remote_notification_token == "no"
       Thread.new do
         connection.open
-        notification = Houston::Notification.new(device: device.remote_notification_token) #8ca9c4f8cf26da318f144695c7568d32bc23460dae806469b20bfa4ff33c4241 
+        notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
         notification.alert = "Event finished around you #{publication.title}" 
         notification.badge = 1
         notification.sound = "default"
@@ -51,13 +51,13 @@ end
 def pushRegistered_User(publication, registration)
   device =  ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid #ActiveDevice.where(dev_uuid: publication.active_device_dev_uuid).where.not(remote_notification_token: "no")
   unless device == nil or device.remote_notification_token == "no"
-    certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
-    passphrase = "fdprod77457745" #"g334613334613fxct"  
+    certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
+    passphrase = "g334613f@@@" 
     connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
     
     Thread.new do
       connection.open
-      notification = Houston::Notification.new(device: device.remote_notification_token ) #8ca9c4f8cf26da318f144695c7568d32bc23460dae806469b20bfa4ff33c4241')
+      notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
       notification.alert = "User comes to pick up #{publication.title}"
       notification.badge = 1
       notification.sound = "default"
