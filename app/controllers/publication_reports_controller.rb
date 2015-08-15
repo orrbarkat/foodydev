@@ -6,9 +6,15 @@
   end
 
   def create
+    require '/app/lib/push.rb'
+    require 'houston'
+
     publication_report = PublicationReport.new(publication_report_params)
     publication_report.save!
+    @publication = Publication.find(publication_report_params[:publication_id])
     render json:  publication_report
+    pushReport(@publication)
+    pushReport_owner(@publication)
   rescue
     render json: publication_report.errors, status: :unprocessable_entity 
   end
