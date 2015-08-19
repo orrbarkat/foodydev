@@ -76,7 +76,7 @@ def pushReport(publication)
   certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
   passphrase = "g334613f@@@"#"g334613334613fxct"(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
 
-  Thread.new do @devices.each do |device|
+  Thread.new do 
     @registered.each do |registration|
       device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
       unless device == nil or device.remote_notification_token == "no"
