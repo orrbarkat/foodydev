@@ -4,8 +4,8 @@ def push(publication)
   passphrase = "g334613f@@@"#"g334613334613fxct"  
   connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   
-  @devices.each do |device|
-    Thread.new do
+  Thread.new do
+    @devices.each do |device|  
       connection.open
       notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
       notification.alert = "New event around you #{publication.title}" 
@@ -18,7 +18,6 @@ def push(publication)
       connection.close
     end
   end
-  
 end
   
 def pushDelete(publication)
