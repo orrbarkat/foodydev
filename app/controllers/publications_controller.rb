@@ -23,6 +23,7 @@ class PublicationsController < ApplicationController
     @publication.update!(publication_params)
     if @publication.is_on_air == false
       pushDelete(@publication)
+    end
     render json: @publication, only: [:id, :version]
   rescue
     render json: @publication.errors, status: :unprocessable_entity
