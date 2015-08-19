@@ -13,8 +13,6 @@ class PublicationsController < ApplicationController
     publication.save!
     render json: publication, only: [:id, :version]
     push(publication)
-       
-
   rescue
     render json: publication.errors, status: :unprocessable_entity
   end
