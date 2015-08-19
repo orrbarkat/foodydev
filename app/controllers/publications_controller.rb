@@ -9,23 +9,23 @@ class PublicationsController < ApplicationController
   def create
     require '/app/lib/push.rb'
     require 'houston'
-    publication = Publication.new(publication_params)
-    publication.save!
-    render json: publication, only: [:id, :version]
-    push(publication)
-  rescue
-    render json: publication.errors, status: :unprocessable_entity
+      publication = Publication.new(publication_params)
+      publication.save!
+      render json: publication, only: [:id, :version]
+      push(publication)
+    rescue
+      render json: publication.errors, status: :unprocessable_entity
   end
 
   def update
     require '/app/lib/push.rb'
     require 'houston'
-    @publication.update!(publication_params)
-    render json: @publication, only: [:id, :version]
-    if @publication.is_on_air == false
-      pushDelete(@publication)
-  rescue
-    render json: @publication.errors, status: :unprocessable_entity
+      @publication.update!(publication_params)
+      render json: @publication, only: [:id, :version]
+      if @publication.is_on_air == false
+        pushDelete(@publication)
+    rescue
+      render json: @publication.errors, status: :unprocessable_entity
   end
 
   def destroy
