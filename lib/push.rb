@@ -28,10 +28,10 @@ def pushDelete(publication)
   connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
 
  # @devices.each do |device|
-  @registered.each do |registration|
-    device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
-    unless device == nil or device.remote_notification_token == "no"
-      Thread.new do
+  Thread.new do
+    @registered.each do |registration|
+      device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
+      unless device == nil or device.remote_notification_token == "no"
         connection.open
         notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
         notification.alert = "Event finished around you #{publication.title}" 
@@ -93,7 +93,6 @@ def pushReport(publication)
         connection.close
       end
     end
-    ActiveRecord::Base.connection.close
   end  
 end
 
