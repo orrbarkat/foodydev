@@ -2,14 +2,13 @@ Rails.application.routes.draw do
   
 
   #resources :publication_reports
-
+  post 'publications/new' => 'publication#create'
   resources :active_devices
 
   resources :publications do
     resources :publication_reports
     resources :registered_user_for_publications
 
-  post 'publications/new' => 'publication#create'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
