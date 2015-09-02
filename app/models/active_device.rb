@@ -3,7 +3,7 @@ class ActiveDevice < ActiveRecord::Base
   has_many :publication_reports
 
   validates :remote_notification_token, presence: true, length: { maximum: 64 }
-  validates :is_ios, presence: true
+ # validates :is_ios, presence: true
   validates :last_location_latitude, presence: true
   validates :last_location_longitude, presence: true
   validates :dev_uuid, presence: true, length: { maximum: 64 }, uniqueness: true
