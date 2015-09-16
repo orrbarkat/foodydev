@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629141804) do
+ActiveRecord::Schema.define(version: 20150916071552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "adminpack"
 
   create_table "active_devices", force: true do |t|
-    t.string   "remote_notification_token", limit: 64, null: false
+    t.string   "remote_notification_token", limit: 128, null: false
     t.boolean  "is_ios"
-    t.decimal  "last_location_latitude",               null: false
-    t.decimal  "last_location_longitude",              null: false
-    t.string   "dev_uuid",                  limit: 64, null: false
+    t.decimal  "last_location_latitude",                null: false
+    t.decimal  "last_location_longitude",               null: false
+    t.string   "dev_uuid",                  limit: 64,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
