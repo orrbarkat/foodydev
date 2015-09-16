@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20150916071552) do
   enable_extension "adminpack"
 
   create_table "active_devices", force: true do |t|
-    t.string   "remote_notification_token", limit: 128, null: false
+    t.string   "remote_notification_token", limit: 256, null: false
     t.boolean  "is_ios"
     t.decimal  "last_location_latitude",                null: false
     t.decimal  "last_location_longitude",               null: false

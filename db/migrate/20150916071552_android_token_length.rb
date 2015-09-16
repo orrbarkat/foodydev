@@ -1,7 +1,7 @@
 class AndroidTokenLength < ActiveRecord::Migration
   
   def up
-  	change_column :active_devices, :remote_notification_token, :string,{ limit:128, null:false};
+  	change_column :active_devices, :remote_notification_token, :string,{ limit:256, null:false};
   end
 
   def down
