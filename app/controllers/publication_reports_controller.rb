@@ -5,7 +5,7 @@
     if(params.has_key?(:publication_id) && params.has_key?(:publication_version))
      render json: PublicationReport.where( publication_id: params[:publication_id], publication_version: params[:publication_version] )
     else 
-      render json: PublicationReport
+      render json: PublicationReport.all
     end
       
   end
