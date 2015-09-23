@@ -14,7 +14,7 @@ class RegisteredUserForPublicationsController < ApplicationController
 
   def index
     if(params[:publication_id] == 1)
-    render json:  RegisteredUserForPublications.all
+    render json: RegisteredUserForPublication.all
     else 
     @publication = Publication.find(params[:publication_id])
     @registered_user_for_publication = @publication.registered_user_for_publication
