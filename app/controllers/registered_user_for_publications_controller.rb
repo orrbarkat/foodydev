@@ -13,9 +13,13 @@ class RegisteredUserForPublicationsController < ApplicationController
   end
 
   def index
+    if(params[:publication_id] == 0)
+    render json:  RegisteredUserForPublication.all
+    else 
     @publication = Publication.find(params[:publication_id])
     @registered_user_for_publication = @publication.registered_user_for_publication
     render json: @registered_user_for_publication
+    end
   end
 
   def destroy
