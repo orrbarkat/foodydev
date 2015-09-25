@@ -5,7 +5,7 @@ def push(publication)
   connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   @devices.each do |device|  
     connection.open
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: device.remote_notification_token)
     notification.alert = "New event around you #{publication.title}" 
     notification.badge = 1
     notification.sound = "default"
@@ -28,7 +28,7 @@ def pushDelete(publication)
     device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
     unless device == nil or device.remote_notification_token == "no"
       connection.open
-      notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+      notification = Houston::Notification.new(device: device.remote_notification_token)
       notification.alert = "Event finished around you #{publication.title}" 
       notification.badge = 1
       notification.sound = "default"
@@ -49,7 +49,7 @@ def pushRegistered_User(publication, registration)
     connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
     
     connection.open
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: device.remote_notification_token)
     notification.alert = "User comes to pick up #{publication.title}"
     notification.badge = 1
     notification.sound = "default"
@@ -73,7 +73,7 @@ def pushReport(publication)
     unless device == nil or device.remote_notification_token == "no"
     
       connection.open
-      notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+      notification = Houston::Notification.new(device: device.remote_notification_token)
       notification.alert = 'New report'
       notification.badge = 1
       notification.sound = "default"
@@ -95,13 +95,13 @@ def pushReport_owner(publication)
     connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   
     connection.open
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: device.remote_notification_token)
     notification.alert = 'New report'
     notification.badge = 1
     notification.sound = "default"
     notification.category = 'ARRIVED_CATEGORY'
     notification.content_available = true
-    notification.custom_data = {type:"publication_report",data:{ id:publication.id,version:publication.version,date:publication.date_of_registration,report_message:"#{publication.title} לע שדח חוויד"}}
+    notification.custom_data = {type:"publication_report",data:{ id:publication.id,version:publication.version,date:publication.starting_date,report_message:"#{publication.title} לע שדח חוויד"}}
     connection.write(notification.message)
     connection.close
   end

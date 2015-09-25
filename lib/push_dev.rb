@@ -101,7 +101,7 @@ def pushReport_owner(publication)
     notification.sound = "default"
     notification.category = 'ARRIVED_CATEGORY'
     notification.content_available = true
-    notification.custom_data = {type:"publication_report",data:{ id:publication.id,version:publication.version,date:publication.date_of_registration,report_message:"#{publication.title} לע שדח חוויד"}}
+    notification.custom_data = {type:"publication_report",data:{ id:publication.id,version:publication.version,date:publication.starting_date,report_message:"#{publication.title} לע שדח חוויד"}}
     connection.write(notification.message)
     connection.close
   end

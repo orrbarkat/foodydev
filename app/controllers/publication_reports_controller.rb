@@ -19,7 +19,7 @@
     @publication = Publication.find(publication_report_params[:publication_id])
     render json:  publication_report
     pushReport(@publication)
-  #  pushReport_owner(@publication)
+    pushReport_owner(@publication)
   rescue
     render json: publication_report.errors, status: :unprocessable_entity 
   end
