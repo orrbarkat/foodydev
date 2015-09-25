@@ -1,8 +1,8 @@
 def push(publication)
   @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"  
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
+  passphrase = "fdprod77457745"#"g334613334613fxct"  
+  connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   @devices.each do |device|  
     connection.open
     notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
@@ -20,9 +20,9 @@ end
 def pushDelete(publication)
   @registered = RegisteredUserForPublication.where("publication_id = ? AND publication_version = ?" , publication.id , publication.version)
 #  @devices = @registered.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
+  passphrase = "fdprod77457745"#"g334613334613fxct"
+  connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
 
   @registered.each do |registration|
     device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
@@ -44,9 +44,9 @@ end
 def pushRegistered_User(publication, registration)
   device =  ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid #ActiveDevice.where(dev_uuid: publication.active_device_dev_uuid).where.not(remote_notification_token: "no")
   unless device == nil or device.remote_notification_token == "no"
-    certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-    passphrase = "g334613f@@@" 
-    connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+    certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
+    passphrase = "fdprod77457745" 
+    connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
     
     connection.open
     notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
@@ -64,9 +64,9 @@ end
 def pushReport(publication)
   @registered = RegisteredUserForPublication.where("publication_id = ? AND publication_version = ?" , publication.id , publication.version)
 #  @devices = @registered.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
+  passphrase = "fdprod77457745"#"g334613334613fxct"(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
+  connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
 
   @registered.each do |registration|
     device =  ActiveDevice.find_by dev_uuid: registration.active_device_dev_uuid
@@ -90,9 +90,9 @@ end
 def pushReport_owner(publication)
   device =  ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid #ActiveDevice.where(dev_uuid: publication.active_device_dev_uuid).where.not(remote_notification_token: "no")
   unless device == nil or device.remote_notification_token == "no"
-    certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-    passphrase = "g334613f@@@"#"g334613334613fxct" 
-    connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+    certificate = File.read("/app/lib/assets/cd_production_new.pem")#ck_production
+    passphrase = "fdprod77457745"#"g334613334613fxct" 
+    connection = Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
   
     connection.open
     notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
