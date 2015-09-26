@@ -1,7 +1,7 @@
 class RegisteredUserForPublicationsController < ApplicationController
   
   def create
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
     registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     registered_user_for_publication.save!

@@ -11,7 +11,7 @@
   end
 
   def create
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
 
     publication_report = PublicationReport.new(publication_report_params)
