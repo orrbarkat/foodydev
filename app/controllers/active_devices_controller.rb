@@ -14,7 +14,21 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    active_device = ActiveDevice.new(active_device_params)
+    
+    params = active_device_params #getting parametrs
+
+    if params.is_ios != nil
+      active_device = ActiveDevice.find_by_dev_uuid(params.dev_uuid)
+      if active_device == nil
+        active_device = ActiveDevice.new(params)
+      else 
+       active_device.update!(params)
+      end
+
+    else #if device is ios countinue regularly
+      active_device = ActiveDevice.new(params)
+    end
+    
     active_device.save!
     render json: active_device
   rescue
