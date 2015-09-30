@@ -14,13 +14,11 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    #active_device = ActiveDevice.new(active_device_params)
-    params = active_device_params #getting parametrs
-    active_device = ActiveDevice.find_by dev_uuid(params.dev_uuid)
+    active_device = ActiveDevice.find_by_dev_uuid(active_device_params[:dev_uuid])
       if active_device == nil
-        active_device = ActiveDevice.new(params)
+        active_device = ActiveDevice.new(active_device_params)
         else 
-        active_device.update!(params)
+        active_device.update!(active_device_params)
       end
       active_device.save!
     render json: active_device
