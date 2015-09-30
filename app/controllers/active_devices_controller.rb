@@ -17,7 +17,7 @@ class ActiveDevicesController < ApplicationController
     
     params = active_device_params #getting parametrs
 
-    if params.is_ios != nil
+    if params.is_ios != true
       active_device = ActiveDevice.find_by_dev_uuid(params.dev_uuid)
       if active_device == nil
         active_device = ActiveDevice.new(params)
