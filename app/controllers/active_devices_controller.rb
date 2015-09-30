@@ -14,8 +14,15 @@ class ActiveDevicesController < ApplicationController
   # POST /active_devices
   # POST /active_devices.json
   def create
-    active_device = ActiveDevice.new(active_device_params)
-    active_device.save!
+    #active_device = ActiveDevice.new(active_device_params)
+    params = active_device_params #getting parametrs
+    active_device = ActiveDevice.find_by dev_uuid(params.dev_uuid)
+      if active_device == nil
+        active_device = ActiveDevice.new(params)
+        else 
+        active_device.update!(params)
+      end
+      active_device.save!
     render json: active_device
   rescue
     render json: active_device.errors, status: :unprocessable_entity
