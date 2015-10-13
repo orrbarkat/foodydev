@@ -12,8 +12,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'pg', '0.15.1'
 gem 'rails_12factor', '0.0.2'
 
-#gem for push nots
+#gem for apple push nots
 gem 'houston'
+
+#gem for android push
+gem 'gcm'
 
 #delayed jobs
 gem 'delayed_job_active_record'
