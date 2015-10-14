@@ -6,5 +6,6 @@ class RegisteredUserForPublication < ActiveRecord::Base
   validates :active_device_dev_uuid, presence: true, length: { maximum: 64 }
   validates :date_of_registration, presence: true  
   validates :publication_version, presence:true 
+  validates :contact_info_regi, presence: true, length: { maximum: 100 }
 
 end
