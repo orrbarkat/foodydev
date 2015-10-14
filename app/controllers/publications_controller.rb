@@ -7,7 +7,7 @@ class PublicationsController < ApplicationController
   end
 
   def create
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
     publication = Publication.new(publication_params)
     publication.save!
@@ -18,7 +18,7 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
     @publication.update!(publication_params)
     if @publication.is_on_air == false
@@ -30,7 +30,7 @@ class PublicationsController < ApplicationController
   end
 
   def destroy
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
     
     pushDelete(@publication)

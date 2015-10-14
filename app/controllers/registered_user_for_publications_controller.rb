@@ -1,7 +1,7 @@
 class RegisteredUserForPublicationsController < ApplicationController
   
   def create
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
     registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     registered_user_for_publication.save!
@@ -13,13 +13,18 @@ class RegisteredUserForPublicationsController < ApplicationController
   end
 
   def index
+    if(params[:publication_id] == "1")
+    render json: RegisteredUserForPublication.all
+    else 
     @publication = Publication.find(params[:publication_id])
     @registered_user_for_publication = @publication.registered_user_for_publication
     render json: @registered_user_for_publication
+    end
   end
 
   def destroy
-    @registered_user_for_publication = RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
+    #@registered_user_for_publication = RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: registered_user_for_publication_params[:publication_version], active_device_dev_uuid: registered_user_for_publication_params[:active_device_dev_uuid])
+    @registered_user_for_publication = RegisteredUserForPublication.where(publication_id: params[:publication_id], publication_version: params[:publication_version], active_device_dev_uuid: params[:active_device_dev_uuid])
     @registered_user_for_publication.destroy_all
     render json: "OK"
   end

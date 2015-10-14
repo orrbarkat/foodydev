@@ -2,11 +2,16 @@
   before_action :set_publication_report, only: [:edit, :update, :destroy]
 
   def index
-    render json: PublicationReport.where( publication_id: params[:publication_id], publication_version: params[:publication_version] )
+    if(params.has_key?(:publication_id) && params.has_key?(:publication_version))
+     render json: PublicationReport.where( publication_id: params[:publication_id], publication_version: params[:publication_version] )
+    else 
+      render json: PublicationReport.all
+    end
+      
   end
 
   def create
-    require '/app/lib/push.rb'
+    require '/app/lib/push_dev.rb'
     require 'houston'
 
     publication_report = PublicationReport.new(publication_report_params)
