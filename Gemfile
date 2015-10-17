@@ -18,6 +18,9 @@ gem 'houston'
 #gem for android push
 gem 'gcm'
 
+#http requests
+gem 'json'
+
 #delayed jobs
 gem 'delayed_job_active_record'
 

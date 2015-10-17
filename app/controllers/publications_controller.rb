@@ -43,6 +43,11 @@ class PublicationsController < ApplicationController
     render json: @publication
   end
 
+  def gcm
+    require '/app/lib/gcm.rb'
+    gcm()
+  end
+  
 private
   def set_publication
     @publication = Publication.find(params[:id])

@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20150916071552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "adminpack"
 
   create_table "active_devices", force: true do |t|
     t.string   "remote_notification_token", limit: 256, null: false
