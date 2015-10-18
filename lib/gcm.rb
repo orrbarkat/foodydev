@@ -13,7 +13,7 @@
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
 
-	request.body = { "to"=> "/topics/global", "data": {"message" => "now it works like i wanted!"}}.to_json 
+	request.body = { :to => "/topics/global", :data => {:message => "now it works like i wanted!"}}.to_json 
 
 	response = http.request(request)
 	puts response
