@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
 
   #resources :publication_reports
-  get 'publications/gcm' => 'publication#gcm'
+  get 'gcm' => 'publication#gcm'
   post 'publications/new' => 'publication#create'
   resources :active_devices
 
