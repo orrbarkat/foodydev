@@ -1,4 +1,3 @@
-
 def gcm
 	require "net/https"
 	require "uri"
@@ -11,8 +10,9 @@ def gcm
 
 	request = Net::HTTP::Post.new(uri.request_uri)
 
-	#request["content-type"] = "application/json"
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
+	request["content-type"] = "application/json"
+
 	request.body = { "to": "/topics/global", "data": {"message": "now it works like i wanted!"}}.to_json 
 
 	response = http.request(request)
