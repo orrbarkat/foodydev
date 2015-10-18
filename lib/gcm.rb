@@ -1,4 +1,4 @@
-def gcm
+
 	require "net/https"
 	require "uri"
 	require 'json'
@@ -18,4 +18,3 @@ def gcm
 	response = http.request(request)
 	puts response
 	puts response.code
-end

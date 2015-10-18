@@ -44,8 +44,7 @@ class PublicationsController < ApplicationController
   end
 
   def gcm
-    require '/app/lib/gcm.rb'
-    gcm()
+    exec 'ruby /app/lib/gcm.rb'
     render json: "OK"
   end
   
