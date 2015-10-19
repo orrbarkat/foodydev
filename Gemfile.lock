@@ -53,11 +53,17 @@ GEM
     erubis (2.7.0)
     ffi (1.9.6)
     ffi (1.9.6-x86-mingw32)
+    gcm (0.1.0)
+      httparty
+      json
     highline (1.7.2)
     hike (1.2.3)
     houston (2.2.3)
       commander (~> 4.1)
       json
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
@@ -69,6 +75,7 @@ GEM
     mini_portile (0.6.1)
     minitest (5.4.3)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     nokogiri (1.6.5-x86-mingw32)
@@ -149,11 +156,16 @@ DEPENDENCIES
   byebug
   capybara
   delayed_job_active_record
+  gcm
   houston
   jbuilder (~> 2.0)
+  json
   pg (= 0.15.1)
   rails (= 4.1.8)
   rails_12factor (= 0.0.2)
   rspec-rails
   selenium-webdriver
   tzinfo-data
+
+BUNDLED WITH
+   1.10.5

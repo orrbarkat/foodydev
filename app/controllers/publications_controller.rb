@@ -43,6 +43,13 @@ class PublicationsController < ApplicationController
     render json: @publication
   end
 
+  def gcm
+    exec `ruby app/lib/gcm.rb`
+    render json: "OK"
+  rescue
+    render json: publication.errors, :status => 404
+  end
+  
 private
   def set_publication
     @publication = Publication.find(params[:id])
