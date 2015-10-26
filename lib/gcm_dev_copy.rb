@@ -23,8 +23,6 @@ def pushGcmDelete(publication)
 	require 'json'
 	
 	tokens = android_tokens(publication) 
-
-	
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -72,7 +70,6 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	if owner.is_android
 		tokens<<owner.remote_notification_token
 	end
-
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
