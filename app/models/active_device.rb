@@ -8,6 +8,15 @@ class ActiveDevice < ActiveRecord::Base
   validates :last_location_longitude, presence: true
   validates :dev_uuid, presence: true, length: { maximum: 64 }, uniqueness: true
 
+  def is_android
+  	(self!=nil && remote_notification_token!="no" && is_ios==false)
+  end
+  
+  def is_iphone
+  	(self!=nil && remote_notification_token!="no" && is_ios==true)
+  end
+
+
   scope :iphone, -> {where("is_ios=? AND remote_notification_token!=?", true, "no")}
   scope :android, -> {where("is_ios=? AND remote_notification_token!=?", false, "no")}
 end
