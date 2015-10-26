@@ -8,6 +8,8 @@ class RegisteredUserForPublication < ActiveRecord::Base
   validates :publication_version, presence:true 
   validates :contact_info_regi, presence: true, length: { maximum: 100 }
 
+  
+  
   def token
   ActiveDevice.find_by_dev_uuid(active_device_dev_uuid).remote_notification_token
   end
@@ -16,5 +18,8 @@ class RegisteredUserForPublication < ActiveRecord::Base
   (ActiveDevice.find_by_dev_uuid(active_device_dev_uuid)!=nil) && (ActiveDevice.find_by_dev_uuid(active_device_dev_uuid).remote_notification_token != "no")
   end
 
+  def is_ios
+    ActiveDevice.find_by_dev_uuid(active_device_dev_uuid).is_ios
+  end
 
 end
