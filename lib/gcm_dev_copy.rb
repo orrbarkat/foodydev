@@ -21,8 +21,7 @@ def pushGcmDelete(publication)
 	require "uri"
 	require 'json'
 	
-	@publication = publication
-	tokens = token_array(@publication) 
+	tokens = token_array(publication) 
 	
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
@@ -42,8 +41,7 @@ def pushGcmReports(publication, report)
 	require "uri"
 	require 'json'
 	
-	@publication = publication
-	tokens = token_array(@publication) 
+	tokens = token_array(publication) 
 	
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
@@ -64,8 +62,7 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	require "uri"
 	require 'json'
 
-	@publication = publication
-	tokens = token_array(@publication) 
+	tokens = token_array(publication) 
 
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
