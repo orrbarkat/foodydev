@@ -1,4 +1,4 @@
-def ios_tokens(publication)
+def iphone_tokens(publication)
   @registered = publication.registered_user_for_publication
   i=0
   @tokens = []
