@@ -21,9 +21,7 @@ def pushGcmDelete(publication)
 	require "uri"
 	require 'json'
 	
-	@publication = publication
-	tokens = token_array(@publication) 
-	
+	tokens = android_tokens(publication) 
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -42,9 +40,11 @@ def pushGcmReports(publication, report)
 	require "uri"
 	require 'json'
 	
-	@publication = publication
-	tokens = token_array(@publication) 
-	
+	tokens = android_tokens(publication) 
+	owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
+	if owner.is_android
+		tokens<<owner.remote_notification_token
+	end
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -64,9 +64,11 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	require "uri"
 	require 'json'
 
-	@publication = publication
-	tokens = token_array(@publication) 
-
+	tokens = android_tokens(publication) 
+	owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
+	if owner.is_android
+		tokens<<owner.remote_notification_token
+	end
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -78,6 +80,4 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	response = http.request(request)
 	puts response
 	puts response.code
-
 end
-

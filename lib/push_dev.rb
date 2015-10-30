@@ -1,3 +1,5 @@
+
+
 def push(publication)
   @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
   certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
