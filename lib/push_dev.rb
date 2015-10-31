@@ -7,7 +7,7 @@ def push(publication)
   connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
   connection.open
   @devices.each do |device|  
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = "New event around you #{publication.title}" 
     notification.badge = 1
     notification.sound = "default"
@@ -30,7 +30,7 @@ def pushDelete(publication)
   connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
   connection.open
   registered.each do |token|
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = "Event finished around you #{publication.title}" 
     notification.badge = 1
     notification.sound = "default"
@@ -53,7 +53,7 @@ def pushRegistered(publication, registration)
   connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
   connection.open
   registered.each do |token|
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = "User comes to pick up #{publication.title}"
     notification.badge = 1
     notification.sound = "default"
@@ -69,7 +69,7 @@ def pushRegistered(publication, registration)
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
     
     connection.open
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = "User comes to pick up #{publication.title}"
     notification.badge = 1
     notification.sound = "default"
@@ -92,7 +92,7 @@ def pushReport(publication)
   connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
   connection.open
   registered.each do |token|
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = 'New report'
     notification.badge = 1
     notification.sound = "default"
@@ -112,7 +112,7 @@ def pushReport_owner(publication)
     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
   
     connection.open
-    notification = Houston::Notification.new(device: "4095b507bb74d6c0901a3e1e378325aa8f5cb0a042f72eeedd3b6ace138afddd")
+    notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
     notification.alert = 'New report'
     notification.badge = 1
     notification.sound = "default"

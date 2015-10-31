@@ -37,6 +37,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def registered_user_for_publication_params
-    params.require(:registered_user_for_publication).permit(:publication_id, :publication_version, :date_of_registration, :active_device_dev_uuid, :contact_info_regi)
+    params.require(:registered_user_for_publication).permit(:publication_id, :publication_version, :date_of_registration, :active_device_dev_uuid, :collector_contact_info, :collector_name)
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014092556) do
+ActiveRecord::Schema.define(version: 20151030155654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20151014092556) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
+    t.string   "report_user_name"
+    t.string   "report_contact_info"
   end
 
   create_table "publications", force: true do |t|
@@ -77,7 +79,8 @@ ActiveRecord::Schema.define(version: 20151014092556) do
     t.datetime "updated_at"
     t.integer  "publication_version"
     t.decimal  "date_of_registration"
-    t.string   "contact_info_regi",      limit: 100, default: "", null: false
+    t.string   "collector_contact_info", limit: 100, default: "", null: false
+    t.string   "collector_name",         limit: 100, default: "", null: false
   end
 
 end

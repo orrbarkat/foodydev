@@ -32,6 +32,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def publication_report_params
-    params.require(:publication_report).permit(:publication_id, :publication_version, :report, :date_of_report, :active_device_dev_uuid)
+    params.require(:publication_report).permit(:publication_id, :publication_version, :report, :date_of_report, :active_device_dev_uuid ,:report_user_name ,:report_contact_info)
   end
 end
