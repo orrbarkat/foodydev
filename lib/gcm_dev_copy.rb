@@ -1,4 +1,3 @@
-
 def pushGcm(publication)
 	require "net/https"
 	require "uri"
@@ -82,4 +81,3 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	puts response
 	puts response.code
 end
-
