@@ -3,15 +3,17 @@ class PublicationsController < ApplicationController
 
   def index
     dti=(Time.now).to_i
-    render json: Publication.where( "is_on_air=? AND ending_date>=?", true, dti)
+    render json: Publication.where( "is_on_air=? AND starting_date>=? ending_date>=?", true, dti, dti)
   end
 
   def create
     require '/app/lib/push_dev.rb'
+    require '/app/lib/gcm_dev.rb'
     require 'houston'
     publication = Publication.new(publication_params)
     publication.save!
     push(publication)
+    pushGcm(publication)
     render json: publication, only: [:id, :version]
   rescue
     render json: publication.errors, status: :unprocessable_entity
