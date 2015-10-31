@@ -21,17 +21,17 @@
   <tbody>
     <% @publications.each do |publication| %>
       <tr>
-        <td><%= publication.publication_version %></td>
-        <td><%= publication.publication_title %></td>
-        <td><%= publication.publication_address %></td>
-        <td><%= publication.publication_type_of_collecting %></td>
-        <td><%= publication.publication_latitude %></td>
-        <td><%= publication.publication_longitude %></td>
-        <td><%= publication.publication_starting_date %></td>
-        <td><%= publication.publication_ending_date %></td>
-        <td><%= publication.publication_contact_info %></td>
+        <td><%= publication.version %></td>
+        <td><%= publication.title %></td>
+        <td><%= publication.address %></td>
+        <td><%= publication.type_of_collecting %></td>
+        <td><%= publication.latitude %></td>
+        <td><%= publication.longitude %></td>
+        <td><%= publication.starting_date %></td>
+        <td><%= publication.ending_date %></td>
+        <td><%= publication.contact_info %></td>
         <td><%= publication.is_on_air %></td>
-        <td><%= publication.reporting_device_uuid %></td>
+        <td><%= publication.active_device_dev_uuid %></td>
         <td><%= link_to 'Show', publication %></td>
         <td><%= link_to 'Edit', edit_publication_path(publication) %></td>
         <td><%= link_to 'Destroy', publication, method: :delete, data: { confirm: 'Are you sure?' } %></td>

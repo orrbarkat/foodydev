@@ -1,8 +1,8 @@
-<<<<<<< Updated upstream:lib/gcm_dev_copy.rb
-=======
+# <<<<<<< Updated upstream:lib/gcm_dev_copy.rb
+# =======
 require '/app/lib/clients.rb'
 
->>>>>>> Stashed changes:lib/gcm_dev.rb
+# >>>>>>> Stashed changes:lib/gcm_dev.rb
 def pushGcm(publication)
 	require "net/https"
 	require "uri"

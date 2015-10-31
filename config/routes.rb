@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
   
-
+  root 'web/publications#index'
   #resources :publication_reports
-  get 'gcm' => 'publications#gcm'
-  post 'publications/new' => 'publication#create'
   resources :active_devices
 
   resources :publications do
     resources :publication_reports
     resources :registered_user_for_publications
+  end
 
+
+  resources :web do
+    resources :publications, :controller => 'web/publications'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
