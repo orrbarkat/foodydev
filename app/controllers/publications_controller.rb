@@ -1,6 +1,10 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
 
+  def home
+    @publications = Publication.all
+  end
+  
   def index
     dti=(Time.now).to_i
     render json: Publication.where( "is_on_air=? AND starting_date<=? AND ending_date>=?", true, dti, dti)
