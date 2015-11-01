@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+  root             'publications#home'
   #resources :publication_reports
   resources :active_devices
 
@@ -9,9 +9,6 @@ Rails.application.routes.draw do
   end
 
 
-  resources :web do
-    resources :publications, :controller => 'web/publications'
-  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
