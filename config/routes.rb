@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   
-  root 'web/publications#index'
   #resources :publication_reports
   resources :active_devices
 
