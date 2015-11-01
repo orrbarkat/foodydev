@@ -12,14 +12,15 @@
 
   def create
     require '/app/lib/push_dev.rb'
+    require '/app/lib/gcm_dev.rb'
     require 'houston'
 
     publication_report = PublicationReport.new(publication_report_params)
     publication_report.save!
     @publication = Publication.find(publication_report_params[:publication_id])
     render json:  publication_report
-    pushReport(@publication)
-    pushReport_owner(@publication)
+    pushReport(@publication, publication_report)
+    pushGcmReports(@publication, publication_report)
   rescue
     render json: publication_report.errors, status: :unprocessable_entity 
   end

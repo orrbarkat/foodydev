@@ -1,8 +1,3 @@
-# <<<<<<< Updated upstream:lib/gcm_dev_copy.rb
-# =======
-require '/app/lib/clients.rb'
-
-# >>>>>>> Stashed changes:lib/gcm_dev.rb
 def pushGcm(publication)
 	require "net/https"
 	require "uri"
@@ -46,10 +41,7 @@ def pushGcmReports(publication, report)
 	require 'json'
 	
 	tokens = android_tokens(publication) 
-	owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
-	if owner.is_android
-		tokens<<owner.remote_notification_token
-	end
+
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -70,10 +62,7 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	require 'json'
 
 	tokens = android_tokens(publication) 
-	owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
-	if owner.is_android
-		tokens<<owner.remote_notification_token
-	end
+	
 	uri = URI.parse("https://android.googleapis.com/gcm/send")
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
@@ -85,4 +74,21 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	response = http.request(request)
 	puts response
 	puts response.code
+end
+
+def android_tokens(publication)
+  registered = publication.registered_user_for_publication
+  i=0
+  tokens = []
+  registered.each do |r|
+    if r.is_real && !(r.is_ios)
+      tokens [i] = r.token
+      i=i+1
+    end
+  end
+  owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
+	if owner.is_android
+		tokens<<owner.remote_notification_token
+	end
+  return tokens
 end

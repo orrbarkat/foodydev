@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.8'
+gem 'rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -24,9 +24,16 @@ gem 'json'
 #delayed jobs
 gem 'delayed_job_active_record'
 
+#web design
+gem 'bootstrap-sass', '3.2.0.0'
+gem 'sass-rails',   '5.0.2'
+gem 'uglifier',     '2.5.3'
+gem 'coffee-rails', '4.1.0'
+gem 'jquery-rails', '4.0.3'
+gem 'turbolinks',   '2.3.0'
+
 group :development, :test do
 	gem 'rspec-rails'
- gem 'byebug'
 end
 
 group :test do
