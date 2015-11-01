@@ -57,7 +57,7 @@ def pushRegistered(publication)
     notification.sound = "default"
     notification.category = "ARRIVED_CATEGORY"
     notification.content_available = true
-    notification.custom_data = {type:"registration_for_publication",data:{ id:publication.id}}
+    notification.custom_data = {type:"registration_for_publication",data:{ id:publication.id,version:publication.version,date:registration.date_of_registration}}
     connection.write(notification.message)
   end   
   connection.close
