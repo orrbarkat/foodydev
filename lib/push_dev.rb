@@ -42,7 +42,7 @@ def pushDelete(publication)
   connection.close
 end
 
-def pushRegistered(publication)
+def pushRegistered(publication, registration)
   
   registered = iphone_tokens(publication)
 

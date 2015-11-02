@@ -8,7 +8,7 @@ class RegisteredUserForPublicationsController < ApplicationController
     registered_user_for_publication.save!
     @publication = Publication.find(params[:publication_id])
     render json: registered_user_for_publication
-    pushRegistered(@publication)
+    pushRegistered(@publication, registered_user_for_publication)
     pushGcmRegistered(@publication)
   rescue
     render json: registered_user_for_publication.errors, status: :unprocessable_entity 
