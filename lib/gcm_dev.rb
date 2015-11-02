@@ -10,8 +10,9 @@ def pushGcm(publication)
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
-	request.body = {:to => "/topics/global",:type => "new_publication",:data => {:id => publication.id}}.to_json #topics send to all app owners
+	request.body = {:to => "/topics/global", :data => {:message => {:type=> 'new_publication', :id=> publication.id}}}.to_json #topics send to all app owners
 	response = http.request(request)
+	puts request.body
 	puts response
 	puts response.code
 end
@@ -29,13 +30,13 @@ def pushGcmDelete(publication)
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
-	request.body = {:to => tokens,:type => "deleted_publication",:data => {:id => publication.id}}.to_json 
+	request.body = {:to => tokens,:data => {:message => {:type => "deleted_publication",:id => publication.id}}}.to_json 
 	response = http.request(request)
 	puts response
 	puts response.code
 end
 
-def pushGcmReports(publication, report)
+def pushGcmReports(publication, new_report)
 	require "net/https"
 	require "uri"
 	require 'json'
@@ -49,8 +50,8 @@ def pushGcmReports(publication, report)
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
-	request.body = {:to => tokens,:type => "publication_report",\
-		:data => {:publication_id=>publication.id,:publication_version=>publication.version,:date_of_report=>report.date_of_report, :report=>report.report}}.to_json 
+	request.body = {:to => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>publication.id,\
+		:publication_version=>publication.version,:date_of_report=>new_report.date_of_report, :report=>new_report.report}}}.to_json
 	response = http.request(request)
 	puts response
 	puts response.code
@@ -70,7 +71,7 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
-	request.body = {:to=>tokens,:type=>"registeration_for_publication",:data => {:id => publication.id}}.to_json 
+	request.body = {:to=>tokens,:data=>{:message=>{:type=>"registeration_for_publication",:id => publication.id}}}.to_json 
 	response = http.request(request)
 	puts response
 	puts response.code
