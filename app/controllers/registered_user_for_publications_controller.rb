@@ -3,7 +3,7 @@ class RegisteredUserForPublicationsController < ApplicationController
   def create
     require '/app/lib/push_dev.rb'
     require 'houston'
-    require_relative '../../lib/gcm_dev.rb'
+    require '../../lib/gcm_dev.rb'
     registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     registered_user_for_publication.save!
     @publication = Publication.find(params[:publication_id])
