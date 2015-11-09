@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_devices", force: true do |t|
+  create_table "active_devices", force: :cascade do |t|
     t.string   "remote_notification_token", limit: 256, null: false
     t.boolean  "is_ios"
     t.decimal  "last_location_latitude",                null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
     t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "publication_reports", force: true do |t|
+  create_table "publication_reports", force: :cascade do |t|
     t.integer  "publication_id",                    null: false
     t.integer  "publication_version",               null: false
     t.integer  "report"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
     t.string   "report_contact_info"
   end
 
-  create_table "publications", force: true do |t|
+  create_table "publications", force: :cascade do |t|
     t.integer  "version",                            null: false
     t.string   "title",                  limit: 200, null: false
     t.text     "subtitle"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
     t.datetime "updated_at"
   end
 
-  create_table "registered_user_for_publications", force: true do |t|
+  create_table "registered_user_for_publications", force: :cascade do |t|
     t.integer  "publication_id",                                  null: false
     t.string   "active_device_dev_uuid", limit: 64,               null: false
     t.datetime "created_at"
