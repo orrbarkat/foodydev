@@ -63,6 +63,10 @@ GEM
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.6.0)
     ffi (1.9.10)
@@ -197,6 +201,7 @@ DEPENDENCIES
   capybara
   coffee-rails (= 4.1.0)
   delayed_job_active_record
+  dotenv-rails
   gcm
   houston
   jbuilder (~> 2.0)

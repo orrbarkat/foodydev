@@ -15,4 +15,8 @@
 /log/*.log
 /tmp
 
+#Ignore database conf
 config/database.yml
+
+#Ignore env vars
+.env

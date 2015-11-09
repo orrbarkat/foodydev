@@ -1,10 +1,14 @@
-
+def envelope
+  puts ENV["password"]
+  ENV["certificate_path"]
+  ENV["gcm_path"] 
+  ENV["push_path"]
+end
 
 def push(publication)
   @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"  
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read(ENV["certificate_path"]) #"/app/lib/assets/ck_foodonet_dev.pem")#ck_production
+  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
   connection.open
   @devices.each do |device|  
     notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
@@ -20,14 +24,13 @@ def push(publication)
 end
   
 def pushDelete(publication)
-  require '/app/lib/gcm_dev.rb'
+  require ENV["gcm_path"]
   pushGcmDelete(publication)
   #@registered = RegisteredUserForPublication.where("publication_id = ? AND publication_version = ?" , publication.id , publication.version)
   #@devices = @registered.where(is_ios: true).where.not(remote_notification_token: "no")
   registered = iphone_tokens(publication)
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read(ENV["certificate_path"])#ck_production
+  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
   connection.open
   registered.each do |token|
     notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
@@ -46,9 +49,8 @@ def pushRegistered(publication, registration)
   
   registered = iphone_tokens(publication)
 
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read(ENV["certificate_path"])#ck_production
+  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
   connection.open
   registered.each do |token|
     notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
@@ -64,13 +66,10 @@ def pushRegistered(publication, registration)
 end
 
 def pushReport(publication, report)
-  #@registered = RegisteredUserForPublication.where("publication_id = ? AND publication_version = ?" , publication.id , publication.version)
-  #@devices = @registered.where(is_ios: true).where.not(remote_notification_token: "no")
   registered = iphone_tokens(publication)
 
-  certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-  passphrase = "g334613f@@@"#"g334613334613fxct"(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, passphrase)
-  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
+  certificate = File.read(ENV["certificate_path"])#ck_production
+  connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
   connection.open
   registered.each do |token|
     notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
@@ -85,25 +84,6 @@ def pushReport(publication, report)
   connection.close
 end
 
-# def pushReport_owner(publication)
-#   device =  ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid #ActiveDevice.where(dev_uuid: publication.active_device_dev_uuid).where.not(remote_notification_token: "no")
-#   unless device == nil or device.remote_notification_token == "no"
-#     certificate = File.read("/app/lib/assets/ck_foodonet_dev.pem")#ck_production
-#     passphrase = "g334613f@@@"#"g334613334613fxct" 
-#     connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, passphrase)
-  
-#     connection.open
-#     notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
-#     notification.alert = 'New report'
-#     notification.badge = 1
-#     notification.sound = "default"
-#     notification.category = 'ARRIVED_CATEGORY'
-#     notification.content_available = true
-#     notification.custom_data = {type:"publication_report",data:{ id:publication.id,version:publication.version,date:publication.starting_date,report_message:"#{publication.title} לע שדח חוויד"}}
-#     connection.write(notification.message)
-#     connection.close
-#   end
-# end
 
 def iphone_tokens(publication)
   registered = publication.registered_user_for_publication

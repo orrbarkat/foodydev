@@ -11,8 +11,8 @@ class PublicationsController < ApplicationController
   end
 
   def create
-    require '/app/lib/push_dev.rb'
-    require '/app/lib/gcm_dev.rb'
+    require ENV["push_path"]
+    require ENV["gcm_path"]
     require 'houston'
     publication = Publication.new(publication_params)
     publication.save!
@@ -24,7 +24,7 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    require '/app/lib/push_dev.rb'
+    require ENV["push_path"]
     require 'houston'
     @publication.update!(publication_params)
     if @publication.is_on_air == false
@@ -36,7 +36,7 @@ class PublicationsController < ApplicationController
   end
 
   def destroy
-    require '/app/lib/push_dev.rb'
+    require ENV["push_path"]
     require 'houston'
     
     pushDelete(@publication)
@@ -49,12 +49,6 @@ class PublicationsController < ApplicationController
     render json: @publication
   end
 
-  def gcm
-    exec `ruby app/lib/gcm.rb`
-    render json: "OK"
-  rescue
-    render json: publication.errors, :status => 404
-  end
   
 private
   def set_publication

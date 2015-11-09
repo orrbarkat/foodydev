@@ -11,8 +11,8 @@
   end
 
   def create
-    require '/app/lib/push_dev.rb'
-    require '/app/lib/gcm_dev.rb'
+    require ENV["push_path"]#ENV["push_path"]
+    require ENV["gcm_path"]#ENV["gcm_path"]
     require 'houston'
 
     publication_report = PublicationReport.new(publication_report_params)

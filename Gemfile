@@ -34,6 +34,8 @@ gem 'turbolinks',   '2.3.0'
 
 group :development, :test do
 	gem 'rspec-rails'
+	#set ENV VAR
+	gem 'dotenv-rails'
 end
 
 group :test do
