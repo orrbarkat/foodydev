@@ -27,15 +27,15 @@ ActiveRecord::Schema.define(version: 20151030155654) do
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
+    t.integer  "priority",               default: 0, null: false
+    t.integer  "attempts",               default: 0, null: false
+    t.text     "handler",                            null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
     t.string   "contact_info",           limit: 100
     t.boolean  "is_on_air"
     t.string   "active_device_dev_uuid", limit: 64,  null: false
-    t.string   "photo_url"
+    t.string   "photo_url",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
