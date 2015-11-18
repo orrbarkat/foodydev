@@ -87,8 +87,8 @@ def android_tokens(publication)
       i=i+1
     end
   end
-  owner = ActiveDevice.find_by dev_uuid: publication.active_device_dev_uuid
-	if owner.is_android
+  owner = ActiveDevice.find_by_dev_uuid(publication.active_device_dev_uuid)
+	if (owner!=nil && owner.is_android)
 		tokens<<owner.remote_notification_token
 	end
   return tokens
