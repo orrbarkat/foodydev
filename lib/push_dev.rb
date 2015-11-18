@@ -19,6 +19,7 @@ def push(publication)
     notification.content_available = true
     notification.custom_data = {type:"new_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
     connection.write(notification.message)
+    puts "Error: #{notification.error}." if notification.error
   end
   connection.close
 end
@@ -41,6 +42,7 @@ def pushDelete(publication)
     notification.content_available = true
     notification.custom_data = {type:"deleted_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
     connection.write(notification.message)
+    puts "Error: #{notification.error}." if notification.error
   end        
   connection.close
 end
@@ -61,6 +63,7 @@ def pushRegistered(publication, registration)
     notification.content_available = true
     notification.custom_data = {type:"registration_for_publication",data:{ id:publication.id,version:publication.version,date:registration.date_of_registration}}
     connection.write(notification.message)
+    puts "Error: #{notification.error}." if notification.error
   end   
   connection.close
 end
@@ -80,6 +83,7 @@ def pushReport(publication, report)
     notification.content_available = true
     notification.custom_data = {type:"publication_report",data:{:publication_id=>publication.id,:publication_version=>publication.version,:date_of_report=>report.date_of_report, :report=>report.report}}
     connection.write(notification.message)
+    puts "Error: #{notification.error}." if notification.error
   end       
   connection.close
 end
