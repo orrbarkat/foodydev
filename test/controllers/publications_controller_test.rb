@@ -46,3 +46,4 @@ class PublicationsControllerTest < ActionController::TestCase
 
    #assert_redirected_to publication_path(assigns(:publication))
   end
+end
