@@ -1,6 +1,13 @@
 class ActiveDevicesController < ApplicationController
   #before_action :set_active_device, only: [:show, :edit,  :destroy]
-
+  def downloads
+    @active_devices = ActiveDevice.all
+    daily = @active_devices.today
+    weekly = @active_devices.week
+    monthly = @active_devices.month
+    @downloads = [daily.count, weekly.count, monthly.count]
+    render "downloads"
+  end
   # GET /active_devices
   # GET /active_devices.json
   def index

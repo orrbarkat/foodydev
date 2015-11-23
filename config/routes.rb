@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root             'publications#home'
   #resources :publication_reports
+  get 'downloads' => 'active_devices#downloads'
   resources :active_devices
 
   resources :publications do
