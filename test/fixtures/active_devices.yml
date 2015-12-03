@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+    remote_notification_token: "asdf"
+    is_ios: true
+    last_location_latitude: 99.9
+    last_location_longitude: 99.9
+    dev_uuid: "1234"
+    
+
+# two:
+#   version: 1
+#   title: MyText
+#   address: MyText
+#   type_of_collecting: 1
+#   latitude: 9.99
+#   longitude: 9.99
+#   starting_date: <%= 1.day.ago.to_i %>
+#   ending_date: <%= 1.day.from_now.to_i %>
+#   contact_info: MyText
+#   is_on_air: true
+#   active_device_dev_uuid: MyText

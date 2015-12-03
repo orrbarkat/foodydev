@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030155654) do
+ActiveRecord::Schema.define(version: 20151123175305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,20 +27,28 @@ ActiveRecord::Schema.define(version: 20151030155654) do
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
+    t.integer  "priority",               default: 0, null: false
+    t.integer  "attempts",               default: 0, null: false
+    t.text     "handler",                            null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.string   "active_device_dev_uuid"
+    t.string   "reporter_name"
+    t.string   "report"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "publication_reports", force: :cascade do |t|
     t.integer  "publication_id",                    null: false
@@ -67,7 +75,7 @@ ActiveRecord::Schema.define(version: 20151030155654) do
     t.string   "contact_info",           limit: 100
     t.boolean  "is_on_air"
     t.string   "active_device_dev_uuid", limit: 64,  null: false
-    t.string   "photo_url"
+    t.string   "photo_url",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -23,17 +23,19 @@ def pushGcmDelete(publication)
 	require 'json'
 	
 	tokens = android_tokens(publication) 
-	uri = URI.parse("https://android.googleapis.com/gcm/send")
-	http = Net::HTTP.new(uri.host, uri.port)
-	http.use_ssl = true
-	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-	request = Net::HTTP::Post.new(uri.request_uri)
-	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
-	request["content-type"] = "application/json"
-	request.body = {:to => tokens,:data => {:message => {:type => "deleted_publication",:id => publication.id}}}.to_json 
-	response = http.request(request)
-	puts response
-	puts response.code
+	unless tokens.empty?
+		uri = URI.parse("https://android.googleapis.com/gcm/send")
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		request = Net::HTTP::Post.new(uri.request_uri)
+		request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
+		request["content-type"] = "application/json"
+		request.body = {:to => tokens,:data => {:message => {:type => "deleted_publication",:id => publication.id}}}.to_json 
+		response = http.request(request)
+		puts response
+		puts response.code
+	end
 end
 
 def pushGcmReports(publication, new_report)
@@ -42,19 +44,20 @@ def pushGcmReports(publication, new_report)
 	require 'json'
 	
 	tokens = android_tokens(publication) 
-
-	uri = URI.parse("https://android.googleapis.com/gcm/send")
-	http = Net::HTTP.new(uri.host, uri.port)
-	http.use_ssl = true
-	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-	request = Net::HTTP::Post.new(uri.request_uri)
-	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
-	request["content-type"] = "application/json"
-	request.body = {:to => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>publication.id,\
-		:publication_version=>publication.version,:date_of_report=>new_report.date_of_report, :report=>new_report.report}}}.to_json
-	response = http.request(request)
-	puts response
-	puts response.code
+	unless tokens.empty?
+		uri = URI.parse("https://android.googleapis.com/gcm/send")
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		request = Net::HTTP::Post.new(uri.request_uri)
+		request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
+		request["content-type"] = "application/json"
+		request.body = {:to => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>publication.id,\
+			:publication_version=>publication.version,:date_of_report=>new_report.date_of_report, :report=>new_report.report}}}.to_json
+		response = http.request(request)
+		puts response
+		puts response.code
+	end
 end
 
 def pushGcmRegistered(publication)# tokens should have all registered non ios users + the oner, meaning the publication.active_dev....
@@ -63,18 +66,19 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 	require 'json'
 
 	tokens = android_tokens(publication) 
-	
-	uri = URI.parse("https://android.googleapis.com/gcm/send")
-	http = Net::HTTP.new(uri.host, uri.port)
-	http.use_ssl = true
-	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-	request = Net::HTTP::Post.new(uri.request_uri)
-	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
-	request["content-type"] = "application/json"
-	request.body = {:to=>tokens,:data=>{:message=>{:type=>"registeration_for_publication",:id => publication.id}}}.to_json 
-	response = http.request(request)
-	puts response
-	puts response.code
+	unless tokens.empty?
+		uri = URI.parse("https://android.googleapis.com/gcm/send")
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		request = Net::HTTP::Post.new(uri.request_uri)
+		request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
+		request["content-type"] = "application/json"
+		request.body = {:to=>tokens,:data=>{:message=>{:type=>"registeration_for_publication",:id => publication.id}}}.to_json 
+		response = http.request(request)
+		puts response
+		puts response.code
+	end
 end
 
 def android_tokens(publication)
