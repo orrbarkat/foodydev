@@ -31,10 +31,10 @@ class FeedbacksController < ApplicationController
     render json: @feedback, only: [:active_device_dev_uuid, :reporter_name, :reporter]
   rescue
     render json: @feedback.errors, status: :unprocessable_entity 
-    format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
+    #format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
     # format.   json { render :show, status: :created, location: @feedback }
     #   else
-         format.html { render :new }
+        #format.html { render :new }
     #     format.json { render json: @feedback.errors, status: :unprocessable_entity }
   end
 
@@ -66,6 +66,7 @@ class FeedbacksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_feedback
       @feedback = Feedback.find(params[:id])
+      render json: @feedback
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
