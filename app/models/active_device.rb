@@ -16,6 +16,9 @@ class ActiveDevice < ActiveRecord::Base
   	(self!=nil && remote_notification_token!="no" && is_ios==true)
   end
 
+  scope :today, -> {where("created_at<=? AND created_at>=?", Time.now, 1.day.ago)}
+  scope :week, ->  {where("created_at<=? AND created_at>=?", Time.now, 1.week.ago)}
+  scope :month, ->  {where("created_at<=? AND created_at>=?", Time.now, 1.month.ago)}
 
   scope :iphone, -> {where("is_ios=? AND remote_notification_token!=?", true, "no")}
   scope :android, -> {where("is_ios=? AND remote_notification_token!=?", false, "no")}

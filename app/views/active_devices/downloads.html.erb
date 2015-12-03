@@ -1,24 +1,29 @@
+<% provide(:title, "Downloads") %>
 <h1>Listing active_devices</h1>
-
+<h1><%= "today: " + @downloads[0].to_s%></h1>
+<h1><%= "this week: " + @downloads[1].to_s%></h1>
+<h1><%= "this month: " + @downloads[2].to_s%></h1>
 <table>
   <thead>
     <tr>
-      <th>Remote notification token</th>
+      <th>created_at</th>
       <th>Is ios</th>
       <th>Last location latitude</th>
       <th>Last location longitude</th>
+      <th>Remote notification token</th>
       <th>Device uuid</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @active_devices.each do |active_device| %>
       <tr>
-        <td><%= active_device.remote_notification_token %></td>
+        <td><%= active_device.created_at%></td>
         <td><%= active_device.is_ios %></td>
         <td><%= active_device.last_location_latitude %></td>
         <td><%= active_device.last_location_longitude %></td>
+        <td><%= active_device.remote_notification_token %></td>
         <td><%= active_device.dev_uuid %></td>
         <td><%= link_to 'Show', active_device %></td>
         <td><%= link_to 'Edit', edit_active_device_path(active_device) %></td>
