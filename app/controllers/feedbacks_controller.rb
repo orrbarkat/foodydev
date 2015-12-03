@@ -11,7 +11,8 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/1
   # GET /feedbacks/1.json
   def show
-    @feedback=Feedback.find(:id)
+    @feedback=Feedback.find(params[:id])
+    render json: @feedback
   end
 
   # GET /feedbacks/new
@@ -66,7 +67,6 @@ class FeedbacksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_feedback
       @feedback = Feedback.find(params[:id])
-      render json: @feedback
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
