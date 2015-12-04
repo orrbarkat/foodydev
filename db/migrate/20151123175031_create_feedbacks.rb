@@ -6,11 +6,12 @@ class CreateFeedbacks < ActiveRecord::Migration
       t.string :report
 
       t.timestamps null: false
-    end
-    def down
-    	drop_table :feedbacks
-    end
-    	
-    end
+    end	
   end
+  
+  def down
+      drop_table :feedbacks
+  end
+  
 end
+

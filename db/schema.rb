@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 20151123175305) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.string   "active_device_dev_uuid"
-    t.string   "reporter_name"
-    t.string   "report"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "reporter_name",          limit: 100, default: "no_name"
+    t.string   "report",                 limit: 500,                     null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   create_table "publication_reports", force: :cascade do |t|

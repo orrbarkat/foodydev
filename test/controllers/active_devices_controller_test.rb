@@ -1,16 +1,16 @@
 #require 'test_helper'
 
-class ActiveDeviceControllerTest < ActionController::TestCase
-  setup do
-    @active_devices = active_devices(:one)
-  end
+# class ActiveDeviceControllerTest < ActionController::TestCase
+#   setup do
+#     @active_devices = active_devices(:one)
+#   end
 
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:active_devces)
-  end
-end
+#   test "should get index" do
+#     get :index
+#     assert_response :success
+#     assert_not_nil assigns(:active_devces)
+#   end
+# end
 
 #   test "should get new" destroy
 #     get :new
