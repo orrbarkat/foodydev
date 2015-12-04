@@ -8,9 +8,8 @@ class ActiveDeviceControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:active_devces)
+   
   end
-end
 
 #   test "should get new" destroy
 #     get :new
@@ -47,4 +46,4 @@ end
 
 #     assert_redirected_to publications_path
 #   end
-#  end
+  end
