@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20151204123920) do
     t.string   "active_device_dev_uuid",                                 null: false
     t.string   "reporter_name",          limit: 100, default: "no_name"
     t.string   "report",                 limit: 500,                     null: false
-    t.string   "string",                 limit: 500,                     null: false
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
   end
