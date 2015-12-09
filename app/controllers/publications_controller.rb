@@ -18,9 +18,9 @@ class PublicationsController < ApplicationController
     puts "1"
     publication.save!
     puts "2"
-    push(publication)
+    #push(publication)
     puts "3"
-    pushGcm(publication)
+    #pushGcm(publication)
     puts"4"
     render json: publication, only: [:id, :version]
   rescue
