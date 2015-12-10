@@ -20,18 +20,17 @@ class PublicationsController < ApplicationController
     require ENV["gcm_path"]
     require 'houston'
     @publication = Publication.new(publication_params)
-    @publication.starting_date = @start.to_i
-    @publication.ending_date = @end.to_i
+    use_date
     @publication.save!
     puts "two"
-    # push(@publication)
+    push(@publication)
     puts "three"
-    # pushGcm(@publication)
+    pushGcm(@publication)
     puts"four"
     render json: @publication, only: [:id, :version]
     puts "five"
-  # rescue
-  #   render json: @publication.errors, status: :unprocessable_entity
+  rescue
+    render json: @publication.errors, status: :unprocessable_entity
   end
 
   def update
@@ -72,6 +71,13 @@ private
     end
     if params[:publication][:ending_date].nil? 
     @end = Time.new(params[:publication]["ending_date(1i)"].to_i,params[:publication]["ending_date(2i)"].to_i,params[:publication]["ending_date(3i)"].to_i,params[:publication]["ending_date(4i)"].to_i,params[:publication]["ending_date(5i)"].to_i)
+    end
+  end
+
+  def use_date
+    if @publication.starting_date == 0.0
+      @publication.starting_date = @start.to_i
+      @publication.ending_date = @end.to_i
     end
   end
 
