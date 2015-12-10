@@ -15,14 +15,15 @@ class PublicationsController < ApplicationController
     require ENV["gcm_path"]
     require 'houston'
     @publication = Publication.new(publication_params)
-    puts "1"
+    puts "one"
     @publication.save!
-    puts "2"
-    # push(publication)
-    puts "3"
-    # pushGcm(publication)
-    puts"4"
+    puts "two"
+    push(publication)
+    puts "three"
+    pushGcm(publication)
+    puts"four"
     render json: @publication, only: [:id, :version]
+    puts "five"
   rescue
     render json: @publication.errors, status: :unprocessable_entity
   end
