@@ -1,6 +1,6 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
-  after_action :set_date, only: [:new]
+  before_action :set_date, only: [:new]
 
   def home
     @publications = Publication.all
@@ -19,14 +19,16 @@ class PublicationsController < ApplicationController
     require ENV["push_path"]
     require ENV["gcm_path"]
     require 'houston'
+    puts params[:publication][:starting_date]
     puts @start
+
     @publication = Publication.new(publication_params)
     @publication.starting_date = @start.to_i
     @publication.save!
     puts "two"
-    push(@publication)
+    # push(@publication)
     puts "three"
-    pushGcm(@publication)
+    # pushGcm(@publication)
     puts"four"
     render json: @publication, only: [:id, :version]
     puts "five"
