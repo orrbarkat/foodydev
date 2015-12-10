@@ -82,7 +82,7 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 end
 
 def group
-	if ENV["password"]==fdprod77457745
+	if ENV["password"]=="fdprod77457745"
 		return "/topics/prod"
 	else
 		return "/topics/dev"
