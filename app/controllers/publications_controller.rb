@@ -32,7 +32,7 @@ class PublicationsController < ApplicationController
     puts "three"
     # pushGcm(@publication)
     puts"four"
-    render json: @publication#, only: [:id, :version]
+    render json: @publication, only: [:id, :version]
     puts "five"
   rescue
     render json: @publication.errors, status: :unprocessable_entity
