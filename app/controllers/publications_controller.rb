@@ -10,6 +10,10 @@ class PublicationsController < ApplicationController
     render json: Publication.where( "is_on_air=? AND starting_date<=? AND ending_date>=?", true, dti, dti)
   end
 
+  def new
+    @publication = Publication.new
+  end
+
   def create
     require ENV["push_path"]
     require ENV["gcm_path"]
@@ -18,14 +22,14 @@ class PublicationsController < ApplicationController
     puts "one"
     @publication.save!
     puts "two"
-    push(publication)
+    push(@publication)
     puts "three"
-    pushGcm(publication)
+    pushGcm(@publication)
     puts"four"
     render json: @publication, only: [:id, :version]
     puts "five"
-  rescue
-    render json: @publication.errors, status: :unprocessable_entity
+  # rescue
+  #   render json: @publication.errors, status: :unprocessable_entity
   end
 
   def update

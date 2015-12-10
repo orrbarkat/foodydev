@@ -1,11 +1,12 @@
 def envelope
   puts ENV["password"]
-  ENV["certificate_path"]
-  ENV["gcm_path"] 
-  ENV["push_path"]
+  puts ENV["certificate_path"]
+  puts ENV["gcm_path"] 
+  puts ENV["push_path"]
 end
 
 def push(publication)
+  envelope()
   @devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
   certificate = File.read(ENV["certificate_path"]) #"/app/lib/assets/ck_foodonet_dev.pem")#ck_production
   connection = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
