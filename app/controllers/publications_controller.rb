@@ -19,7 +19,7 @@ class PublicationsController < ApplicationController
     require ENV["push_path"]
     require ENV["gcm_path"]
     require 'houston'
-    puts params[:publication][:starting_date]
+    puts params[:starting_date]
     puts @start
 
     @publication = Publication.new(publication_params)
@@ -69,7 +69,7 @@ private
   end
 
   def set_date
-    if params[:publication][:starting_date].nil?
+    if params[:starting_date].exists?
     @start = Time.new(params[:publication]["starting_date(1i)"].to_i,params[:publication]["starting_date(2i)"].to_i,params[:publication]["starting_date(3i)"].to_i,params[:publication]["starting_date(4i)"].to_i,params[:publication]["starting_date(5i)"].to_i)
     end
     if params[:publication][:ending_date].nil? 
