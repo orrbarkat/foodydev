@@ -65,16 +65,6 @@ private
     @publication = Publication.find(params[:id])
   end
 
-  def set_date
-    if self.starting_date == 0.0
-      self.starting_date = Time.new(params[:publication]["starting_date(1i)"].to_i,params[:publication]["starting_date(2i)"].to_i,params[:publication]["starting_date(3i)"].to_i,
-        params[:publication]["starting_date(4i)"].to_i,params[:publication]["starting_date(5i)"].to_i).to_i
-    end
-    if self.ending_date==0.0
-      self.ending_date = Time.new(params[:publication]["ending_date(1i)"].to_i,params[:publication]["ending_date(2i)"].to_i,params[:publication]["ending_date(3i)"].to_i,
-        params[:publication]["ending_date(4i)"].to_i,params[:publication]["ending_date(5i)"].to_i).to_i
-    end
-  end
   
   def publication_params
     params.require(:publication).permit(:version, :title, :subtitle, :address, :type_of_collecting, :latitude, :longitude, :starting_date, :ending_date, :contact_info, :is_on_air, :active_device_dev_uuid, :photo_url)
