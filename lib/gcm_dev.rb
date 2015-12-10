@@ -10,7 +10,7 @@ def pushGcm(publication)
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 	request["content-type"] = "application/json"
-	request.body = {:to => "/topics/global", :data => {:message => {:type=> 'new_publication', :id=> publication.id}}}.to_json #topics send to all app owners
+	request.body = {:to => group, :data => {:message => {:type=> 'new_publication', :id=> publication.id}}}.to_json #topics send to all app owners
 	response = http.request(request)
 	puts request.body
 	puts response
@@ -80,6 +80,15 @@ def pushGcmRegistered(publication)# tokens should have all registered non ios us
 		puts response.code
 	end
 end
+
+def group
+	if ENV["password"]==fdprod77457745
+		return "/topics/prod"
+	else
+		return "/topics/dev"
+	end
+end
+
 
 def android_tokens(publication)
   registered = publication.registered_user_for_publication
