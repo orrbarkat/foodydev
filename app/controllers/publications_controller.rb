@@ -19,6 +19,7 @@ class PublicationsController < ApplicationController
     require ENV["push_path"]
     require ENV["gcm_path"]
     require 'houston'
+    puts @start
     @publication = Publication.new(publication_params)
     @publication.starting_date = @start.to_i
     @publication.save!
