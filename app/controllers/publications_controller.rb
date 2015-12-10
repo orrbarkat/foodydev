@@ -24,12 +24,12 @@ class PublicationsController < ApplicationController
     puts "two"
     push(@publication)
     puts "three"
-    # pushGcm(@publication)
+    pushGcm(@publication)
     puts"four"
     render json: @publication, only: [:id, :version]
     puts "five"
-  # rescue
-  #   render json: @publication.errors, status: :unprocessable_entity
+  rescue
+    render json: @publication.errors, status: :unprocessable_entity
   end
 
   def update
