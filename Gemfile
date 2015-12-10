@@ -5,6 +5,7 @@ gem 'rails'
 
 # webserver
 gem 'puma'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
