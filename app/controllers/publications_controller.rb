@@ -1,6 +1,6 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
-  before_action :set_date, only: [:create]
+  after_action :set_date, only: [:new]
 
   def home
     @publications = Publication.all
