@@ -19,12 +19,6 @@ class PublicationsController < ApplicationController
     require ENV["gcm_path"]
     require 'houston'
     @publication = Publication.new(publication_params)
-    if @publication.starting_date = 0.0
-      @publication.starting_date = Time.new(params[:publication]["starting_date(1i)"].to_i,params[:publication]["starting_date(2i)"].to_i,params[:publication]["starting_date(3i)"].to_i,
-        params[:publication]["starting_date(4i)"].to_i,params[:publication]["starting_date(5i)"].to_i).to_i
-      @publication.ending_date = Time.new(params[:publication]["ending_date(1i)"].to_i,params[:publication]["ending_date(2i)"].to_i,params[:publication]["ending_date(3i)"].to_i,
-        params[:publication]["ending_date(4i)"].to_i,params[:publication]["ending_date(5i)"].to_i).to_i
-    end
     puts "one"
     @publication.save!
     puts "two"
