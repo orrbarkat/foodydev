@@ -21,6 +21,7 @@ class PublicationsController < ApplicationController
     @publication = Publication.new(publication_params)
     if @publication.starting_date = 0.0
       @publication.starting_date = Date.civil(params[:publication]["starting_date(1i)"].to_i,params[:publication]["starting_date(2i)"].to_i,params[:publication]["starting_date(3i)"].to_i)
+      @publication.starting_date = Date.civil(params[:publication]["ending_date(1i)"].to_i,params[:publication]["ending_date(2i)"].to_i,params[:publication]["ending_date(3i)"].to_i)
     end
     puts "one"
     @publication.save!
