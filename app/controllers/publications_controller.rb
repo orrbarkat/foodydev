@@ -1,6 +1,6 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
-  before_action :set_date, only: [:new]
+  before_action :set_date, only: [:create]
 
   def home
     @publications = Publication.all
@@ -19,11 +19,9 @@ class PublicationsController < ApplicationController
     require ENV["push_path"]
     require ENV["gcm_path"]
     require 'houston'
-    puts params[:starting_date].exists?
-    puts @start.to_s
-
     @publication = Publication.new(publication_params)
     @publication.starting_date = @start.to_i
+    @publication.ending_date = @end.to_i
     @publication.save!
     puts "two"
     # push(@publication)
@@ -32,8 +30,8 @@ class PublicationsController < ApplicationController
     puts"four"
     render json: @publication, only: [:id, :version]
     puts "five"
-  rescue
-    render json: @publication.errors, status: :unprocessable_entity
+  # rescue
+  #   render json: @publication.errors, status: :unprocessable_entity
   end
 
   def update
@@ -69,7 +67,7 @@ private
   end
 
   def set_date
-    if params[:starting_date].exists?
+    if params[:publication][:starting_date].nil?
     @start = Time.new(params[:publication]["starting_date(1i)"].to_i,params[:publication]["starting_date(2i)"].to_i,params[:publication]["starting_date(3i)"].to_i,params[:publication]["starting_date(4i)"].to_i,params[:publication]["starting_date(5i)"].to_i)
     end
     if params[:publication][:ending_date].nil? 
