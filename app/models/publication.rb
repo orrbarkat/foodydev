@@ -15,7 +15,7 @@ class Publication < ActiveRecord::Base
   validates :active_device_dev_uuid, presence: true, length: { maximum: 64 }
 
   before_validation :set_version
-  before :set_date
+  before_validation :set_date
   before_save :default_values
 
   def set_version
