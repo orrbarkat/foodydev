@@ -70,7 +70,7 @@ private
     require ENV["push_path"]
     require ENV["gcm_path"]
     require 'houston'
-    puts @publication.to_s
+    puts @publication.id
   end
 
   def set_date
