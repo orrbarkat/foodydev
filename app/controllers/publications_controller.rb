@@ -71,6 +71,10 @@ private
     require ENV["gcm_path"]
     require 'houston'
     puts @publication.id
+    pushGcm(@publication)
+    push(@publication)
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
   end
 
   def set_date
