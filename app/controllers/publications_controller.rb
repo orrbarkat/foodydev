@@ -1,6 +1,7 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
   before_action :set_date, only: [:create]
+  after_action :pushCreate, only: [:create]
 
   def home
     @publications = Publication.all
@@ -23,12 +24,7 @@ class PublicationsController < ApplicationController
     use_date
     @publication.save!
     puts "two"
-    push(@publication)
-    puts "three"
-    pushGcm(@publication)
-    puts"four"
     render json: @publication, only: [:id, :version]
-    puts "five"
   rescue
     render json: @publication.errors, status: :unprocessable_entity
   end
@@ -63,6 +59,17 @@ class PublicationsController < ApplicationController
 private
   def set_publication
     @publication = Publication.find(params[:id])
+  end
+
+  def pushCreate
+    require ENV["push_path"]
+    require ENV["gcm_path"]
+    require 'houston'
+    puts @publication.id
+    pushGcm(@publication)
+    push(@publication)
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
   end
 
   def set_date
