@@ -46,4 +46,5 @@ class ActiveDeviceControllerTest < ActionController::TestCase
 
 #     assert_redirected_to publications_path
 #   end
+
 end

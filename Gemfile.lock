@@ -37,8 +37,12 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
-    bootstrap-sass (3.2.0.0)
-      sass (~> 3.2)
+    autoprefixer-rails (6.1.2)
+      execjs
+      json
+    bootstrap-sass (3.3.6)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     builder (3.2.2)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -198,7 +202,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bootstrap-sass (= 3.2.0.0)
+  bootstrap-sass (= 3.3.6)
   capybara
   coffee-rails (= 4.1.0)
   delayed_job_active_record
@@ -218,6 +222,3 @@ DEPENDENCIES
   turbolinks (= 2.3.0)
   tzinfo-data
   uglifier (= 2.5.3)
-
-BUNDLED WITH
-   1.10.5

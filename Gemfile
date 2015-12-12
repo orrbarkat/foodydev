@@ -18,6 +18,7 @@ gem 'rails_12factor', '0.0.2'
 #gem for apple push nots
 gem 'houston'
 
+
 #gem for android push
 gem 'gcm'
 
@@ -28,7 +29,7 @@ gem 'json'
 gem 'delayed_job_active_record'
 
 #web design
-gem 'bootstrap-sass', '3.2.0.0'
+gem 'bootstrap-sass', '3.3.6'
 gem 'sass-rails',   '5.0.2'
 gem 'uglifier',     '2.5.3'
 gem 'coffee-rails', '4.1.0'

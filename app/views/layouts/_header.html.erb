@@ -1,18 +1,17 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
- <%= link_to image_tag("Foodonet-Logo-White.png", alt: "Foodonet"), 'http://foodonet.wix.com/foodonet',{:id => 'logo'} %>  
-  
-
+<header class="navbar navbar-default navbar-fixed-top">
 <nav>
+  <div class="container-fluid">
       <ul class="nav navbar-nav navbar-left">
+      <li><%= link_to image_tag("Foodonet-Logo-White-small.png", alt: "Foodonet"), 'http://foodonet.wix.com/foodonet',{:id => 'logo'} %></li>
         <li><%= link_to "Home",   root_path %></li>
         <li><%= link_to "How it works",   '#' %></li>
         <li><%= link_to "Share your spare",   '#' %></li>
         <li><%= link_to "Articles",   '#' %></li>
-        <li><%= link_to "give us feedback",   '/feedbacks/new' %></li>
+        <li><%= link_to "Give us feedback",   '/feedbacks/new' %></li>
         <li><%= link_to "Log in", '#' %></li>
         
       </ul>
+      </div>
     </nav>
   </div>
 </header>
