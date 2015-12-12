@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123175305) do
+ActiveRecord::Schema.define(version: 20151204123920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20151123175305) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string   "active_device_dev_uuid"
+    t.string   "active_device_dev_uuid",                                 null: false
     t.string   "reporter_name",          limit: 100, default: "no_name"
     t.string   "report",                 limit: 500,                     null: false
     t.datetime "created_at",                                             null: false
@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 20151123175305) do
   end
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                    null: false
-    t.integer  "publication_version",               null: false
+    t.integer  "publication_id",                     null: false
+    t.integer  "publication_version",                null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name"
-    t.string   "report_contact_info"
+    t.string   "report_user_name",       limit: 255
+    t.string   "report_contact_info",    limit: 255
   end
 
   create_table "publications", force: :cascade do |t|
