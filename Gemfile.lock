@@ -107,6 +107,7 @@ GEM
       mini_portile (~> 0.6.0)
     pg (0.15.1)
     pg (0.15.1-x86-mingw32)
+    puma (2.15.3)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -208,6 +209,7 @@ DEPENDENCIES
   jquery-rails (= 4.0.3)
   json
   pg (= 0.15.1)
+  puma
   rails
   rails_12factor (= 0.0.2)
   rspec-rails

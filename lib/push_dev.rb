@@ -1,8 +1,8 @@
 def envelope
   puts ENV["password"]
-  ENV["certificate_path"]
-  ENV["gcm_path"] 
-  ENV["push_path"]
+  puts ENV["certificate_path"]
+  puts ENV["gcm_path"] 
+  puts ENV["push_path"]
 end
 
 def push(publication)

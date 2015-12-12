@@ -8,12 +8,13 @@ def push(publication)
   @devices.each do |device|  
     notification = Houston::Notification.new(device: device.remote_notification_token)
     notification.alert = "New event around you #{publication.title}" 
-    notification.badge = 1
+    # notification.badge = 1
     notification.sound = "default"
     notification.category = "ARRIVED_CATEGORY"
     notification.content_available = true
     notification.custom_data = {type:"new_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
     connection.write(notification.message)
+    puts "Error: #{notification.error}." if notification.error
   end
   connection.close
 end
@@ -30,12 +31,13 @@ def pushDelete(publication)
     registered.each do |token|
       notification = Houston::Notification.new(device: token)
       notification.alert = "Event finished around you #{publication.title}" 
-      notification.badge = 1
+      # notification.badge = 1
       notification.sound = "default"
       notification.category = "ARRIVED_CATEGORY"
       notification.content_available = true
       notification.custom_data = {type:"deleted_publication",data:{ id:publication.id,version:publication.version,title:publication.title}}
       connection.write(notification.message)
+      puts "Error: #{notification.error}." if notification.error
     end        
     connection.close
   end
@@ -51,12 +53,13 @@ def pushRegistered(publication, registration)
     registered.each do |token|
       notification = Houston::Notification.new(device: token)
       notification.alert = "User comes to pick up #{publication.title}"
-      notification.badge = 1
+      # notification.badge = 1
       notification.sound = "default"
       notification.category = "ARRIVED_CATEGORY"
       notification.content_available = true
       notification.custom_data = {type:"registration_for_publication",data:{ id:publication.id,version:publication.version,date:registration.date_of_registration}}
       connection.write(notification.message)
+      puts "Error: #{notification.error}." if notification.error
     end   
     connection.close
   end
@@ -71,12 +74,13 @@ def pushReport(publication, report)
     registered.each do |token|
       notification = Houston::Notification.new(device: token)
       notification.alert = 'New report'
-      notification.badge = 1
+      # notification.badge = 1
       notification.sound = "default"
       notification.category = 'ARRIVED_CATEGORY'
       notification.content_available = true
       notification.custom_data = {type:"publication_report",data:{:publication_id=>publication.id,:publication_version=>publication.version,:date_of_report=>report.date_of_report, :report=>report.report}}
       connection.write(notification.message)
+      puts "Error: #{notification.error}." if notification.error
     end       
     connection.close
   end
