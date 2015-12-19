@@ -1,15 +1,12 @@
 class RegisteredUserForPublicationsController < ApplicationController
+  after_action :pushRegister, only: [:create]
   
   def create
     require ENV["push_path"]
-    require 'houston'
-    require ENV["gcm_path"]
-    registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
-    registered_user_for_publication.save!
+    @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
+    @registered_user_for_publication.save!
     @publication = Publication.find(params[:publication_id])
     render json: registered_user_for_publication
-    pushRegistered(@publication, registered_user_for_publication)
-    pushGcmRegistered(@publication)
   rescue
     render json: registered_user_for_publication.errors, status: :unprocessable_entity 
   end
@@ -32,6 +29,15 @@ class RegisteredUserForPublicationsController < ApplicationController
   end
   
 private
+
+  def pushRegister
+    puts @publication.id
+    push = Push.new(@publication,nil,@registered_user_for_publication)
+    push.register
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_registered_user_for_publication
     @registered_user_for_publication = RegisteredUserForPublication.find(params[:id])
