@@ -37,8 +37,10 @@ class Apn
 	class << self
 		def connection(certificate)
 			if ENV["password"]=="fdprod77457745"
+				puts ENV["password"] + "prod"
 				return Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, ENV["password"])
 			end
+			puts "dev"
 			return Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
 		end
 
