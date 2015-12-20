@@ -40,9 +40,7 @@ class Apn
 				puts ENV["password"]
 				return Houston::Connection.new(Houston::APPLE_PRODUCTION_GATEWAY_URI, certificate, ENV["password"])
 			end
-			puts ENV["password"] + ENV["certificate_path"]
 			conn = Houston::Connection.new(Houston::APPLE_DEVELOPMENT_GATEWAY_URI, certificate, ENV["password"])
-			puts conn.to_s
 			return conn
 		end
 
@@ -80,8 +78,8 @@ class Apn
 		while done>0
 			begin
 				done-=1
-				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
-			    #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+				notification = Houston::Notification.new(device: "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf") #devices[done].remote_notification_token)
+			    #
 				notification.alert = "New event around you #{@publication.title}" 
 				    #notification.badge = 1
 			    notification.sound = "default"
