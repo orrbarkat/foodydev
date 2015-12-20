@@ -6,9 +6,9 @@ class RegisteredUserForPublicationsController < ApplicationController
     @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     @registered_user_for_publication.save!
     @publication = Publication.find(params[:publication_id])
-    render json: registered_user_for_publication
+    render json: @registered_user_for_publication
   rescue
-    render json: registered_user_for_publication.errors, status: :unprocessable_entity 
+    render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
   end
 
   def index
