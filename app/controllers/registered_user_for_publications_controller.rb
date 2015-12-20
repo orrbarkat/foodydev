@@ -31,6 +31,7 @@ class RegisteredUserForPublicationsController < ApplicationController
 private
 
   def pushRegister
+    require ENV["push_path"]
     puts @publication.id
     push = Push.new(@publication,nil,@registered_user_for_publication)
     push.register

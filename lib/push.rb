@@ -6,7 +6,7 @@ class Push
 		@report=report
 	    @registration=registration
     	@apn = Apn.new(@publication,@report,@registration)
-    	@apn = Apn.new(@publication,@report,@registration)
+    	@gcm = Gcm.new(@publication,@report,@registration)
   	end
 
   	def create

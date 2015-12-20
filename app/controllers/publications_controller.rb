@@ -2,8 +2,7 @@ class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
   before_action :set_date, only: [:create]
   after_action :pushCreate, only: [:create]
-  after_action :pushDelete, only: [:destroy]
-  require ENV["push_path"]
+  after_action :pushDelete, only: [:destroy] 
 
   def home
     @publications = Publication.all
@@ -55,6 +54,7 @@ private
   end
 
   def pushCreate
+    require ENV["push_path"]
     puts @publication.id
     push = Push.new(@publication)
     push.create
@@ -63,8 +63,10 @@ private
   end
 
   def pushDelete
+    require ENV["push_path"]
     puts @publication.id
     push = Push.new(@publication)
+    puts push
     push.delete
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"
