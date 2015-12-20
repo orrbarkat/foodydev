@@ -89,10 +89,10 @@ class Apn
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
-			rescue Errno::EPIPE => e
+			rescue 
 				@@connection.close
 				@@connection = Apn.connection(@@cert)
-   				Rails.logger.warn "Unable to push, will ignore: #{e}"
+   				Rails.logger.warn "Unable to push, will ignore: "
    				@@connection.open
 			end
 		end 
