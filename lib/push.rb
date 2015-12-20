@@ -90,6 +90,8 @@ class Apn
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
 			    if notification.error
 			    	@@connection.open
+			    	puts "Error: #{notification.error}."
+			    	Rails.logger.warn "Unable to push with error, will ignore: #{notification.error}"
 			    	notification.error = nil
 			    end
 			    	
@@ -97,6 +99,7 @@ class Apn
 			    puts "Error: #{notification.error}." if notification.error
 			rescue Errno::EPIPE => e
    				Rails.logger.warn "Unable to push, will ignore: #{e}"
+   				@@connection.open
 			end
 			
 		end 
