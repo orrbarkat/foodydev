@@ -74,10 +74,9 @@ class Apn
   	def create
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
-		@@connection.open
 		while done>0
 			begin
-				
+				@@connection.open
 				done-=1
 				next if (devices[done].remote_notification_token.length != 64)
 				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
@@ -88,12 +87,7 @@ class Apn
 			    notification.category = "ARRIVED_CATEGORY"
 			    notification.content_available = true
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-			    if !@@connection.open?
-			    	@@connection.open
-			    	puts "Error: #{notification.error}."
-			    	Rails.logger.warn "Unable to push with error, will ignore: #{notification.error}"
-			    	notification.error = nil
-			    end
+			   
 			    	
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
