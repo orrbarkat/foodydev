@@ -78,7 +78,7 @@ class Apn
 		while done>0
 			begin
 				done-=1
-				next if devices[done].remote_notification_token.count != 64
+				next if devices[done].remote_notification_token.length != 64
 				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
 				#"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf") #
 				notification.alert = "New event around you #{@publication.title}" 
