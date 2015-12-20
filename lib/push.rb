@@ -71,25 +71,9 @@ class Apn
 	    @registration=registration
   	end
 
-  # 	def test
-  # 		APN = Houston::Client.development
-		# APN.certificate = 
-		# token = "909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-		# notification = Houston::Notification.new(device: token)
-		# notification.alert = "New event around you #{@publication.title}" 
-		# 		    #notification.badge = 1
-		# notification.sound = "default"
-	 #    notification.category = "ARRIVED_CATEGORY"
-	 #    notification.content_available = true
-	 #    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-	 #    APN.push(notification)
-  # 	end
-
-
   	def create
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
-		
 		while done>0
 			begin
 				@@connection.open
@@ -108,8 +92,6 @@ class Apn
 				puts devices[done].remote_notification_token.length
 			    puts "Error: #{notification.error}." if notification.error
 			rescue Errno::EPIPE => e
-				@@connection =  Apn.connection(@@cert)
-				@@connection.open
    				Rails.logger.warn "Unable to push, will ignore: #{e}"
 			end
 			@@connection.close
@@ -123,6 +105,7 @@ class Apn
 		@@connection.open
 		while done>0
 			begin
+				@@connection.open
 				done-=1
 			    notification = Houston::Notification.new(device: registered[done])
 			    #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
@@ -135,66 +118,60 @@ class Apn
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
 		    rescue Errno::EPIPE => e
-				@@connection =  Apn.connection(@@cert)
-				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
+			@@connection.close
 		end      
-		@@connection.close
   	end
 
   	def register
 	  	registered = Apn.getTokens(@publication)
   		done = registered.length
-		@@connection.open
 		while done>0
 			begin
-		   	  done-=1
-		      notification = Houston::Notification.new(device: registered[done])
-		      #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-		      notification.alert = "User comes to pick up #{@publication.title}"
-		      #notification.badge = 1
-		      notification.sound = "default"
-		      notification.category = "ARRIVED_CATEGORY"
-		      notification.content_available = true
-		      notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
-		      @@connection.write(notification.message)
-		      puts "Error: #{notification.error}." if notification.error
+			  	@@connection.open
+		   	  	done-=1
+		      	notification = Houston::Notification.new(device: registered[done])
+		      	#"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+		      	notification.alert = "User comes to pick up #{@publication.title}"
+		      	#notification.badge = 1
+		      	notification.sound = "default"
+		      	notification.category = "ARRIVED_CATEGORY"
+		      	notification.content_available = true
+		      	notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
+		      	@@connection.write(notification.message)
+		      	puts "Error: #{notification.error}." if notification.error
 		    rescue Errno::EPIPE => e
-				@@connection =  Apn.connection(@@cert)
-				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
-		end      
-		@@connection.close
+			@@connection.close
+		end     
 	end
 
   	def report
   		registered = Apn.getTokens(@publication)
   		done = registered.length
-		@@connection.open
 		while done>0
 			begin
-		   	  done-=1
-		      notification = Houston::Notification.new(device: registered[done])
-		      #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-		      notification.alert = 'New report'
-		      #notification.badge = 1
-		      notification.sound = "default"
-		      notification.category = 'ARRIVED_CATEGORY'
-		      notification.content_available = true
-		      notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}
-		      @@connection.write(notification.message)
-		      puts "Error: #{notification.error}." if notification.error
-		    rescue Errno::EPIPE => e
-				@@connection =  Apn.connection(@@cert)
 				@@connection.open
+		   	    done-=1
+		      	notification = Houston::Notification.new(device: registered[done])
+		      	#"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+		      	notification.alert = 'New report'
+		      	#notification.badge = 1
+		      	notification.sound = "default"
+		      	notification.category = 'ARRIVED_CATEGORY'
+		      	notification.content_available = true
+		      	notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}
+		      	@@connection.write(notification.message)
+		      	puts "Error: #{notification.error}." if notification.error
+		    rescue Errno::EPIPE => e
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
+			@@connection.close
 		end      
-		@@connection.close
   	end
-	
+
 end
 
 
