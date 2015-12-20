@@ -74,28 +74,30 @@ class Apn
   	def create
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
-		@@connection.open
 		while done>0
-			begin
-				done-=1
-				next if (devices[done].remote_notification_token.length != 64)
-				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
-				#"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-				notification.alert = "New event around you #{@publication.title}" 
-				    #notification.badge = 1
-			    notification.sound = "default"
-			    notification.category = "ARRIVED_CATEGORY"
-			    notification.content_available = true
-			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-			    @@connection.write(notification.message)
-			    puts notification.message
-			    puts devices[done].remote_notification_token 
-				puts devices[done].remote_notification_token.length
-			    puts "Error: #{notification.error}." if notification.error
-			rescue Errno::EPIPE => e
-				@@connection =  Apn.connection(@@cert)
-				@@connection.open
-   				Rails.logger.warn "Unable to push, will ignore: #{e}"
+			@@connection.open
+			10.times do
+				begin
+					done-=1
+					break if done<0
+					next if (devices[done].remote_notification_token.length != 64)
+					notification = Houston::Notification.new(device: devices[done].remote_notification_token)
+					#"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+					notification.alert = "New event around you #{@publication.title}" 
+					    #notification.badge = 1
+				    notification.sound = "default"
+				    notification.category = "ARRIVED_CATEGORY"
+				    notification.content_available = true
+				    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+				    @@connection.write(notification.message)
+				    puts devices[done].remote_notification_token 
+					puts devices[done].remote_notification_token.length
+				    puts "Error: #{notification.error}." if notification.error
+				rescue Errno::EPIPE => e
+					@@connection =  Apn.connection(@@cert)
+					@@connection.open
+	   				Rails.logger.warn "Unable to push, will ignore: #{e}"
+				end
 			end
 		end
 		 @@connection.close
