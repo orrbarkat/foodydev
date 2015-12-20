@@ -88,15 +88,12 @@ class Apn
 			    notification.content_available = true
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
 			    @@connection.write(notification.message)
-			    puts devices[done].remote_notification_token 
-				puts devices[done].remote_notification_token.length
 			    puts "Error: #{notification.error}." if notification.error
 			rescue Errno::EPIPE => e
    				Rails.logger.warn "Unable to push, will ignore: #{e}"
 			end
 			@@connection.close
-		end
-		 
+		end 
 	end
 
   	def delete
