@@ -73,12 +73,11 @@ class Apn
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
 		@@connection.open
-		puts done
-		puts devices.co
+		puts devices
 		while done>0
 			begin
 				done-=1
-				puts devices[done].remote_notification_token=="909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+				puts (devices[done].remote_notification_token=="909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf")
 				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
 			    #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
 				notification.alert = "New event around you #{@publication.title}" 
@@ -90,7 +89,7 @@ class Apn
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
 			rescue Errno::EPIPE => e
-				@@connection =  connection(@@cert)
+				@@connection =  Apn.connection(@@cert)
 				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
@@ -116,7 +115,7 @@ class Apn
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
 		    rescue Errno::EPIPE => e
-				@@connection =  connection(@@cert)
+				@@connection =  Apn.connection(@@cert)
 				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
@@ -130,9 +129,8 @@ class Apn
 		@@connection.open
 		while done>0
 			begin
-		   	done-=1
-		    notification = Houston::Notification.new(device: registered[done])
-		      notification = Houston::Notification.new(device: token)
+		   	  done-=1
+		      notification = Houston::Notification.new(device: registered[done])
 		      #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
 		      notification.alert = "User comes to pick up #{@publication.title}"
 		      #notification.badge = 1
@@ -143,7 +141,7 @@ class Apn
 		      @@connection.write(notification.message)
 		      puts "Error: #{notification.error}." if notification.error
 		    rescue Errno::EPIPE => e
-				@@connection =  connection(@@cert)
+				@@connection =  Apn.connection(@@cert)
 				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
@@ -157,9 +155,8 @@ class Apn
 		@@connection.open
 		while done>0
 			begin
-		   	done-=1
-		    notification = Houston::Notification.new(device: registered[done])
-		      notification = Houston::Notification.new(device: token)
+		   	  done-=1
+		      notification = Houston::Notification.new(device: registered[done])
 		      #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
 		      notification.alert = 'New report'
 		      #notification.badge = 1
@@ -170,7 +167,7 @@ class Apn
 		      @@connection.write(notification.message)
 		      puts "Error: #{notification.error}." if notification.error
 		    rescue Errno::EPIPE => e
-				@@connection =  connection(@@cert)
+				@@connection =  Apn.connection(@@cert)
 				@@connection.open
    				logger.warn "Unable to push, will ignore: #{e}"
 			end
