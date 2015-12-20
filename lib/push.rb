@@ -95,9 +95,9 @@ class Apn
    				Rails.logger.warn "Unable to push, will ignore: #{e}"
    				@@connection.open
 			end
-			
-		end 
+		
 		@@connection.close
+		end 
 	end
 
   	def delete
