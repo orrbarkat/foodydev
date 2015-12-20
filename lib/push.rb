@@ -74,9 +74,9 @@ class Apn
   	def create
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
+		@@connection.open
 		while done>0
 			begin
-				@@connection.open
 				done-=1
 				next if (devices[done].remote_notification_token.length != 64)
 				notification = Houston::Notification.new(device: devices[done].remote_notification_token)
@@ -90,10 +90,13 @@ class Apn
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
 			rescue Errno::EPIPE => e
+				@@connection.close
+				@@connection = Apn.connection(@@cert)
    				Rails.logger.warn "Unable to push, will ignore: #{e}"
+   				@@connection.open
 			end
-			@@connection.close
 		end 
+		@@connection.close
 	end
 
   	def delete
