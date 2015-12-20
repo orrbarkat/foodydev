@@ -73,6 +73,8 @@ class Apn
   		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
 		done = devices.length
 		@@connection.open
+		puts done
+		puts devices
 		while done>0
 			begin
 				done-=1
