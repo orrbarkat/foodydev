@@ -88,7 +88,7 @@ class Apn
 			    notification.category = "ARRIVED_CATEGORY"
 			    notification.content_available = true
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-			    if !@@connection.active?
+			    if !@@connection.open?
 			    	@@connection.open
 			    	puts "Error: #{notification.error}."
 			    	Rails.logger.warn "Unable to push with error, will ignore: #{notification.error}"
