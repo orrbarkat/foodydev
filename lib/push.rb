@@ -32,7 +32,7 @@ class Push
 end
 
 class Apn
-	require 'Houston'
+	require 'houston'
 
 	class << self
 		def connection(certificate)
