@@ -11,21 +11,25 @@
   end
 
   def create
-    require ENV["push_path"]#ENV["push_path"]
-    require ENV["gcm_path"]#ENV["gcm_path"]
-    require 'houston'
-
-    publication_report = PublicationReport.new(publication_report_params)
-    publication_report.save!
+    @report = PublicationReport.new(publication_report_params)
+    @report.save!
     @publication = Publication.find(publication_report_params[:publication_id])
-    render json:  publication_report
-    pushReport(@publication, publication_report)
-    pushGcmReports(@publication, publication_report)
+    render json:  @report
   rescue
-    render json: publication_report.errors, status: :unprocessable_entity 
+    render json: @report.errors, status: :unprocessable_entity 
   end
 
 private
+  
+  def pushReport
+    require ENV["push_path"]
+    puts @publication.id
+    push = Push.new(@publication,@report)
+    push.report
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
+  end
+
     # Use callbacks to share common setup or constraints between actions.
   def set_publication_report
     @publication_report = PublicationReport.find(params[:id])

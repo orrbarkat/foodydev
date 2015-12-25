@@ -2,6 +2,7 @@ class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
   before_action :set_date, only: [:create]
   after_action :pushCreate, only: [:create]
+  after_action :pushDelete, only: [:destroy] 
 
   def home
     @publications = Publication.all
@@ -17,9 +18,6 @@ class PublicationsController < ApplicationController
   end
 
   def create
-    require ENV["push_path"]
-    require ENV["gcm_path"]
-    require 'houston'
     @publication = Publication.new(publication_params)
     use_date
     @publication.save!
@@ -30,8 +28,6 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    require ENV["push_path"]
-    require 'houston'
     @publication.update!(publication_params)
     if @publication.is_on_air == false
       pushDelete(@publication)
@@ -42,10 +38,6 @@ class PublicationsController < ApplicationController
   end
 
   def destroy
-    require ENV["push_path"]
-    require 'houston'
-    
-    pushDelete(@publication)
     @publication.destroy
     render json: "OK"
   end
@@ -63,11 +55,19 @@ private
 
   def pushCreate
     require ENV["push_path"]
-    require ENV["gcm_path"]
-    require 'houston'
     puts @publication.id
-    pushGcm(@publication)
-    push(@publication)
+    push = Push.new(@publication)
+    push.create
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
+  end
+
+  def pushDelete
+    require ENV["push_path"]
+    puts @publication.id
+    push = Push.new(@publication)
+    puts push
+    push.delete
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"
   end
