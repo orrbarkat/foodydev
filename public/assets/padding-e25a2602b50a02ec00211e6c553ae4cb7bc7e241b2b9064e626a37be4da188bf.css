@@ -1,0 +1,24 @@
+/* line 1, /Users/orbarkat/Documents/foodydev/foodydev/app/assets/stylesheets/padding.css.scss */
+.container {
+  padding-top: 100px;
+}
+
+/* line 4, /Users/orbarkat/Documents/foodydev/foodydev/app/assets/stylesheets/padding.css.scss */
+.container-fluid {
+  background-color: #3a1ed8;
+  border-color: #000000;
+}
+/* line 10, /Users/orbarkat/Documents/foodydev/foodydev/app/assets/stylesheets/padding.css.scss */
+.container-fluid > li > a:hover .container-fluid > li > a:focus {
+  background-color: #3a1eFF;
+}
+
+/* line 16, /Users/orbarkat/Documents/foodydev/foodydev/app/assets/stylesheets/padding.css.scss */
+.nav.navbar-nav.navbar-left li a {
+  color: white;
+  font-size: 17px;
+}
+/* line 19, /Users/orbarkat/Documents/foodydev/foodydev/app/assets/stylesheets/padding.css.scss */
+.nav.navbar-nav.navbar-left li a:hover {
+  background-color: #3a1eFF;
+}
