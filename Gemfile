@@ -17,9 +17,10 @@ gem 'rails_12factor', '0.0.2'
 
 #gem for apple push nots
 gem 'houston'
+gem 'pushmeup'
 
 #gem for android push
-gem 'gcm'
+# gem 'gcm'
 
 #http requests
 gem 'json'

@@ -71,9 +71,6 @@ GEM
     execjs (2.6.0)
     ffi (1.9.10)
     ffi (1.9.10-x86-mingw32)
-    gcm (0.1.0)
-      httparty
-      json
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     highline (1.7.8)
@@ -108,6 +105,9 @@ GEM
     pg (0.15.1)
     pg (0.15.1-x86-mingw32)
     puma (2.15.3)
+    pushmeup (0.3.0)
+      httparty
+      json
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -203,13 +203,13 @@ DEPENDENCIES
   coffee-rails (= 4.1.0)
   delayed_job_active_record
   dotenv-rails
-  gcm
   houston
   jbuilder (~> 2.0)
   jquery-rails (= 4.0.3)
   json
   pg (= 0.15.1)
   puma
+  pushmeup
   rails
   rails_12factor (= 0.0.2)
   rspec-rails
