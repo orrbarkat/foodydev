@@ -1,0 +1,46 @@
+<% provide(:title, "Home") %>
+<h1>Listing publications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Publication version</th>
+      <th>Publication title</th>
+      <th>Publication address</th>
+      <th>Publication type of collecting</th>
+      <th>Publication latitude</th>
+      <th>Publication longitude</th>
+      <th>Publication starting date</th>
+      <th>Publication ending date</th>
+      <th>Publication contact info</th>
+      <th>Is on air</th>
+      <th>Reporting device uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @publications.each do |publication| %>
+      <tr>
+        <td><%= publication.version %></td>
+        <td><%= publication.title %></td>
+        <td><%= publication.address %></td>
+        <td><%= publication.type_of_collecting %></td>
+        <td><%= publication.latitude %></td>
+        <td><%= publication.longitude %></td>
+        <td><%= publication.starting_date %></td>
+        <td><%= publication.ending_date %></td>
+        <td><%= publication.contact_info %></td>
+        <td><%= publication.is_on_air %></td>
+        <td><%= publication.active_device_dev_uuid %></td>
+        <td><%= link_to 'Show', publication %></td>
+        <td><%= link_to 'Edit', edit_publication_path(publication) %></td>
+        <td><%= link_to 'Destroy', publication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Publication', new_publication_path %>

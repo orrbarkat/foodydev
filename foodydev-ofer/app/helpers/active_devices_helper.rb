@@ -1,0 +1,2 @@
+module ActiveDevicesHelper
+end

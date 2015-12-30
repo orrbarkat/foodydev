@@ -1,0 +1,2 @@
+module PublicationReportsHelper
+end

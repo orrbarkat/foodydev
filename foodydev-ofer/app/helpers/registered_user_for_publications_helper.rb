@@ -1,0 +1,2 @@
+module RegisteredUserForPublicationsHelper
+end

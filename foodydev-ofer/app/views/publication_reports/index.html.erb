@@ -1,0 +1,33 @@
+<h1>Listing publication_reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Publication unique</th>
+      <th>Publication version</th>
+      <th>Report</th>
+      <th>Date of report</th>
+      <th>Reporting device uuid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @publication_reports.each do |publication_report| %>
+      <tr>
+        <td><%= publication_report.publication_unique_id %></td>
+        <td><%= publication_report.publication_version %></td>
+        <td><%= publication_report.report %></td>
+        <td><%= publication_report.date_of_report %></td>
+        <td><%= publication_report.reporting_device_uuid %></td>
+        <td><%= link_to 'Show', publication_report %></td>
+        <td><%= link_to 'Edit', edit_publication_report_path(publication_report) %></td>
+        <td><%= link_to 'Destroy', publication_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Publication report', new_publication_report_path %>
