@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Remote notification token:</strong>
+  <%= @active_device.remote_notification_token %>
+</p>
+
+<p>
+  <strong>Is ios:</strong>
+  <%= @active_device.is_ios %>
+</p>
+
+<p>
+  <strong>Last location latitude:</strong>
+  <%= @active_device.last_location_latitude %>
+</p>
+
+<p>
+  <strong>Last location longitude:</strong>
+  <%= @active_device.last_location_longitude %>
+</p>
+
+<p>
+  <strong>Device uuid:</strong>
+  <%= @active_device.device_uuid %>
+</p>
+
+<%= link_to 'Edit', edit_active_device_path(@active_device) %> |
+<%= link_to 'Back', active_devices_path %>
