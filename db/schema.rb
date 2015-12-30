@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 20151204123920) do
   end
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                    null: false
-    t.integer  "publication_version",               null: false
+    t.integer  "publication_id",                     null: false
+    t.integer  "publication_version",                null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name"
-    t.string   "report_contact_info"
+    t.string   "report_user_name",       limit: 255
+    t.string   "report_contact_info",    limit: 255
   end
 
   create_table "publications", force: :cascade do |t|
