@@ -40,6 +40,7 @@ group :development, :test do
 	gem 'rspec-rails'
 	#set ENV VAR
 	gem 'dotenv-rails'
+	gem 'byebug'
 end
 
 group :test do
