@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20151231083647) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name"
-    t.string   "report_contact_info"
+    t.string   "report_user_name", limit: 255
+    t.string   "report_contact_info", limit: 255
   end
 
   create_table "publications", force: :cascade do |t|
