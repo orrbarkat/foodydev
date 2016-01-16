@@ -23,10 +23,11 @@ private
   
   def pushReport
     require ENV["push_path"]
-    push = Push.new(@publication,@report)
+    pub = Publication.find(@registered_user_for_publication.publication_id)
+    push = Push.new(pub,@report)
     push.report
-  rescue => e
-    logger.warn "Unable to push, will ignore: #{e}"
+  # rescue => e
+  #   logger.warn "Unable to push, will ignore: #{e}"
   end
 
     # Use callbacks to share common setup or constraints between actions.
