@@ -24,17 +24,39 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    op=0
     @user = User.new(user_params)
+    if (@user.identity_provider.downcase == "google")
+      if (User.find_by_identity_provider_token(@user.identity_provider_token))
+        op=1
+      end
+    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_user_id))
+      op=1
+    end
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    if (!op)
+      respond_to do |format|
+        if @user.save
+          format.html { redirect_to @user, notice: 'User was successfully created.' }
+          format.json { render :show, status: :created, location: @user }
+        else
+          format.html { render :new }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
+    
+    if(op)
+      respond_to do |format|
+          if @user.update(user_params)
+            format.html { redirect_to @user, notice: 'User was successfully updated.' }
+            format.json { render :show, status: :ok, location: @user }
+          else
+            format.html { render :edit }
+            format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
+      end  
+    end    
   end
 
   # PATCH/PUT /users/1
