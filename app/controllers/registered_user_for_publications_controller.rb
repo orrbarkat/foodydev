@@ -31,7 +31,7 @@ private
 
   def pushRegister
     require ENV["push_path"]
-    pub = Publication.find(@publication_id)
+    pub = Publication.find(@registered_user_for_publication.publication_id)
     puts pub.id
     push = Push.new(publication=>pub,report=>nil,registered=>@registered_user_for_publication)
     push.register
