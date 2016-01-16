@@ -23,7 +23,6 @@ private
   
   def pushReport
     require ENV["push_path"]
-    puts @publication.id
     push = Push.new(@publication,@report)
     push.report
   rescue => e
