@@ -11,22 +11,22 @@ class Push
 
   	def create
   		@gcm.create
-  		@apn.create
+  		# @apn.create
   	end
 
   	def delete
   		@gcm.delete
-  		@apn.delete
+  		# @apn.delete
   	end
 
   	def register
   		@gcm.register
-  		@apn.register
+  		# @apn.register
   	end
 
   	def report
   		@gcm.report
-  		@apn.report
+  		# @apn.report
   	end
 end
 
