@@ -10,24 +10,23 @@ class Push
   	end
 
   	def create
-  		@apn.create
   		@gcm.create
+  		@apn.create
   	end
 
   	def delete
-  		@apn.delete
   		@gcm.delete
-
+  		@apn.delete
   	end
 
   	def register
-		@apn.register
   		@gcm.register
+  		@apn.register
   	end
 
   	def report
-  		@apn.report
   		@gcm.report
+  		@apn.report
   	end
 end
 
@@ -87,7 +86,6 @@ class Apn
 			    notification.category = "ARRIVED_CATEGORY"
 			    notification.content_available = true
 			    notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-			   
 			    	
 			    @@connection.write(notification.message)
 			    puts "Error: #{notification.error}." if notification.error
@@ -191,22 +189,6 @@ class Gcm
 			end
 		end
 
-		def android_tokens(publication)
-		  registered = publication.registered_user_for_publication
-		  i=0
-		  tokens = []
-		  registered.each do |r|
-		    if r.is_real && !(r.is_ios)
-		      tokens [i] = r.token
-		      i=i+1
-		    end
-		  end
-		  owner = ActiveDevice.find_by_dev_uuid(publication.active_device_dev_uuid)
-			if (owner!=nil && owner.is_android)
-				tokens<<owner.remote_notification_token
-			end
-		  return tokens
-		end
 	end
 
 	def initialize(publication, report=nil, registration=nil)
@@ -214,6 +196,21 @@ class Gcm
 	    @report=report
 	    @registration=registration
 	end
+
+	def android_tokens()
+		  registered = @publication.registered_user_for_publication if not @publication.nil?
+		  tokens = []
+		  registered.each do |r|
+		    if (r.is_real && !(r.is_ios))
+		      tokens << r.token
+		    end
+		  end
+		  owner = ActiveDevice.find_by_dev_uuid(@publication.active_device_dev_uuid)
+		  if (owner!=nil && owner.is_android)
+			tokens<<owner.remote_notification_token
+		  end
+		  return tokens
+		end
 
 	def create
 		uri = URI.parse("https://android.googleapis.com/gcm/send")
@@ -229,9 +226,11 @@ class Gcm
 		puts response
 		puts response.code
 	end
-
+# change :to  - :registration_ids
+# fix tokens.nil/empty
+# move android dev to production server
 	def delete
-		tokens = android_tokens(publication) 
+		tokens = android_tokens() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -240,15 +239,16 @@ class Gcm
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 			request["content-type"] = "application/json"
-			request.body = {:to => tokens,:data => {:message => {:type => "deleted_publication",:id => @publication.id}}}.to_json 
+			request.body = {:registration_ids => tokens,:data => {:message => {:type => "deleted_publication",:id => @publication.id}}}.to_json 
 			response = http.request(request)
 			puts response
 			puts response.code
+			puts response.message
 		end
 	end
 
 	def register
-		tokens = android_tokens(publication) 
+		tokens = android_tokens() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -257,7 +257,7 @@ class Gcm
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 			request["content-type"] = "application/json"
-			request.body = {:to=>tokens,:data=>{:message=>{:type=>"registeration_for_publication",:id => @publication.id}}}.to_json 
+			request.body = {:registration_ids=>tokens,:data=>{:message=>{:type=>"registeration_for_publication",:id => @publication.id}}}.to_json 
 			response = http.request(request)
 			puts response
 			puts response.code
@@ -265,7 +265,7 @@ class Gcm
 	end
 
 	def report
-		tokens = android_tokens(publication) 
+		tokens = android_tokens() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -274,8 +274,7 @@ class Gcm
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 			request["content-type"] = "application/json"
-			request.body = {:to => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,\
-				:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}}.to_json
+			request.body = {:registration_ids => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,:publication_version=>@publication.publication_version,:date_of_report=>@report.date_of_report, :report=>@report.report}}}.to_json
 			response = http.request(request)
 			puts response
 			puts response.code

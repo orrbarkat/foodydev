@@ -22,3 +22,5 @@ config/database.yml
 .env
 
 push_test.rb
+
+lib/apn

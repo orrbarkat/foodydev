@@ -2,7 +2,6 @@ class RegisteredUserForPublicationsController < ApplicationController
   after_action :pushRegister, only: [:create]
   
   def create
-    require ENV["push_path"]
     @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     @registered_user_for_publication.save!
     @publication = Publication.find(params[:publication_id])
@@ -33,7 +32,7 @@ private
   def pushRegister
     require ENV["push_path"]
     puts @publication.id
-    push = Push.new(@publication,nil,@registered_user_for_publication)
+    push = Push.new(publication=>@publication,report=>nil,registered=>@registered_user_for_publication)
     push.register
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"

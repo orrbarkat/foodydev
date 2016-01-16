@@ -4,6 +4,8 @@ class PublicationsController < ApplicationController
   after_action :pushCreate, only: [:create]
   after_action :pushDelete, only: [:destroy] 
 
+  require ENV["push_path"]
+
   def home
     @publications = Publication.all
   end
@@ -21,7 +23,6 @@ class PublicationsController < ApplicationController
     @publication = Publication.new(publication_params)
     use_date
     @publication.save!
-    puts "two"
     render json: @publication, only: [:id, :version]
   rescue
     render json: @publication.errors, status: :unprocessable_entity
@@ -54,7 +55,6 @@ private
   end
 
   def pushCreate
-    require ENV["push_path"]
     puts @publication.id
     push = Push.new(@publication)
     push.create
@@ -63,7 +63,6 @@ private
   end
 
   def pushDelete
-    require ENV["push_path"]
     puts @publication.id
     push = Push.new(@publication)
     puts push
