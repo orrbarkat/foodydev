@@ -4,7 +4,6 @@ class RegisteredUserForPublicationsController < ApplicationController
   def create
     @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     @registered_user_for_publication.save!
-    @@publication = Publication.find(params[:publication_id])
     render json: @registered_user_for_publication
   rescue
     render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
@@ -32,13 +31,10 @@ private
   def pushRegister
     require ENV["push_path"]
     pub = Publication.find(@registered_user_for_publication.publication_id)
-    puts @registered_user_for_publication.publication_id
-    puts @publication_id
-    puts @@publication
     push = Push.new(pub,nil,@registered_user_for_publication)
     push.register
-  # rescue => e
-  #   logger.warn "Unable to push, will ignore: #{e}"
+  rescue => e
+    logger.warn "Unable to push, will ignore: #{e}"
   end
 
   # Use callbacks to share common setup or constraints between actions.
