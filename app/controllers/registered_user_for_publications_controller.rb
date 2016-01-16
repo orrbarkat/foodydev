@@ -35,7 +35,7 @@ private
     puts @registered_user_for_publication.publication_id
     puts @publication_id
     puts @@publication
-    push = Push.new(publication=>pub,report=>nil,registered=>@registered_user_for_publication)
+    push = Push.new(pub,nil,@registered_user_for_publication)
     push.register
   # rescue => e
   #   logger.warn "Unable to push, will ignore: #{e}"
