@@ -4,7 +4,7 @@ class RegisteredUserForPublicationsController < ApplicationController
   def create
     @registered_user_for_publication = RegisteredUserForPublication.new(registered_user_for_publication_params)
     @registered_user_for_publication.save!
-    @publication = Publication.find(params[:publication_id])
+    @@publication = Publication.find(params[:publication_id])
     render json: @registered_user_for_publication
   rescue
     render json: @registered_user_for_publication.errors, status: :unprocessable_entity 
@@ -31,8 +31,8 @@ private
 
   def pushRegister
     require ENV["push_path"]
-    puts @publication.id
-    push = Push.new(publication=>@publication,report=>nil,registered=>@registered_user_for_publication)
+    puts @@publication.id
+    push = Push.new(publication=>@@publication,report=>nil,registered=>@registered_user_for_publication)
     push.register
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"
