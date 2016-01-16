@@ -23,7 +23,7 @@ private
   
   def pushReport
     require ENV["push_path"]
-    pub = Publication.find(@registered_user_for_publication.publication_id)
+    pub = Publication.find(@report.publication_id)
     push = Push.new(pub,@report)
     push.report
   # rescue => e
