@@ -1,5 +1,6 @@
   class PublicationReportsController < ApplicationController
   before_action :set_publication_report, only: [:edit, :update, :destroy]
+  after_action :pushReport, only: [:create]
 
   def index
     if(params.has_key?(:publication_id) && params.has_key?(:publication_version))
@@ -24,7 +25,7 @@ private
   def pushReport
     require ENV["push_path"]
     puts @publication.id
-    push = Push.new(@publication,@report)
+    push = Push.new(publication=>@publication,report=>@report)
     push.report
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"
