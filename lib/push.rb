@@ -274,7 +274,7 @@ class Gcm
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 			request["content-type"] = "application/json"
-			request.body = {:registration_ids => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,:publication_version=>@publication.publication_version,:date_of_report=>@report.date_of_report, :report=>@report.report}}}.to_json
+			request.body = {:registration_ids => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}}.to_json
 			response = http.request(request)
 			puts response
 			puts response.code
