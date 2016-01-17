@@ -123,7 +123,7 @@ class Apn
       nots=[]
       tokens.each do |token|
         notification = Houston::Notification.new(device: token)
-        notifinotification.alert = 'New report'
+        notification.alert = 'New report'
         #notification.badge = 1
         notification.sound = "default"
         notification.category = 'ARRIVED_CATEGORY'
