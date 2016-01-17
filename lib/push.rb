@@ -83,7 +83,7 @@ class Apn
     end
 
     def delete
-      tokens= Apn.getTokens()
+      tokens= getTokens()
       nots=[]
       tokens.each do |token|
         notification = Houston::Notification.new(device: token)
@@ -101,7 +101,7 @@ class Apn
     end
 
     def register
-      tokens= Apn.getTokens()
+      tokens= getTokens()
       nots=[]
       tokens.each do |token|
         notification = Houston::Notification.new(device: token)
@@ -118,7 +118,7 @@ class Apn
     end
 
     def report
-      tokens= Apn.getTokens()
+      tokens= getTokens()
       nots=[]
       tokens.each do |token|
         notification = Houston::Notification.new(device: token)
