@@ -25,16 +25,20 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     op=0
-    @user = User.new(user_params)
-    if (@user.identity_provider.downcase == "google")
-      if (User.find_by_identity_provider_email(@user.identity_provider_email))
+    
+    if (params[:identity_provider].downcase == "google")
+      if (User.find_by_identity_provider_email(params[:identity_provider_email]))
+        @user = User.find_by_identity_provider_email(params[:identity_provider_email])
         op=1
       end
-    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_user_id))
+    elsif (User.find_by_identity_provider_user_id(params[:identity_provider_id]))
+      @user = User.find_by_identity_provider_email(params[:identity_provider_id])
       op=1
     end
 
     if (!op)
+      @user = User.new(user_params)
+      @user.identity_provider_email.downcase!
       respond_to do |format|
         if @user.save
           format.html { redirect_to @user, notice: 'User was successfully created.' }
