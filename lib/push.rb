@@ -80,6 +80,7 @@ class Apn
       end
       @APN.push(nots)
       puts nots.map {|n| n.sent?}
+      puts @APN.devices
     end
 
     def delete
