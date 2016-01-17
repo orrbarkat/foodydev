@@ -36,11 +36,11 @@ class UsersController < ApplicationController
       op=1
     end
 
-    if (!op)
+    if (op==0)
       @user = User.new(user_params)
       @user.identity_provider_email.downcase!
       respond_to do |format|
-        if @user.save
+        if @user.save 
           format.html { redirect_to @user, notice: 'User was successfully created.' }
           format.json { render :show, status: :created, location: @user }
         else
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       end
     end
     
-    if(op)
+    if(op==1)
       respond_to do |format|
           if @user.update(user_params)
             format.html { redirect_to @user, notice: 'User was successfully updated.' }
