@@ -26,20 +26,21 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     op=0
-    
-    if (params[:identity_provider] == "google")
-      if (User.find_by_identity_provider_email(params[:identity_provider_email]))
-        @user = User.find_by_identity_provider_email(params[:identity_provider_email])
+    @user = User.new(user_params)
+    @user.identity_provider_email.downcase!
+    if (@user.identity_provider == "google")
+      if (User.find_by_identity_provider_email(@user.identity_provider_email))
+        @user = User.find_by_identity_provider_email(@user.identity_provider_email)
         op=1
       end
-    elsif (User.find_by_identity_provider_user_id(params[:identity_provider_id]))
-      @user = User.find_by_identity_provider_id(params[:identity_provider_id])
+    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_id))
+      @user = User.find_by_identity_provider_id(@user.identity_provider_id)
       op=1
     end
 
     if (op==0)
-      @user = User.new(user_params)
-      @user.identity_provider_email.downcase!
+ 
+      
       respond_to do |format|
         if @user.save 
           format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -98,4 +99,5 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:identity_provider, :identity_provider_user_id, :identity_provider_token, :phone_number, :identity_provider_email, :identity_provider_user_name, :is_logged_in, :active_device_dev_uuid, :ratings, :cradits, :foodies)
     end
+
 end
