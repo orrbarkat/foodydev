@@ -28,12 +28,12 @@ class UsersController < ApplicationController
     op=0
     
     if (params[:identity_provider] == "google")
-      if (User.find_by_identity_provider_email:params[:identity_provider_email])
-        @user = User.find_by_identity_provider_email:params[:identity_provider_email]
+      if (User.find_by_identity_provider_email(params[:identity_provider_email]))
+        @user = User.find_by_identity_provider_email(params[:identity_provider_email])
         op=1
       end
-    elsif (User.find_by_identity_provider_user_id:params[:identity_provider_id])
-      @user = User.find_by_identity_provider_id:params[:identity_provider_id]
+    elsif (User.find_by_identity_provider_user_id(params[:identity_provider_id]))
+      @user = User.find_by_identity_provider_id(params[:identity_provider_id])
       op=1
     end
 
