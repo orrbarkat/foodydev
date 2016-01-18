@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   def create
     op=0
     
-    if (params[:identity_provider].downcase == "google")
+    if (params[:identity_provider] == "google")
     #   if (User.find_by_identity_provider_email:params[:identity_provider_email].downcase)
     #     @user = User.find_by_identity_provider_email:params[:identity_provider_email].downcase
     #     op=1
