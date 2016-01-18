@@ -28,13 +28,13 @@ class UsersController < ApplicationController
     op=0
     
     if (params[:identity_provider].downcase == "google")
-      if (User.find_by_identity_provider_email:params[:identity_provider_email].downcase)
-        @user = User.find_by_identity_provider_email:params[:identity_provider_email].downcase
-        op=1
-      end
-    elsif (User.find_by_identity_provider_user_id:params[:identity_provider_id])
-      @user = User.find_by_identity_provider_id:params[:identity_provider_id]
-      op=1
+    #   if (User.find_by_identity_provider_email:params[:identity_provider_email].downcase)
+    #     @user = User.find_by_identity_provider_email:params[:identity_provider_email].downcase
+    #     op=1
+    #   end
+    # elsif (User.find_by_identity_provider_user_id:params[:identity_provider_id])
+    #   @user = User.find_by_identity_provider_id:params[:identity_provider_id]
+    #   op=1
     end
 
     if (op==0)
