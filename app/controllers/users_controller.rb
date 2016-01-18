@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         op=1
       end
     elsif (User.find_by_identity_provider_user_id(@user.identity_provider_id))
-      @user = User.find_by_identity_provider_id(@user.identity_provider_id)
+      @user = User.find_by_identity_provider_user_id(@user.identity_provider_id)
       op=1
     end
 
