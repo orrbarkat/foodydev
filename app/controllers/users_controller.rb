@@ -28,15 +28,11 @@ class UsersController < ApplicationController
     op=0
     @user = User.new(user_params)
     @user.identity_provider_email.downcase!
-    if (@user.identity_provider == "google")
+    
       if (User.find_by_identity_provider_email(@user.identity_provider_email))
         @user = User.find_by_identity_provider_email(@user.identity_provider_email)
         op=1
       end
-    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_user_id))
-      @user = User.find_by_identity_provider_user_id(@user.identity_provider_user_id)
-      op=1
-    end
 
     if (op==0)
  
