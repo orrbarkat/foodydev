@@ -33,8 +33,8 @@ class UsersController < ApplicationController
         @user = User.find_by_identity_provider_email(@user.identity_provider_email)
         op=1
       end
-    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_id))
-      @user = User.find_by_identity_provider_user_id(@user.identity_provider_id)
+    elsif (User.find_by_identity_provider_user_id(@user.identity_provider_user_id))
+      @user = User.find_by_identity_provider_user_id(@user.identity_provider_user_id)
       op=1
     end
 
