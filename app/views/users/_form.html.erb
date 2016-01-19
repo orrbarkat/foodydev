@@ -1,0 +1,61 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :identity_provider %><br>
+    <%= f.text_field :identity_provider %>
+  </div>
+  <div class="field">
+    <%= f.label :identity_provider_user_id %><br>
+    <%= f.text_field :identity_provider_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :identity_provider_token %><br>
+    <%= f.text_field :identity_provider_token %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :identity_provider_email %><br>
+    <%= f.text_field :identity_provider_email %>
+  </div>
+  <div class="field">
+    <%= f.label :identity_provider_user_name %><br>
+    <%= f.text_field :identity_provider_user_name %>
+  </div>
+  <div class="field">
+    <%= f.label :is_logged_in %><br>
+    <%= f.check_box :is_logged_in %>
+  </div>
+  <div class="field">
+    <%= f.label :active_device_dev_uuid %><br>
+    <%= f.text_field :active_device_dev_uuid %>
+  </div>
+  <div class="field">
+    <%= f.label :ratings %><br>
+    <%= f.text_field :ratings %>
+  </div>
+  <div class="field">
+    <%= f.label :cradits %><br>
+    <%= f.text_field :cradits %>
+  </div>
+  <div class="field">
+    <%= f.label :foodies %><br>
+    <%= f.text_field :foodies %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

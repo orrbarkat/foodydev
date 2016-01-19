@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Identity provider:</strong>
+  <%= @user.identity_provider %>
+</p>
+
+<p>
+  <strong>Identity provider user:</strong>
+  <%= @user.identity_provider_user_id %>
+</p>
+
+<p>
+  <strong>Identity provider token:</strong>
+  <%= @user.identity_provider_token %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @user.phone_number %>
+</p>
+
+<p>
+  <strong>Identity provider email:</strong>
+  <%= @user.identity_provider_email %>
+</p>
+
+<p>
+  <strong>Identity provider user name:</strong>
+  <%= @user.identity_provider_user_name %>
+</p>
+
+<p>
+  <strong>Is logged in:</strong>
+  <%= @user.is_logged_in %>
+</p>
+
+<p>
+  <strong>Active device dev uuid:</strong>
+  <%= @user.active_device_dev_uuid %>
+</p>
+
+<p>
+  <strong>Ratings:</strong>
+  <%= @user.ratings %>
+</p>
+
+<p>
+  <strong>Cradits:</strong>
+  <%= @user.cradits %>
+</p>
+
+<p>
+  <strong>Foodies:</strong>
+  <%= @user.foodies %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

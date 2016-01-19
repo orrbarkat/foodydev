@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204123920) do
+ActiveRecord::Schema.define(version: 20151231083647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 20151204123920) do
   end
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                     null: false
-    t.integer  "publication_version",                null: false
+    t.integer  "publication_id",                    null: false
+    t.integer  "publication_version",               null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64,  null: false
+    t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name",       limit: 255
-    t.string   "report_contact_info",    limit: 255
+    t.string   "report_user_name", limit: 255
+    t.string   "report_contact_info", limit: 255
   end
 
   create_table "publications", force: :cascade do |t|
@@ -89,6 +89,22 @@ ActiveRecord::Schema.define(version: 20151204123920) do
     t.decimal  "date_of_registration"
     t.string   "collector_contact_info", limit: 100, default: "", null: false
     t.string   "collector_name",         limit: 100, default: "", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "identity_provider"
+    t.string   "identity_provider_user_id"
+    t.string   "identity_provider_token",                    null: false
+    t.string   "phone_number",                               null: false
+    t.string   "identity_provider_email",                    null: false
+    t.string   "identity_provider_user_name",                null: false
+    t.boolean  "is_logged_in",                default: true
+    t.string   "active_device_dev_uuid",                     null: false
+    t.integer  "ratings"
+    t.float    "cradits",                     default: 0.0
+    t.integer  "foodies",                     default: 0
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
 end

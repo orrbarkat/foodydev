@@ -2,6 +2,7 @@ class ActiveDevice < ActiveRecord::Base
   has_many :publications, foreign_key: :active_device_dev_uuid, primary_key: :dev_uuid
   has_many :publication_reports
   has_many :feedbacks
+  has_one :user, foreign_key: :active_device_dev_uuid
 
   validates :remote_notification_token, presence: true, length: { maximum: 256 }
  # validates :is_ios, presence: true
