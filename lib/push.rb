@@ -66,21 +66,29 @@ class Apn
   	end
 
   	def create
-  		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-  		nots=[]
-  		devices.each do |device|
-  			notification = Houston::Notification.new(device: device.remote_notification_token)
-  			notification.alert = "New event around you #{@publication.title}" 
-          #notification.badge = 1
-        notification.sound = "default"
-        notification.category = "ARRIVED_CATEGORY"
-        notification.content_available = true
-        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-        nots<<notification
-      end
-      @APN.push(nots)
-      puts nots.map {|n| n.sent?}
-      puts @APN.devices
+  		begin
+	  		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
+	  		nots=[]
+	  		devices.each do |device|
+	  			notification = Houston::Notification.new(device: device.remote_notification_token)
+	  			notification.alert = "New event around you #{@publication.title}" 
+	          #notification.badge = 1
+	        notification.sound = "default"
+	        notification.category = "ARRIVED_CATEGORY"
+	        notification.content_available = true
+	        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+	        nots<<notification
+		    end
+		    @APN.push(nots)
+		    puts nots.map {|n| n.sent?}
+	        puts @APN.devices
+	    rescue
+	    	broken = @APN.devices
+	    	broken.each do |token|
+	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+	    		puts dev.update!(:remote_notification_token=>"no")
+	    	end
+	    end
     end
 
     def delete
