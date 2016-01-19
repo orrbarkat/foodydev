@@ -1,5 +1,6 @@
   class PublicationReportsController < ApplicationController
   before_action :set_publication_report, only: [:edit, :update, :destroy]
+  after_action :pushReport, only: [:create]
 
   def index
     if(params.has_key?(:publication_id) && params.has_key?(:publication_version))
@@ -13,7 +14,6 @@
   def create
     @report = PublicationReport.new(publication_report_params)
     @report.save!
-    @publication = Publication.find(publication_report_params[:publication_id])
     render json:  @report
   rescue
     render json: @report.errors, status: :unprocessable_entity 
@@ -23,8 +23,8 @@ private
   
   def pushReport
     require ENV["push_path"]
-    puts @publication.id
-    push = Push.new(@publication,@report)
+    pub = Publication.find(@report.publication_id)
+    push = Push.new(pub,@report)
     push.report
   rescue => e
     logger.warn "Unable to push, will ignore: #{e}"

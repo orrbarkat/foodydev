@@ -21,4 +21,3 @@ config/database.yml
 #Ignore env vars
 .env
 
-push_test.rb
