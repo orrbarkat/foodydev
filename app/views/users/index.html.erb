@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Identity provider</th>
+      <th>Identity provider user</th>
+      <th>Identity provider token</th>
+      <th>Phone number</th>
+      <th>Identity provider email</th>
+      <th>Identity provider user name</th>
+      <th>Is logged in</th>
+      <th>Active device dev uuid</th>
+      <th>Ratings</th>
+      <th>Cradits</th>
+      <th>Foodies</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.identity_provider %></td>
+        <td><%= user.identity_provider_user_id %></td>
+        <td><%= user.identity_provider_token %></td>
+        <td><%= user.phone_number %></td>
+        <td><%= user.identity_provider_email %></td>
+        <td><%= user.identity_provider_user_name %></td>
+        <td><%= user.is_logged_in %></td>
+        <td><%= user.active_device_dev_uuid %></td>
+        <td><%= user.ratings %></td>
+        <td><%= user.cradits %></td>
+        <td><%= user.foodies %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>

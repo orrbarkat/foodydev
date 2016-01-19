@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :feedbacks
   root             'publications#home'
   #resources :publication_reports
