@@ -13,10 +13,11 @@ namespace :notification do
 			nots<<notification
       	end
       	APN.push(nots)
+      	puts APN.devices
 	    APN.devices.each do |token|
 	    	dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
 	    	puts dev.update!(:remote_notification_token=>"no")
 	    end
-
+	    puts "done for today!"
 	end
 end
