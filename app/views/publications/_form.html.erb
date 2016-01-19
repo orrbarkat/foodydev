@@ -1,5 +1,10 @@
+<% if @publication.nil? %>
+  <% render :text => "not found", :layout => false, :status => :not_found%>
+<% else%>
+
 <%= form_for(@publication) do |f| %>
-  <% if @publication.errors.any? %>
+
+  <% if @publication.nil? || @publication.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@publication.errors.count, "error") %> prohibited this publication from being saved:</h2>
 
@@ -59,3 +64,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+<% end%>
