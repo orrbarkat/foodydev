@@ -29,11 +29,15 @@ class PublicationsController < ApplicationController
   end
 
   def update
-    @publication.update!(publication_params)
-    if @publication.is_on_air == false
-      pushDelete(@publication)
+    respond_to do |format|
+      format.html{render json: @publication.errors, status: :unprocessable_entity}
+      format.json { 
+      @publication.update!(publication_params)
+      if @publication.is_on_air == false
+        pushDelete(@publication)
+      end
+      render json: @publication, only: [:id, :version] }
     end
-    render json: @publication, only: [:id, :version]
   rescue
     render json: @publication.errors, status: :unprocessable_entity
   end

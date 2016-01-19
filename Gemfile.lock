@@ -220,6 +220,6 @@ DEPENDENCIES
   turbolinks (= 2.3.0)
   tzinfo-data
   uglifier (= 2.5.3)
--
--BUNDLED WITH
--   1.10.5
+
+BUNDLED WITH
+   1.10.5
