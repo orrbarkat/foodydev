@@ -49,12 +49,16 @@ class Apn
       			tokens << r.token
     		end
   		end
-	  	owner = ActiveDevice.find_by_dev_uuid(@publication.active_device_dev_uuid)
-	  	if (owner!=nil && owner.is_iphone)
-	    	tokens << owner.remote_notification_token
-	  	end
+	  	tokens = tokens.uniq
+	  	tokens.delete(@registration.active_device_dev_uuid) unless @registration.nil?
+	  	tokens.delete(@report.active_device_dev_uuid) unless @report.nil?
 	  	return tokens
 	end
+
+	def owner()
+		owner = ActiveDevice.find_by_dev_uuid(@publication.active_device_dev_uuid)
+	  	return owner.remote_notification_token if (owner!=nil && owner.is_iphone)
+    end
 
 	def initialize(publication=nil, report=nil, registration=nil)
 	    @publication=publication
@@ -66,73 +70,111 @@ class Apn
   	end
 
   	def create
-  		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
-  		nots=[]
-  		devices.each do |device|
-  			notification = Houston::Notification.new(device: device.remote_notification_token)
-  			notification.alert = "New event around you #{@publication.title}" 
-          #notification.badge = 1
-        notification.sound = "default"
-        notification.category = "ARRIVED_CATEGORY"
-        notification.content_available = true
-        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-        nots<<notification
-      end
-      @APN.push(nots)
-      puts nots.map {|n| n.sent?}
-      puts @APN.devices
+  		begin
+	  		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no").to_set
+	  		nots=[]
+	  		devices.uniq.each do |device|
+	  			notification = Houston::Notification.new(device: device.remote_notification_token)
+	  			notification.alert = "New event around you #{@publication.title}" 
+	            #notification.badge = 1
+		        notification.sound = "default"
+		        notification.category = "ARRIVED_CATEGORY"
+		        notification.content_available = true
+		        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+		        nots<<notification 
+		    end
+		    @APN.push(nots)
+		    puts nots.map {|n| n.sent?}
+	        puts @APN.devices
+	    rescue => e
+	    	broken = @APN.devices
+	    	broken.each do |token|
+	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+	    		puts dev.update!(:remote_notification_token=>"no")
+	    	end
+	    	logger.warn "Unable to push, will ignore: #{e}"
+	    end
     end
 
     def delete
-      tokens= getTokens()
-      nots=[]
-      tokens.each do |token|
-        notification = Houston::Notification.new(device: token)
-        #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-        notification.alert = "Event finished around you #{@publication.title}" 
-        #notification.badge = 1
-        notification.sound = "default"
-        notification.category = "ARRIVED_CATEGORY"
-        notification.content_available = true
-        notification.custom_data = {type:"deleted_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-        nots<<notification
-      end
-      @APN.push(nots)
-      puts nots.map {|n| n.sent?}
+    	begin
+	      tokens= getTokens()
+	      nots=[]
+	      tokens.each do |token|
+	        notification = Houston::Notification.new(device: token)
+	        #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+	        notification.alert = "Event finished around you #{@publication.title}" 
+	        #notification.badge = 1
+	        notification.sound = "default"
+	        notification.category = "ARRIVED_CATEGORY"
+	        notification.content_available = true
+	        notification.custom_data = {type:"deleted_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+	        nots<<notification
+	      end
+	      @APN.push(nots)
+	      puts nots.map {|n| n.sent?}
+        rescue => e
+	    	broken = @APN.devices
+	    	broken.each do |token|
+	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+	    		puts dev.update!(:remote_notification_token=>"no")
+	    	end
+	    	logger.warn "Unable to push, will ignore: #{e}"
+	    end
     end
 
     def register
-      tokens= getTokens()
-      nots=[]
-      tokens.each do |token|
-        notification = Houston::Notification.new(device: token)
-        notification.alert = "User comes to pick up #{@publication.title}"
-        #notification.badge = 1
-        notification.sound = "default"
-        notification.category = "ARRIVED_CATEGORY"
-        notification.content_available = true
-        notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
-        nots<<notification
-      end
-      @APN.push(nots)
-      puts nots.map {|n| n.sent?}
+    	begin
+	      tokens= getTokens()
+	      tokens<<owner()
+	      nots=[]
+	      tokens.each do |token|
+	        notification = Houston::Notification.new(device: token)
+	        notification.alert = "User comes to pick up #{@publication.title}"
+	        #notification.badge = 1
+	        notification.sound = "default"
+	        notification.category = "ARRIVED_CATEGORY"
+	        notification.content_available = true
+	        notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
+	        nots<<notification
+	      end
+	      @APN.push(nots)
+	      puts nots.map {|n| n.sent?}
+      	rescue => e
+	    	broken = @APN.devices
+	    	broken.each do |token|
+	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+	    		puts dev.update!(:remote_notification_token=>"no")
+	    	end
+	    	logger.warn "Unable to push, will ignore: #{e}"
+	  	end
     end
 
     def report
-      tokens= getTokens()
-      nots=[]
-      tokens.each do |token|
-        notification = Houston::Notification.new(device: token)
-        notification.alert = 'New report'
-        #notification.badge = 1
-        notification.sound = "default"
-        notification.category = 'ARRIVED_CATEGORY'
-        notification.content_available = true
-        notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}
-        nots<<notification
-      end
-      @APN.push(nots)
-      puts nots.map {|n| n.sent?}
+    	begin
+	      tokens= getTokens()
+	      tokens<<owner()
+	      nots=[]
+	      tokens.each do |token|
+	        notification = Houston::Notification.new(device: token)
+	        notification.alert = 'New report'
+	        #notification.badge = 1
+	        notification.sound = "default"
+	        notification.category = 'ARRIVED_CATEGORY'
+	        notification.content_available = true
+	        notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}
+	        nots<<notification
+	      end
+	      @APN.push(nots)
+	      puts nots.map {|n| n.sent?}
+        rescue => e
+	    	broken = @APN.devices
+	    	broken.each do |token|
+	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+	    		puts dev.update!(:remote_notification_token=>"no")
+	    	end
+	    	logger.warn "Unable to push, will ignore: #{e}"
+	  end
     end
 end
 
@@ -161,19 +203,23 @@ class Gcm
 	end
 
 	def android_tokens()
-		  registered = @publication.registered_user_for_publication if not @publication.nil?
-		  tokens = []
-		  registered.each do |r|
-		    if (r.is_real && !(r.is_ios))
-		      tokens << r.token
-		    end
-		  end
-		  owner = ActiveDevice.find_by_dev_uuid(@publication.active_device_dev_uuid)
-		  if (owner!=nil && owner.is_android)
-			tokens<<owner.remote_notification_token
-		  end
-		  return tokens
-		end
+	    registered = @publication.registered_user_for_publication if not @publication.nil?
+	    tokens = []
+	    registered.each do |r|
+	    	if (r.is_real && !(r.is_ios))
+	    		tokens << r.token 
+	    	end
+	  	end
+	  	tokens = tokens.uniq
+	  	tokens.delete(@registration.active_device_dev_uuid) unless @registration.nil?
+	  	tokens.delete(@report.active_device_dev_uuid) unless @report.nil?
+	  	return tokens
+	end
+
+	def getOwner()
+		owner = ActiveDevice.find_by_dev_uuid(@publication.active_device_dev_uuid)
+		return owner.remote_notification_token if (owner!=nil && owner.is_android)
+	end
 
 	def create
 		uri = URI.parse("https://android.googleapis.com/gcm/send")
@@ -211,7 +257,8 @@ class Gcm
 	end
 
 	def register
-		tokens = android_tokens() 
+		tokens = android_tokens()
+		tokens<<owner() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -229,6 +276,7 @@ class Gcm
 
 	def report
 		tokens = android_tokens() 
+		tokens<<owner() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
