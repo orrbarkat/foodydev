@@ -1,12 +1,12 @@
 class Push
-	attr_accessor :apn, :gcm, :publication, :report, :registration
+	attr_accessor :apn, :gcm, :publication, :user_report, :registration
 
 	def initialize(publication, report=nil, registration=nil)
 		@publication = publication
-		@report=report
+		@user_report=report
 	    @registration=registration
-    	@apn = Apn.new(@publication,@report,@registration)
-    	@gcm = Gcm.new(@publication,@report,@registration)
+    	@apn = Apn.new(@publication,report,@registration)
+    	@gcm = Gcm.new(@publication,report,@registration)
   	end
 
   	def create
@@ -51,7 +51,7 @@ class Apn
   		end
 	  	tokens = tokens.uniq
 	  	tokens.delete(@registration.active_device_dev_uuid) unless @registration.nil?
-	  	tokens.delete(@report.active_device_dev_uuid) unless @report.nil?
+	  	tokens.delete(@user_report.active_device_dev_uuid) unless @user_report.nil?
 	  	return tokens
 	end
 
@@ -62,7 +62,7 @@ class Apn
 
 	def initialize(publication=nil, report=nil, registration=nil)
 	    @publication=publication
-	    @report=report
+	    @user_report=report
 	    @registration=registration
 	    @APN = Apn.client()
 	    @APN.passphrase = ENV["password"]
@@ -162,7 +162,7 @@ class Apn
 	        notification.sound = "default"
 	        notification.category = 'ARRIVED_CATEGORY'
 	        notification.content_available = true
-	        notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}
+	        notification.custom_data = {type:"publication_report",data:{:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@user_report.date_of_report, :report=>@user_report.report}}
 	        nots<<notification
 	      end
 	      @APN.push(nots)
@@ -183,6 +183,8 @@ class Gcm
 	require "net/https"
 	require "uri"
 	require 'json'
+
+	attr_accessor :publication, :user_report, :registration
 	
 	class << self
 		
@@ -198,7 +200,7 @@ class Gcm
 
 	def initialize(publication, report=nil, registration=nil)
 	    @publication=publication
-	    @report=report
+	    @user_report=report
 	    @registration=registration
 	end
 
@@ -212,7 +214,7 @@ class Gcm
 	  	end
 	  	tokens = tokens.uniq
 	  	tokens.delete(@registration.active_device_dev_uuid) unless @registration.nil?
-	  	tokens.delete(@report.active_device_dev_uuid) unless @report.nil?
+	  	tokens.delete(self.user_report.active_device_dev_uuid) unless @user_report.nil?
 	  	return tokens
 	end
 
@@ -258,7 +260,7 @@ class Gcm
 
 	def register
 		tokens = android_tokens()
-		tokens<<owner() 
+		tokens<<getOwner() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -276,7 +278,7 @@ class Gcm
 
 	def report
 		tokens = android_tokens() 
-		tokens<<owner() 
+		tokens<<getOwner() 
 		unless tokens.empty?
 			uri = URI.parse("https://android.googleapis.com/gcm/send")
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -285,7 +287,7 @@ class Gcm
 			request = Net::HTTP::Post.new(uri.request_uri)
 			request["authorization"] = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
 			request["content-type"] = "application/json"
-			request.body = {:registration_ids => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@report.date_of_report, :report=>@report.report}}}.to_json
+			request.body = {:registration_ids => tokens,:data => {:message => {:type=>"publication_report",:publication_id=>@publication.id,:publication_version=>@publication.version,:date_of_report=>@user_report.date_of_report, :report=>@user_report.report}}}.to_json
 			response = http.request(request)
 			puts response
 			puts response.code

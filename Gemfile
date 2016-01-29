@@ -38,6 +38,7 @@ gem 'turbolinks',   '2.3.0'
 
 group :development, :test do
 	gem 'rspec-rails'
+	gem 'factory_girl_rails'
 	#set ENV VAR
 	gem 'dotenv-rails'
 	gem 'byebug'
