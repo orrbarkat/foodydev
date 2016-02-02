@@ -47,4 +47,6 @@ end
 group :test do
 	gem 'selenium-webdriver'
 	gem 'capybara'
+	gem 'guard-rspec'
+  	gem 'launchy'
 end
