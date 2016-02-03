@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'groups/all'
+
   resources :users
   resources :feedbacks
   root             'publications#home'
