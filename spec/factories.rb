@@ -1,13 +1,14 @@
-FactoryGirl.define do  factory :group_member do
-    Group ""
-User ""
-phone_number "MyString"
-name "MyString"
+FactoryGirl.define do  
+
+  factory :group_member do
+    Group_id {Group.last.id}
+    phone_number "0473478342"
+    name "MyString"
   end
   
 
   factory :group do
-    user {User.last ||= create(:user)}
+    user_id {User.last.id || create(:user).get(:id)}
     name "MyString"
   end
 

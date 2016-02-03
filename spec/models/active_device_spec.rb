@@ -1,5 +1,5 @@
-# require 'spec_helper'
+require 'rails_helper'
 
-# describe ActiveDevice do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+RSpec.describe ActiveDevice do
+  pending "add some examples to (or delete) #{__FILE__}"
+end

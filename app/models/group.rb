@@ -3,5 +3,6 @@ class Group < ActiveRecord::Base
 	has_many :group_members
 
 	validates :name, presence: true
+	validates_associated :group_members, :user
 
 end
