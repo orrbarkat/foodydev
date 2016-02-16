@@ -35,6 +35,7 @@ class GroupsController < ApplicationController
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
+    # add admin to groups members
   end
 
   # PATCH/PUT /groups/1

@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
 	  belongs_to :active_device
-	  has_many :groups
+	  has_many :groups, foreign_key: :user_id, primary_key: :id
+    has_many :publications, foreign_key: :user_id, primary_key: :id
+    has_many :publication_reports, foreign_key: :user_id, primary_key: :id
+    has_many :group_members, foreign_key: :user_id, primary_key: :id
+    has_many :registered_user_for_publications, foreign_key: :user_id, primary_key: :id
 
 
 	validates :identity_provider_token, presence: true

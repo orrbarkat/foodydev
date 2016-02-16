@@ -24,6 +24,7 @@ class GroupMembersController < ApplicationController
   # POST /group_members
   # POST /group_members.json
   def create
+    
     @group_member = GroupMember.new(group_member_params)
 
     respond_to do |format|
