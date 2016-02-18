@@ -1,5 +1,6 @@
 class GroupMembersController < ApplicationController
   before_action :set_group_member, only: [:show, :edit, :update, :destroy]
+  before_action :group_member_params
 
   # GET /group_members
   # GET /group_members.json
@@ -24,18 +25,33 @@ class GroupMembersController < ApplicationController
   # POST /group_members
   # POST /group_members.json
   def create
+  
+    members = (group_member_params).collect {|key, group_member_values| GroupMember.new(group_member_values)}
     
-    @group_member = GroupMember.new(group_member_params)
-
-    respond_to do |format|
-      if @group_member.save
-        format.html { redirect_to @group_member, notice: 'Group member was successfully created.' }
-        format.json { render :show, status: :created, location: @group_member }
-      else
-        format.html { render :new }
-        format.json { render json: @group_member.errors, status: :unprocessable_entity }
-      end
+    all_members_valid = true
+    members.each_with_index do |member|
+        unless member.valid?
+            all_members_valid = false
+        end
     end
+    
+    @send_group_members = []
+    
+    if (all_members_valid)
+    
+      members.each do |group_member|
+        group_member.save
+        @send_group_members << group_member
+      end
+      
+      format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
+      format.json { render :show, status: :created, location: @send_group_members } 
+    
+    else
+      format.html { render :new }
+      format.json { render json: @group_member.errors, status: :unprocessable_entity }
+    end
+  
   end
 
   # PATCH/PUT /group_members/1
