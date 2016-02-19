@@ -33,10 +33,11 @@ class GroupMembersController < ApplicationController
     
       members_params.each do |group_member|
         temp = GroupMember.new(group_member)
-        temp.save
-        @send_group_members << temp
-        rescue
+        if (temp.save)
+          @send_group_members << temp
+        else
           @send_group_members << "440"
+        end
       end
       
       format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
