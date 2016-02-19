@@ -26,31 +26,21 @@ class GroupMembersController < ApplicationController
   # POST /group_members.json
   def create
   
-    members = (group_member_params).collect {|key, group_member_values| GroupMember.new(group_member_values)}
+    members_params = (group_member_params)
     
-    all_members_valid = true
-    members.each_with_index do |member|
-        unless member.valid?
-            all_members_valid = false
-        end
-    end
     
     @send_group_members = []
     
-    if (all_members_valid)
-    
-      members.each do |group_member|
-        group_member.save
-        @send_group_members << group_member
+      members_params.each do |group_member|
+        temp = GroupMember.new(group_member)
+        temp.save
+        @send_group_members << temp
+        rescue
+          @send_group_members << "440"
       end
       
       format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
       format.json { render :show, status: :created, location: @send_group_members } 
-    
-    else
-      format.html { render :new }
-      format.json { render json: @group_member.errors, status: :unprocessable_entity }
-    end
   
   end
 
@@ -86,6 +76,6 @@ class GroupMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
-      params[:group_member]
+      params.require(:group_members).permit(:Group_id, :user_id, :phone_number, :name, :is_admin)
     end
 end
