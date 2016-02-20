@@ -1,6 +1,6 @@
 class GroupMembersController < ApplicationController
   before_action :set_group_member, only: [:show, :edit, :update, :destroy]
-  before_action :group_member_params
+  before_action :group_member_params, only: [create]
 
   # GET /group_members
   # GET /group_members.json
@@ -77,6 +77,6 @@ class GroupMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
-      params.require(:group_members).permit(:Group_id, :user_id, :phone_number, :name, :is_admin)
+      params.require(:group_member).permit(:Group_id, :user_id, :phone_number, :name, :is_admin)
     end
 end
