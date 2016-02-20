@@ -1,6 +1,6 @@
 class GroupMembersController < ApplicationController
   before_action :set_group_member, only: [:show, :edit, :update, :destroy]
-  before_action :group_member_params, only: [create]
+  before_action :group_member_params, only: [:create]
 
   # GET /group_members
   # GET /group_members.json
