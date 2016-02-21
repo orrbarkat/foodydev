@@ -44,7 +44,9 @@ class GroupMembersController < ApplicationController
       
         format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
       #  format.json { render :json => @send_group_members , status: :created } 
-      format.json { render :json => @send_group_members } 
+#      format.json { render :json => @send_group_members } 
+            format.json { render @send_group_members } 
+
 
       end
   end
