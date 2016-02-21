@@ -25,7 +25,7 @@ class GroupMembersController < ApplicationController
   # POST /group_members
   # POST /group_members.json
   def create
-    require("JSON")
+    require 'json'
   
     members_params = JSON.parse(group_member_params)
     
