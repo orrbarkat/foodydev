@@ -34,11 +34,12 @@ class GroupMembersController < ApplicationController
     
       members_params.each do |group_member|
        # temp = GroupMember.new(group_member)
-        if (group_member.save)
-          @send_group_members << group_member
-        else
-          @send_group_members << "440"
-        end
+    #    if (group_member.save)
+    #      @send_group_members << group_member
+    #    else
+    #      @send_group_members << "440"
+    #    end
+      @send_group_members << "yes"
       end
       respond_to do |format|
       
