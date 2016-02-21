@@ -34,7 +34,7 @@ class GroupMembersController < ApplicationController
     
       members_params.each do |group_member|
         temp = GroupMember.new(group_member)
-        if (temp.save)
+        if (temp.save!)
           @send_group_members << temp
         else
           @send_group_members << "440"
