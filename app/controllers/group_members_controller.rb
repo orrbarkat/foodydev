@@ -39,10 +39,11 @@ class GroupMembersController < ApplicationController
           @send_group_members << "440"
         end
       end
+      respond_to do |format|
       
-      respond_to.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
-      respond_to.json { render json:  @send_group_members, :show, status: :created, location: } 
-  
+        format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
+        format.json { render :show, status: :created, location: @send_group_members } 
+      end
   end
 
   # PATCH/PUT /group_members/1
