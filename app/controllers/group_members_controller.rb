@@ -30,7 +30,7 @@ class GroupMembersController < ApplicationController
    # members_params = group_member_params
 
     
-    @send_group_members = Array.new
+    @send_group_members = group_member_params
     
   #    members_params.each do |group_member|
        # temp = GroupMember.new(group_member)
