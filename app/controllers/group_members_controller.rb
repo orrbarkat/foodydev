@@ -27,7 +27,7 @@ class GroupMembersController < ApplicationController
   def create
   
    # members_params = (group_member_params).collect {|x| GroupMember.new(x)}
-    members_params = group_member_params[:array]
+    members_params = group_member_params[:group_members]
 
     
     @send_group_members = []
@@ -79,8 +79,8 @@ class GroupMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
-      params.permit(:group_members, array: [:Group_id, :user_id, :phone_number, :name, :is_admin])
-      #  params.permit(:group_members)
+     # params.permit(:group_members, array: [:Group_id, :user_id, :phone_number, :name, :is_admin])
+      params.permit(:group_members => [])
 
     end
 end
