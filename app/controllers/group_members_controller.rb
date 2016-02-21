@@ -27,7 +27,7 @@ class GroupMembersController < ApplicationController
   def create
   
    # members_params = (group_member_params).collect {|x| GroupMember.new(x)}
-    members_params = group_member_params[:group_members]
+    members_params = params[:group_members]
 
     
     @send_group_members = []
