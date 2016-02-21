@@ -80,7 +80,7 @@ class GroupMembersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
      # params.permit(:group_members, array: [:Group_id, :user_id, :phone_number, :name, :is_admin])
-      params.permit(:group_members => [])
+      params.require(:group_members).permit([])
 
     end
 end
