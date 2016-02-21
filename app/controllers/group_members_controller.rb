@@ -26,15 +26,15 @@ class GroupMembersController < ApplicationController
   # POST /group_members.json
   def create
   
-    members_params = Array.new(group_member_params)
+    members_params = (group_member_params).collect {|x| GroupMember.new(x)}
     
     
     @send_group_members = []
     
       members_params.each do |group_member|
-        temp = GroupMember.new(group_member)
-        if (temp.save)
-          @send_group_members << temp
+       # temp = GroupMember.new(group_member)
+        if (group_member.save)
+          @send_group_members << group_member
         else
           @send_group_members << "440"
         end
