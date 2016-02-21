@@ -36,9 +36,9 @@ class GroupMembersController < ApplicationController
         temp = GroupMember.new()
         temp.Group_id     = group_member[:Group_id]
         temp.is_admin     = group_member[:is_admin]
-        temp.name         = group.member[:name]
-        temp.phone_number = group_member[:phone_number]
-        temp.user_id      = group_member[:user_id]
+   #     temp.name         = group.member[:name]
+  #      temp.phone_number = group_member[:phone_number]
+  #      temp.user_id      = group_member[:user_id]
       #  if (temp.save!)
       #    @send_group_members << temp
       #  else
