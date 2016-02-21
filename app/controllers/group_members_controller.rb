@@ -33,13 +33,13 @@ class GroupMembersController < ApplicationController
     @send_group_members = Array.new
     
       members_params.each do |group_member|
-       # temp = GroupMember.new(group_member)
-    #    if (group_member.save)
-    #      @send_group_members << group_member
-    #    else
-    #      @send_group_members << "440"
-    #    end
-      @send_group_members << "yes"
+        temp = GroupMember.new(group_member)
+        if (temp.save)
+          @send_group_members << temp
+        else
+          @send_group_members << "440"
+        end
+    #  @send_group_members << "yes"
       end
       respond_to do |format|
       
