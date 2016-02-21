@@ -26,7 +26,7 @@ class GroupMembersController < ApplicationController
   # POST /group_members.json
   def create
   
-    members_params = (group_member_params)
+    members_params = ActiveSupport::JSON.decode(group_member_params)
     
     
     @send_group_members = []
