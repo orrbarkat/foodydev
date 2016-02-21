@@ -27,19 +27,19 @@ class GroupMembersController < ApplicationController
   def create
   
    # members_params = (group_member_params).collect {|x| GroupMember.new(x)}
-   # members_params = group_member_params
+   members_params = params[:group_members]
 
     
-    @send_group_members = params[:group_members]
+    @send_group_members = Array.new
     
-  #    members_params.each do |group_member|
+      members_params.each do |group_member|
        # temp = GroupMember.new(group_member)
-  #      if (group_member.save)
-  #        @send_group_members << group_member
-  #      else
-  #        @send_group_members << "440"
-  #      end
-  #    end
+        if (group_member.save)
+          @send_group_members << group_member
+        else
+          @send_group_members << "440"
+        end
+      end
       respond_to do |format|
       
         format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
