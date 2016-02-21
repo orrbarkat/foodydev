@@ -26,10 +26,7 @@ class GroupMembersController < ApplicationController
   # POST /group_members.json
   def create
   
-   # members_params = (group_member_params).collect {|x| GroupMember.new(x)}
-   members_params = params[:group_members]
-
-    
+    members_params = params[:group_members]
     @send_group_members = Array.new
     
       members_params.each do |group_member|
@@ -44,16 +41,12 @@ class GroupMembersController < ApplicationController
         else
           @send_group_members << "440"
         end
-    #@send_group_members << temp
       end
+      
       respond_to do |format|
       
         format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
-      #  format.json { render :json => @send_group_members , status: :created } 
-#      format.json { render :json => @send_group_members } 
-            format.json { render json: @send_group_members } 
-
-
+        format.json { render json: @send_group_members } 
       end
   end
 
@@ -90,7 +83,5 @@ class GroupMembersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
       params.permit(:group_members, array: [:Group_id, :user_id, :phone_number, :name, :is_admin])
-      #params.require(:group_members).permit([[:Group_id, :user_id, :phone_number, :name, :is_admin]])
-
     end
 end
