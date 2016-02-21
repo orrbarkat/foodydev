@@ -25,9 +25,8 @@ class GroupMembersController < ApplicationController
   # POST /group_members
   # POST /group_members.json
   def create
-    require 'json'
   
-    members_params = JSON.parse(group_member_params)
+    members_params = (group_member_params)
     
     
     @send_group_members = []
@@ -41,8 +40,8 @@ class GroupMembersController < ApplicationController
         end
       end
       
-      format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
-      format.json { render :show, status: :created, location: @send_group_members } 
+      respond_to.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
+      respond_to.json { render :show, status: :created, location: @send_group_members } 
   
   end
 
