@@ -34,6 +34,7 @@ class GroupMembersController < ApplicationController
     
       members_params.each do |group_member|
         temp = GroupMember.new()
+        temp.Group_id = group_member[:Group_id]
       #  if (temp.save!)
       #    @send_group_members << temp
       #  else
