@@ -1,5 +1,6 @@
 class GroupMembersController < ApplicationController
   before_action :set_group_member, only: [:show, :edit, :update, :destroy]
+  before_action :group_member_params, only: [:create]
 
   # GET /group_members
   # GET /group_members.json
@@ -24,17 +25,29 @@ class GroupMembersController < ApplicationController
   # POST /group_members
   # POST /group_members.json
   def create
-    @group_member = GroupMember.new(group_member_params)
-
-    respond_to do |format|
-      if @group_member.save
-        format.html { redirect_to @group_member, notice: 'Group member was successfully created.' }
-        format.json { render :show, status: :created, location: @group_member }
-      else
-        format.html { render :new }
-        format.json { render json: @group_member.errors, status: :unprocessable_entity }
+  
+    members_params = params[:group_members]
+    @send_group_members = Array.new
+    
+      members_params.each do |group_member|
+        temp = GroupMember.new()
+        temp.Group_id     = group_member[:Group_id]
+        temp.is_admin     = group_member[:is_admin]
+        temp.name         = group_member[:name]
+        temp.phone_number = group_member[:phone_number]
+        temp.user_id      = group_member[:user_id]
+        if (temp.save)
+          @send_group_members << temp
+        else
+          @send_group_members << "440"
+        end
       end
-    end
+      
+      respond_to do |format|
+      
+        format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
+        format.json { render json: @send_group_members } 
+      end
   end
 
   # PATCH/PUT /group_members/1
@@ -69,6 +82,6 @@ class GroupMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_member_params
-      params[:group_member]
+      params.permit(:group_members, array: [:Group_id, :user_id, :phone_number, :name, :is_admin])
     end
 end

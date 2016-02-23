@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :feedbacks
+  resources :groups
+  resources :group_members
+  
   root             'publications#home'
   #resources :publication_reports
   get 'downloads' => 'active_devices#downloads'
