@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'groups/all'
 
-  resources :users
+  resources :users, only:[:create]
   resources :feedbacks
   resources :groups
   resources :group_members
