@@ -26,23 +26,27 @@ class GroupMembersController < ApplicationController
   # POST /group_members.json
   def create
   
-    members_params = (group_member_params).collect {|x| GroupMember.new(x)}
-    
-    
-    @send_group_members = []
+    members_params = params[:group_members]
+    @send_group_members = Array.new
     
       members_params.each do |group_member|
-       # temp = GroupMember.new(group_member)
-        if (group_member.save)
-          @send_group_members << group_member
+        temp = GroupMember.new()
+        temp.Group_id     = group_member[:Group_id]
+        temp.is_admin     = group_member[:is_admin]
+        temp.name         = group_member[:name]
+        temp.phone_number = group_member[:phone_number]
+        temp.user_id      = group_member[:user_id]
+        if (temp.save)
+          @send_group_members << temp
         else
           @send_group_members << "440"
         end
       end
+      
       respond_to do |format|
       
         format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
-        format.json { render :json  => @send_group_members , status: :created } 
+        format.json { render json: @send_group_members } 
       end
   end
 
@@ -64,9 +68,10 @@ class GroupMembersController < ApplicationController
   # DELETE /group_members/1.json
   def destroy
     @group_member.destroy
-    respond_to do |format|
-      format.html { redirect_to group_members_url, notice: 'Group member was successfully destroyed.' }
-      format.json { head :no_content }
+    render json: "OK"
+    # respond_to do |format|
+    #   format.html { redirect_to group_members_url, notice: 'Group member was successfully destroyed.' }
+    #   format.json { head :no_content }
     end
   end
 
