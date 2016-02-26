@@ -72,7 +72,7 @@ class GroupMembersController < ApplicationController
     # respond_to do |format|
     #   format.html { redirect_to group_members_url, notice: 'Group member was successfully destroyed.' }
     #   format.json { head :no_content }
-    end
+  
   end
 
   private
