@@ -1,6 +1,7 @@
 class GroupMember < ActiveRecord::Base
 	belongs_to :group, dependent: :destroy
-	has_one :user, dependent: :destroy
+	has_one :user, 
+	# dependent: :destroy
 
 	validates :name, presence: true
 	validates :Group_id, presence: true
