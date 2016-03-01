@@ -45,7 +45,10 @@ class PublicationsController < ApplicationController
 
   def show
     @publication = Publication.find(params[:id])
-    render json: @publication
+    user = User.find(@publication.publisher_id)
+    user_name = user.identity_provider_user_name unless user.nil?
+    render json: {identity_provider_user_name: user_name}.merge(@publication.attributes)
+    # render json: @publication
   end
 
   
