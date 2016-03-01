@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   root             'publications#home'
   #resources :publication_reports
   get 'downloads' => 'active_devices#downloads'
+
+  get 'users/:id/groups' => 'users#get_groups_for_user', as: :get_groups
   resources :active_devices
 
   resources :publications do
