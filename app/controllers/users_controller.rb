@@ -23,7 +23,7 @@ class UsersController < ApplicationController
         temp_id = m[:Group_id]
         temp = Hash.new()
         group = Group.find(temp_id)
-        temp["group_id"] = id
+        temp["group_id"] = temp_id
         temp["group_name"] = group[:name]
         temp["user_id"] = group[:user_id]
         temp["members"] = GroupMember.where("Group_id = ?", temp_id)
