@@ -15,25 +15,26 @@ class UsersController < ApplicationController
 
   # GET /users/1/groups
   def get_groups_for_user
-    @gruops = Array.new
-    @groups = Group.where("user_id = ?", params[:id])
+    @gruop_member_db_line = Array.new
+    @group_member_db_line = GroupMember.where("user_id = ?", params[:id])
     @array_to_send = Array.new
 
-    @groups.each do |g|
+    @group_member_db_line.each do |m|
         temp = Hash.new()
-
-        temp["group_id"] = g[:id]
-        temp["group_name"] = g[:group_name]
-        temp["user_id"] = g[:user_id]
-        temp["members"] = GroupMember.where("Group_id = ?", g[:id])
+        group = Group.find(m[:Group_id])
+        temp["group_id"] = m[:Group_id]
+        temp["group_name"] = group[:group_name]
+        temp["user_id"] = group[:user_id]
+        temp["members"] = GroupMember.where("Group_id = ?", m[:Group_id])
         @array_to_send << temp
     end
+    render json: @array_to_send 
    
-    respond_to do |format|
+    # respond_to do |format|
       
-        format.html { redirect_to @array_to_send, notice: 'Groups were successfully found.' }
-        format.json { render json: @array_to_send } 
-    end
+    #     format.html { redirect_to @array_to_send, notice: 'Groups were successfully found.' }
+    #     format.json { render json: @array_to_send } 
+    # end
 
   end
 
