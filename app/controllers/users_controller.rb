@@ -23,12 +23,12 @@ class UsersController < ApplicationController
         temp = Hash.new()
         group = Group.find(m[:Group_id])
         temp["group_id"] = m[:Group_id]
-        temp["group_name"] = group[:group_name]
+        temp["group_name"] = group[:name]
         temp["user_id"] = group[:user_id]
         temp["members"] = GroupMember.where("Group_id = ?", m[:Group_id])
         @array_to_send << temp
     end
-    #render json: @array_to_send 
+    render json: @array_to_send 
    
     # respond_to do |format|
       
