@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         temp["members"] = GroupMember.where("Group_id = ?", m[:Group_id])
         @array_to_send << temp
     end
-    render json: @array_to_send 
+    #render json: @array_to_send 
    
     # respond_to do |format|
       
