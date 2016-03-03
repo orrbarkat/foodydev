@@ -17,12 +17,13 @@ FactoryGirl.define do
   	title "MyText"
   	address "MyText"
   	type_of_collecting 1
+    publisher_id {User.last.id || create(:user).get(:id)}
   	latitude 9.99
   	longitude 9.99
   	starting_date  {1.day.ago.to_i}
   	ending_date  {1.day.from_now.to_i} 
   	contact_info "MyText"
-  	is_on_air false
+  	is_on_air true
   	active_device_dev_uuid "a0912a2f2c1a31fc"
   end
 
@@ -60,6 +61,10 @@ FactoryGirl.define do
     is_logged_in true
     active_device_dev_uuid "justOnethatdoesnotexist"
     ratings nil
+
+    trait :google do
+      identity_provider "google"
+    end
   end
 
   factory :feedback do
