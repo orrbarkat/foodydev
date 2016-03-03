@@ -1,6 +1,8 @@
 class GroupMember < ActiveRecord::Base
-	belongs_to :group, dependent: :destroy
-	has_one :user, dependent: :destroy
+	belongs_to :group
+	#dependent: :destroy
+	has_one :user 
+	# dependent: :destroy
 
 	validates :name, presence: true
 	validates :Group_id, presence: true
@@ -15,7 +17,7 @@ class GroupMember < ActiveRecord::Base
 
 	def normalize_phone
       	self.phone_number = self.phone_number.gsub(/[^\d]/, '').split(//).last(9).join
-      end
+    end
 
 	def group_exists?
 		return !self.group.nil?
