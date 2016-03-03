@@ -27,7 +27,7 @@ class Publication < ActiveRecord::Base
   end
 
   def set_user_name
-    user = User.find(@publication.publisher_id)
+    user = User.find(self.publisher_id)
     self.identity_provider_user_name = user.identity_provider_user_name unless user.nil?
   end
 
