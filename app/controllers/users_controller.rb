@@ -28,7 +28,7 @@ class UsersController < ApplicationController
           temp["group_name"] = group[:name]
           temp["user_id"] = group[:user_id]
           
-          temp["members"] = GroupMember.find_by_Group_id(temp_id)
+          temp["members"] = GroupMember.where(:Group_id = temp_id)
           @array_to_send << temp
         end
     end
