@@ -15,13 +15,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/groups
   def get_groups_for_user
-    @group_member_db_line = Array.new
     @group_member_db_line = GroupMember.where("user_id = ?", params[:id])
     @array_to_send = Array.new
 
     @group_member_db_line.each do |m|
         temp_id = m[:Group_id]
-        temp = Hash.new()
+        temp = Hash.new
         group = Group.find(temp_id)
         if(group)
           temp["group_id"] = temp_id
