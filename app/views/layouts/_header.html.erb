@@ -1,16 +1,42 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">foodonet admin</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">About</a></li>
+            <li role="presentation"><a href="#">Contact</a></li>
+            <li role="presentation"><%= link_to "Log in", login_url %></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    
+
+
+<!-- <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
  <%= link_to image_tag("Foodonet-Logo-White.png", alt: "Foodonet"), 'http://foodonet.wix.com/foodonet',{:id => 'logo'} %>  
   
 
-<nav>
-      <ul class="nav navbar-nav navbar-left">
+<nav class="navbar navbar-default navbar-fixed-top">
+      
+      <ul >
         <li><%= link_to "Home",   root_path %></li>
         <li><%= link_to "How it works",   '#' %></li>
         <li><%= link_to "Share your spare",   '#' %></li>
         <li><%= link_to "Articles",   '#' %></li>
         <li><%= link_to "give us feedback",   '/feedbacks/new' %></li>
-        <li><%= link_to "Log in", '#' %></li>
+        <li><%= link_to "Log in", login_url %></li>
         
       </ul>
     </nav>
@@ -18,4 +44,5 @@
 </header>
 <%= link_to "foodonet", root_path, id: "logo" %>
 <%= link_to image_tag("appstore.png", alt: "Rails logo"),
-            'http://rubyonrails.org/' %>
+            'http://rubyonrails.org/' %> -->
+
