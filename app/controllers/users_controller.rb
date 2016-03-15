@@ -15,13 +15,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/groups
   def get_groups_for_user
-    @group_member_db_line = Array.new
     @group_member_db_line = GroupMember.where("user_id = ?", params[:id])
     @array_to_send = Array.new
 
     @group_member_db_line.each do |m|
         temp_id = m[:Group_id]
-        temp = Hash.new()
+        temp = Hash.new
         group = Group.find(temp_id)
         if(group)
           temp["group_id"] = temp_id
@@ -68,8 +67,9 @@ class UsersController < ApplicationController
       
       respond_to do |format|
         if @user.save 
+           
           format.html { redirect_to @user, notice: 'User was successfully created.' }
-          format.json { render :show, status: :created, location: @user }
+          format.json { render :show, status: :created}#, location: @user }
         else
           format.html { render :new }
           format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
       respond_to do |format|
           if @user.update(user_params)
             format.html { redirect_to @user, notice: 'User was successfully updated.' }
-            format.json { render :show, status: :ok, location: @user }
+            format.json { render :show, status: :ok}#, location: @user }
           else
             format.html { render :edit }
             format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        format.json { render :show, status: :ok}#, location: @user }
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }

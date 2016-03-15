@@ -6,18 +6,16 @@ class GroupMember < ActiveRecord::Base
 
 	validates :name, presence: true
 	validates :Group_id, presence: true
+	validates :phone_number, length: { in: 9..15 }
 
-	before_validation :normalize_phone, :set_user
+	before_validation :set_user
+	# after_validation :normalize_phone
 
 	def set_user
 		self.user_id = 0
-		users = User.where("phone_number = ?",self.phone_number)
+		users = User.where("uniphone = ?",self.phone_number.gsub(/[^\d]/, '').split(//).last(9).join)
 		self.user_id = users.last.id unless users.empty?
 	end
-
-	def normalize_phone
-      	self.phone_number = self.phone_number.gsub(/[^\d]/, '').split(//).last(9).join
-    end
 
 	def group_exists?
 		return !self.group.nil?
