@@ -258,7 +258,7 @@ DEPENDENCIES
   jquery-rails (= 4.0.3)
   json
   launchy
-  pg (= 0.15.1)
+  pg
   puma
   pushmeup
   rails
@@ -269,3 +269,6 @@ DEPENDENCIES
   turbolinks (= 2.3.0)
   tzinfo-data
   uglifier (= 2.5.3)
+
+BUNDLED WITH
+   1.11.2

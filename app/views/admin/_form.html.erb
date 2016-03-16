@@ -1,0 +1,13 @@
+<%= form_tag({controller: "admin", action: "index"}, method: "get", class: "form-signin") do %>
+	<h2 class="form-signin-heading">Please sign in</h2>
+	<%= label_tag(:inputEmail, "Email address", class: "sr-only") %>
+	<%= email_field_tag(:inputEmail, nil, class: "form-control",required: true, autofocus: true) %>
+	<%= label_tag(:password, "Password", class: "sr-only") %>
+    <%= password_field_tag(:password, nil, class: "form-control", required: true) %>
+    <div class="checkbox">
+          <label>
+            <%= check_box_tag(nil , 'remember-me') %> Remember me
+          </label>
+        </div>
+    <%= submit_tag("Sign in",id: 'login', class: "btn btn-lg btn-primary btn-block") %>
+<% end %>

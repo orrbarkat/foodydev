@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+	- 2.2.1
+services:
+    - postgresql
+before_script:
+    - cp config/database.yml.travis config/database.yml
+    - psql -c 'create database travis_ci_test;' -U postgres
+
+script: bundle exec rake spec rubocop
+install: bundle install --jobs=1
+cache: bundler

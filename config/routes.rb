@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  
+  get 'admin/' => 'admin#index', as: :admin
+
+  get 'admin/login' => 'admin#login', as: :login
+  get 'admin/logout' => 'admin#logout', as: :logout
+
   get 'groups/all'
 
-  resources :users, only:[:create]
   resources :feedbacks
   resources :groups
   resources :group_members
@@ -9,6 +14,10 @@ Rails.application.routes.draw do
   root             'publications#home'
   #resources :publication_reports
   get 'downloads' => 'active_devices#downloads'
+
+
+  get 'users/:id/groups' => 'users#get_groups_for_user', as: :get_groups
+  post 'users' => 'users#create'
   resources :active_devices
 
   resources :publications do

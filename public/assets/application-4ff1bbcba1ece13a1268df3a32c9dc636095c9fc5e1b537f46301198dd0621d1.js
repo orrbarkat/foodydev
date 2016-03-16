@@ -1,3 +1,18 @@
+(function() {
+
+
+}).call(this);
+(function() {
+
+
+}).call(this);
+// Place all the behaviors and hooks related to the matching controller here.
+// All this logic will automatically be available in application.js.
+;
+(function() {
+
+
+}).call(this);
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -13,7 +28,4 @@
 // //
 // =======
 // >>>>>>> a87b9453867830e55212444b0609a2925ce133dd
-//= require jquery
-//=require jquery_ujs
-//= require turbolinks
-//= require_tree .
+

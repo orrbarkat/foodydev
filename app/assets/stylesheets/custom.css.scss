@@ -1,8 +1,9 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 /* universal */
 .container {
-    padding-top: 100px;
+    margin-top:5px; 
+    /*padding-top: px;*/
+
 }
 .container-fluid{
     background-color: #3a1ed8 ;
@@ -25,8 +26,27 @@
 
 }
 
+.navbar-inverse{
+  background-color: #428bca
+
+}
+.navbar-inverse .navbar-brand {
+    color: #000;
+    }
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: #000;
+  }
+
+table{
+  
+}
+
 body {
-  padding-top: 30px;
+  padding-top: 35px;
 }
 
 section {
@@ -76,7 +96,9 @@ p {
 
 header.navbar.navbar-fixed-top.navbar-inverse {
     background-color: #01AFF4;
-    border-color: #090909;
+    border-color: #000000;
+    padding-bottom: 150px;
+    height: 20px;
 }
 
 #logo {
@@ -97,7 +119,7 @@ header.navbar.navbar-fixed-top.navbar-inverse {
 }
 
 /* footer */
-
+/*
 footer {
   margin-top: 45px;
   padding-top: 5px;
@@ -125,4 +147,4 @@ footer ul {
 footer ul li {
   float: left;
   margin-left: 15px;
-}
+}*/
