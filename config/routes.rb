@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'users/:id/groups' => 'users#get_groups_for_user', as: :get_groups
   post 'users' => 'users#create'
+  delete 'group_members/:id' => 'group_members#destroy', as: :delete_member
   resources :active_devices
 
   resources :publications do
