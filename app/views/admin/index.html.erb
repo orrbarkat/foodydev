@@ -1,25 +1,29 @@
-<h1 class="page-header">admin panel</h1>
+<% if cookies.signed[:user] %>
+  <h1 class="page-header">admin panel</h1>
 
-<div class="table-responsive">          
-  <table class="table">
-    <thead>
-      <tr>
-        <th>week number</th>
-        <th>starting date</th>
-        <th>ios</th>
-        <th>android</th>
-      </tr>
-    </thead>
-    <tbody>
-    	<% 10.times do |i| %>
-	 	 <tr>
-	        <td><%= i+1 %></td>
-	        <td><%= @stats[i][:date].to_formatted_s(:short) %></td>
-	        <td><%= @stats[i][:ios].to_s %></td>
-	        <td><%= @stats[i][:android].to_s %></td>
-	      </tr>
-    	<% end %>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+  <div class="table-responsive">          
+    <table class="table">
+      <thead>
+        <tr>
+          <th>week number</th>
+          <th>starting date</th>
+          <th>ios</th>
+          <th>android</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<% 10.times do |i| %>
+  	 	 <tr>
+  	        <td><%= i+1 %></td>
+  	        <td><%= @stats[i][:date].to_formatted_s(:short) %></td>
+  	        <td><%= @stats[i][:ios].to_s %></td>
+  	        <td><%= @stats[i][:android].to_s %></td>
+  	      </tr>
+      	<% end %>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  <% else %>
+    <%= render 'form' %>
+  <% end %>

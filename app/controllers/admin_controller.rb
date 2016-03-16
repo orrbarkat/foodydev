@@ -1,10 +1,18 @@
 class AdminController < ApplicationController
+	before_filter :authorize, :except => :login
   def index
   	@stats = user_count(ActiveDevice.all)
   end
 
   def login
+  	redirect_to 'admin/index' if cookies.signed[:user] 
+  end	
+
+  def logout
+  	cookies.delete :user 
+  	redirect_to admin_url
   end
+
 
 private
 	def user_count(users)
@@ -27,4 +35,9 @@ private
 		return res
 	end
 
+	def authorize
+		if params['password'] == ENV['admin'] 
+			cookies.signed[:user] = true
+		end
+	end
 end

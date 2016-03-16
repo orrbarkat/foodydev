@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'admin/' => 'admin#index', as: :admin
 
   get 'admin/login' => 'admin#login', as: :login
+  get 'admin/logout' => 'admin#logout', as: :logout
 
   get 'groups/all'
 
