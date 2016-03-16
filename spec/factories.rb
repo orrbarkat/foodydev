@@ -2,6 +2,7 @@ FactoryGirl.define do
 
   factory :group_member do
     Group_id {Group.last.id}
+    user_id {User.last.id}
     phone_number "0473478342"
     name "MyString"
   end

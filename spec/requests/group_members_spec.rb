@@ -9,21 +9,31 @@ RSpec.describe "GroupMembers", type: :request do
     end
   end
   
-  # describe "POST/ group_members" do
-  # 	it "creates!" do
- 	# 	post group_members_path 		
-  # 	end
-  # end
-  # describe "DELETE /group_members and update admin" do
-  # 	it "updates" do
-  # 		create(:user,:phone_number=>"0123456789")
-  # 		user =  User.find_by_phone_number("0123456789")
-  # 		create(:user,:phone_number=>"0909090909")
-  #   	create(:group, :user_id=>User.last.id)
-  #   	create(:group_member, :Group_id => Group.last.id,:phone_number=>"0123456789", :user_id => user.id, :is_admin => false)
-  #   	delete delete_member_path(GroupMember.first.id)
-  #   	expect(:json).to eq GroupMember.last
-  # 	end
-  	
-  # end
+  describe "DELETE /group_members and update admin" do
+  	it "updates when deleting admin" do
+  		create(:user)
+      create(:group)
+      create(:group_member, :is_admin => false)
+      create(:user)
+      create(:group_member, :is_admin => true)
+      count = GroupMember.count
+      delete delete_member_path(GroupMember.last.id)
+      expect(GroupMember.last.is_admin).to eq true 
+      expect(GroupMember.count).to eq (count - 1)
+ 
+  	end
+    
+    it "keeps admin when deleting non_admin member" do
+        create(:user)
+        create(:group)
+        create(:group_member, :is_admin => true)
+        create(:user)
+        create(:group_member, :is_admin => false)
+        count = GroupMember.count
+        delete delete_member_path(GroupMember.last.id)
+        expect(GroupMember.last.is_admin).to eq true 
+        expect(GroupMember.count).to eq (count - 1)     
+    end
+    	
+  end
 end
