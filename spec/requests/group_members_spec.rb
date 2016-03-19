@@ -22,7 +22,6 @@ RSpec.describe "GroupMembers", type: :request do
       expect(GroupMember.count).to eq (count - 1)
  
   	end
-    
     it "keeps admin when deleting non_admin member" do
         create(:user)
         create(:group)

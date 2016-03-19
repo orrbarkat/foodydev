@@ -25,6 +25,8 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  
+
   it "successfuly creates a user" do
   		 headers = {
   		 	"ACCEPT" => "application/json",

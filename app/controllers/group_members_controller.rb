@@ -72,20 +72,24 @@ class GroupMembersController < ApplicationController
       group_id = Group.find(@group_member.Group_id).id
     end
     
-    @group_member.destroy
-    
-    if(group_id > 0)
-      temp = GroupMember.find_by_Group_id(group_id)
-      para= Hash.new
-      para["Group_id"] = temp.Group_id
-      para["user_id"] = temp.user_id
-      para["phone_number"]= temp.phone_number
-      para["name"] = temp.name
-      para["is_admin"] = true
-      temp.update(para)  
+    if(@group_member)
+      @group_member.destroy
+      
+      if(group_id > 0)
+        temp = GroupMember.find_by_Group_id(group_id)
+        para= Hash.new
+        para["Group_id"] = temp.Group_id
+        para["user_id"] = temp.user_id
+        para["phone_number"]= temp.phone_number
+        para["name"] = temp.name
+        para["is_admin"] = true
+        temp.update(para)  
+      end
+      
+      render json: "OK"  
+    else
+      render json: "no group_member with this ID"
     end
-    
-    render json: "OK"  
     # respond_to do |format|
     #   format.html { redirect_to group_members_url, notice: 'Group member was successfully destroyed.' }
     #   format.json { head :no_content }
