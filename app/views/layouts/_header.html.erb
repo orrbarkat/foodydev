@@ -14,7 +14,11 @@
             <li role="presentation" class="active"><%= link_to "Home", admin_url%></li>
             <li role="presentation"><a href="#">About</a></li>
             <li role="presentation"><a href="#">Contact</a></li>
-            <li role="presentation"><%= link_to "Log in", login_url %></li>
+            <% if cookies.signed[:user] %>
+              <li role="presentation"><%= link_to "Log out", logout_url %></li>
+            <% else%>
+              <li role="presentation"><%= link_to "Log in", login_url %></li>
+            <% end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
