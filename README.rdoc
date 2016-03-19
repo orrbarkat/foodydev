@@ -8,10 +8,15 @@ Things you may want to cover:
 * Ruby version blablaa
 
 * System dependencies
+redis- brew install redis
+postgres - postgres.app
 
 * Configuration
+set up .env file
 
 * Database creation
+redis- brew install redis
+postgres - postgres.app
 
 * Database initialization
 

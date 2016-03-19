@@ -36,5 +36,6 @@ module UppServer
     # config.i18n.default_locale = :de
 	config.assets.initialize_on_precompile = true
 	config.serve_static_files = true
+    config.active_job.queue_adapter = :resque
   end
 end

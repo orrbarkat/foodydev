@@ -41,6 +41,32 @@ class UsersController < ApplicationController
 
   end
 
+  # GET /users/1/publications
+
+  def get_publications_for_user
+    group_member_db_line = GroupMember.where("user_id = ?", params[:id])
+    groups_id = Array.new
+    @publications_to_send = Array.new
+    
+    if (group_member_db_line)
+      group_member_db_line.each do |x|
+        groups_id << x[:Group_id]
+      end
+    end
+    
+    if(groups_id)
+     groups_id.uniq!
+      groups_id.each do |g|
+        temp = Publication.where(:audience => g)
+        @publications_to_send << temp
+      end
+    end
+    
+    render json: @publications_to_send
+  
+  end
+
+
   # GET /users/new
   def new
     @user = User.new
@@ -64,10 +90,9 @@ class UsersController < ApplicationController
 
     if (op==0)
  
-      
+      #new user was created
       respond_to do |format|
         if @user.save 
-           
           format.html { redirect_to @user, notice: 'User was successfully created.' }
           format.json { render :show, status: :created}#, location: @user }
         else
@@ -77,6 +102,7 @@ class UsersController < ApplicationController
       end
     end
     
+    # this user already exists
     if(op==1)
       respond_to do |format|
           if @user.update(user_params)
@@ -87,7 +113,9 @@ class UsersController < ApplicationController
             format.json { render json: @user.errors, status: :unprocessable_entity }
           end
       end  
-    end    
+    end   
+    rescue 
+       render json: @user.errors, status: :unprocessable_entity
   end
 
   # PATCH/PUT /users/1

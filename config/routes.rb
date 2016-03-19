@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   get 'admin/' => 'admin#index', as: :admin
-
   get 'admin/login' => 'admin#login', as: :login
   get 'admin/logout' => 'admin#logout', as: :logout
 
@@ -18,13 +17,15 @@ Rails.application.routes.draw do
 
   get 'users/:id/groups' => 'users#get_groups_for_user', as: :get_groups
   post 'users' => 'users#create'
+  get 'users/:id/publications' => 'users#get_publications_for_user', as: :get_publications
+  #post 'group_members' => 'group_members#create', as: :create_group_member 
   resources :active_devices
 
   resources :publications do
     resources :publication_reports
     resources :registered_user_for_publications
   end
-
+  mount Resque::Server.new  => '/resque'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
