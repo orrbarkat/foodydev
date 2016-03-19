@@ -11,6 +11,6 @@ before_script:
   - bundle exec rake db:test:prepare
 
 script: 
-  - bundle exec rspec --exclude-pattern "spec/views/*_spec.rb"
+  - bundle exec rspec --exclude-pattern "spec/{routing,views/**}/*_spec.rb"
 install: bundle install --jobs=1
 cache: bundler
