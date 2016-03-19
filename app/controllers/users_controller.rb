@@ -41,6 +41,7 @@ class UsersController < ApplicationController
 
   end
 
+
   # GET /users/new
   def new
     @user = User.new
@@ -64,10 +65,9 @@ class UsersController < ApplicationController
 
     if (op==0)
  
-      
+      #new user was created
       respond_to do |format|
         if @user.save 
-           
           format.html { redirect_to @user, notice: 'User was successfully created.' }
           format.json { render :show, status: :created}#, location: @user }
         else
@@ -77,6 +77,7 @@ class UsersController < ApplicationController
       end
     end
     
+    # this user already exists
     if(op==1)
       respond_to do |format|
           if @user.update(user_params)
@@ -87,7 +88,9 @@ class UsersController < ApplicationController
             format.json { render json: @user.errors, status: :unprocessable_entity }
           end
       end  
-    end    
+    end   
+    rescue 
+       render json: @user.errors, status: :unprocessable_entity
   end
 
   # PATCH/PUT /users/1

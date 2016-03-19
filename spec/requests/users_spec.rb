@@ -30,8 +30,8 @@ RSpec.describe "Users", type: :request do
   		 	"ACCEPT" => "application/json",
   		 	"CONTENT_TYPE" => "application/json"
   		 }
-  		 user = build(:user).attributes.except(:id,:created_at,:updated_at)
-  		 post "/users", { :user => user }.to_json, headers
+  		 user = attributes_for(:user)
+  		 post "/users.json", { :user => user }.to_json, headers
   		expect(response).to have_http_status(200)
   	end
 end

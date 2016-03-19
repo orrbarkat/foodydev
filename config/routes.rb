@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   
   get 'admin/' => 'admin#index', as: :admin
-
   get 'admin/login' => 'admin#login', as: :login
   get 'admin/logout' => 'admin#logout', as: :logout
 
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
     resources :publication_reports
     resources :registered_user_for_publications
   end
-
+  mount Resque::Server.new  => '/resque'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
