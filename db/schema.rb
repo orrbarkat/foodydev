@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160306121207) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string   "active_device_dev_uuid",                                 null: false
+    t.string   "active_device_dev_uuid"
     t.string   "reporter_name",          limit: 100, default: "no_name"
     t.string   "report",                 limit: 500,                     null: false
     t.datetime "created_at",                                             null: false
@@ -57,15 +57,15 @@ ActiveRecord::Schema.define(version: 20160306121207) do
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                     null: false
-    t.integer  "publication_version",                null: false
+    t.integer  "publication_id",                    null: false
+    t.integer  "publication_version",               null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64,  null: false
+    t.string   "active_device_dev_uuid", limit: 64, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name",       limit: 255
-    t.string   "report_contact_info",    limit: 255
+    t.string   "report_user_name"
+    t.string   "report_contact_info"
     t.integer  "reporter_user_id"
   end
 
