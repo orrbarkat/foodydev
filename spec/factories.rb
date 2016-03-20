@@ -8,7 +8,7 @@ FactoryGirl.define do
   
 
   factory :group do
-    user_id {User.last.id || create(:user).get(:id)}
+    user_id {User.last.nil? ?  create(:user).id : User.last.id}
     name "MyString"
   end
 
