@@ -57,7 +57,7 @@ FactoryGirl.define do
     identity_provider_user_id "facebookuseridkeyisverylong"
     identity_provider_token "facebooktokenkey"
     phone_number "0546684685"
-    identity_provider_email "example@mail.com"
+    identity_provider_email "#{Time.now.to_i}@mail.com"
     identity_provider_user_name "guy free"
     is_logged_in true
     active_device_dev_uuid "justOnethatdoesnotexist"
@@ -66,6 +66,11 @@ FactoryGirl.define do
     trait :google do
       identity_provider "google"
     end
+
+    trait :existing_user do
+      identity_provider_email "example@mail.com"
+    end
+
   end
 
   factory :feedback do

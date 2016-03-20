@@ -26,7 +26,9 @@ gem 'pushmeup'
 gem 'json'
 
 #delayed jobs
-gem 'delayed_job_active_record'
+# gem 'delayed_job_active_record'
+gem 'resque', "~> 1.22.0"
+gem 'redis'
 
 #web design
 gem 'bootstrap-sass', '3.2.0.0'
