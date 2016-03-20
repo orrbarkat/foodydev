@@ -24,17 +24,26 @@ RSpec.describe GroupsController, type: :controller do
   # Group. As you add validations to Group, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:group)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: nil, user_id: "a"}
   }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # GroupsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  describe "GET #get_members" do
+    it "returns all members of a group" do
+      group = Group.create! valid_attributes
+      create_list(:group_member, 5)
+      get :get_members, {:id=>Group.last.id}, valid_session
+      expect(Json.parse(response.body).members).to eq(GroupMember.where(Group_id: Group.last.id))
+    end
+  end
 
   describe "GET #index" do
     it "assigns all groups as @groups" do
@@ -152,7 +161,7 @@ RSpec.describe GroupsController, type: :controller do
     it "redirects to the groups list" do
       group = Group.create! valid_attributes
       delete :destroy, {:id => group.to_param}, valid_session
-      expect(response).to redirect_to(groups_url)
+      expect(response).to have_http_status( 200)
     end
   end
 

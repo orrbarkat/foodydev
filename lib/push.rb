@@ -10,7 +10,9 @@ class Push
   	end
 
   	def create
+  		Rails.logger.warn "gcm now pushing"
   		@gcm.create
+  		Rails.logger.warn "apn now pushing"
   		@apn.create
   	end
 
@@ -42,16 +44,24 @@ class Apn
 	end
 
 	def getTokens()
-		registered = @publication.registered_user_for_publication
-  		tokens = []
-  		registered.each do |r|
-    		if r.is_real && r.is_ios
-      			tokens << r.token
-    		end
-  		end
+		tokens = Array.new
+		if @publication.audience == 0
+			registered = @publication.registered_user_for_publication
+			registered.each do |r|
+	    		if r.is_real && r.is_ios
+	      			tokens << r.token
+	    		end
+  			end
+		else
+			registered = GroupMember.where(Group_id: @publication.audience)
+			registered.each do |r|
+				r = r.token
+				tokens << r.remote if (r.ios==true && r.remote!= "no")
+			end
+		end
 	  	tokens = tokens.uniq
-	  	tokens.delete(@registration.active_device_dev_uuid) unless @registration.nil?
-	  	tokens.delete(@user_report.active_device_dev_uuid) unless @user_report.nil?
+	  	tokens.delete(ActiveDevice.find_by_dev_uuid(@registration.active_device_dev_uuid).remote_notification_token) unless @registration.nil?
+	  	tokens.delete(ActiveDevice.find_by_dev_uuid(@user_report.active_device_dev_uuid).remote_notification_token) unless @user_report.nil?
 	  	return tokens
 	end
 
@@ -70,30 +80,33 @@ class Apn
   	end
 
   	def create
-  		begin
-	  		devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no").to_set
-	  		nots=[]
-	  		devices.uniq.each do |device|
-	  			notification = Houston::Notification.new(device: device.remote_notification_token)
-	  			notification.alert = "New event around you #{@publication.title}" 
-	            #notification.badge = 1
-		        notification.sound = "default"
-		        notification.category = "ARRIVED_CATEGORY"
-		        notification.content_available = true
-		        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-		        nots<<notification 
-		    end
-		    @APN.push(nots)
-		    puts nots.map {|n| n.sent?}
-	        puts @APN.devices
-	    rescue => e
-	    	broken = @APN.devices
-	    	broken.each do |token|
-	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
-	    		puts dev.update!(:remote_notification_token=>"no")
-	    	end
-	    	logger.warn "Unable to push, will ignore: #{e}"
+		if @publication.audience == 0
+  			devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no")
+  			devices.map!{|d| d.remote_notification_token} unless devices.empty?
+  		else
+  			devices = getTokens
+  		end
+  		nots=[]
+  		devices.uniq.each do |token|
+  			notification = Houston::Notification.new(device: token)
+  			notification.alert = "New event around you #{@publication.title}" 
+            #notification.badge = 1
+	        notification.sound = "default"
+	        notification.category = "ARRIVED_CATEGORY"
+	        notification.content_available = true
+	        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+	        nots<<notification 
 	    end
+	    @APN.push(nots)
+	    return nots.map {|n| n.sent?}
+        puts @APN.devices
+    rescue => e
+    	broken = @APN.devices
+    	broken.each do |token|
+    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+    		puts dev.update!(:remote_notification_token=>"no")
+    	end
+    	Rails.logger.warn "Unable to push, will ignore: #{e}"
     end
 
     def delete
@@ -119,7 +132,7 @@ class Apn
 	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
 	    		puts dev.update!(:remote_notification_token=>"no")
 	    	end
-	    	logger.warn "Unable to push, will ignore: #{e}"
+	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
 	    end
     end
 
@@ -146,7 +159,7 @@ class Apn
 	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
 	    		puts dev.update!(:remote_notification_token=>"no")
 	    	end
-	    	logger.warn "Unable to push, will ignore: #{e}"
+	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
 	  	end
     end
 
@@ -173,7 +186,7 @@ class Apn
 	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
 	    		puts dev.update!(:remote_notification_token=>"no")
 	    	end
-	    	logger.warn "Unable to push, will ignore: #{e}"
+	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
 	  end
     end
 end

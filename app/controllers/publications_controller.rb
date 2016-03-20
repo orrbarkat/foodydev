@@ -23,7 +23,6 @@ class PublicationsController < ApplicationController
     @publication = Publication.new(publication_params)
     use_date
     @publication.save!
-    byebug
     CreatePublicationJob.perform_later
     render json: @publication, only: [:id, :version]
   rescue
@@ -56,13 +55,7 @@ private
     @publication = Publication.find(params[:id])
   end
 
-  def pushCreate
-    puts @publication.id
-    push = Push.new(@publication)
-    push.create
-  rescue => e
-    logger.warn "Unable to push, will ignore: #{e}"
-  end
+  
 
   def pushDelete
     puts @publication.id
