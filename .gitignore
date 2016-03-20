@@ -21,3 +21,5 @@ config/database.yml
 #Ignore env vars
 .env
 
+
+dump.rdb
