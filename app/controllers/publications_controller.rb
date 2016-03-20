@@ -2,7 +2,7 @@ class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
   before_action :set_date, only: [:create]
   # after_action :pushCreate, only: [:create]
-  after_action :pushDelete, only: [:destroy] 
+  # after_action :pushDelete, only: [:destroy] 
 
   require ENV["push_path"]
 
@@ -23,8 +23,7 @@ class PublicationsController < ApplicationController
     @publication = Publication.new(publication_params)
     use_date
     @publication.save!
-    byebug
-    CreatePublicationJob.perform_later
+    CreatePublicationJob.perform_later(@publication.id)
     render json: @publication, only: [:id, :version]
   rescue
     render json: @publication.errors, status: :unprocessable_entity
@@ -42,6 +41,7 @@ class PublicationsController < ApplicationController
 
   def destroy
     @publication.destroy
+    DeletePublicationJob.perform_later(@publication)
     render json: "OK"
   end
 
@@ -54,23 +54,6 @@ class PublicationsController < ApplicationController
 private
   def set_publication
     @publication = Publication.find(params[:id])
-  end
-
-  def pushCreate
-    puts @publication.id
-    push = Push.new(@publication)
-    push.create
-  rescue => e
-    logger.warn "Unable to push, will ignore: #{e}"
-  end
-
-  def pushDelete
-    puts @publication.id
-    push = Push.new(@publication)
-    puts push
-    push.delete
-  rescue => e
-    logger.warn "Unable to push, will ignore: #{e}"
   end
 
   def set_date

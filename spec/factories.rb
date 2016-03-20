@@ -1,14 +1,14 @@
 FactoryGirl.define do  
 
   factory :group_member do
-    Group_id {Group.last.id}
-    phone_number "0473478342"
+    Group_id {Group.last.nil? ? create(:group).id : Group.last.id}
+    sequence(:phone_number) { |n| "054668468#{n}"}
     name "MyString"
   end
   
 
   factory :group do
-    user_id {User.last.id || create(:user).get(:id)}
+    user_id {User.last.nil? ?  create(:user).id : User.last.id}
     name "MyString"
   end
 
@@ -17,7 +17,7 @@ FactoryGirl.define do
   	title "MyText"
   	address "MyText"
   	type_of_collecting 1
-    publisher_id {User.last.id || create(:user).get(:id)}
+    publisher_id {User.last.nil? ? create(:user).id : User.last.id }
   	latitude 9.99
   	longitude 9.99
   	starting_date  {1.day.ago.to_i}
@@ -55,7 +55,7 @@ FactoryGirl.define do
     identity_provider "facebook"
     identity_provider_user_id "facebookuseridkeyisverylong"
     identity_provider_token "facebooktokenkey"
-    phone_number "0546684685"
+    phone_number "0546684680"
     identity_provider_email "#{Time.now.to_i}@mail.com"
     identity_provider_user_name "guy free"
     is_logged_in true

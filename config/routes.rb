@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'admin/logout' => 'admin#logout', as: :logout
 
   get 'groups/all'
+  get 'groups/:id/group_members' => 'groups#get_members'
 
   resources :feedbacks
   resources :groups

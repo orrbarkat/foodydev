@@ -32,7 +32,7 @@ RSpec.describe "Users", type: :request do
       create(:group_member, :user_id => User.last.id, :phone_number => User.last.phone_number)
       create(:publication, :audience => Group.last.id)
       get get_publications_path(User.last.id)
-      expect(response.body).to eq Publication.last
+      expect(json[0][0]['id']).to eq(Publication.last.id)
     end
   end
 
@@ -43,6 +43,6 @@ RSpec.describe "Users", type: :request do
   		 }
   		 user = attributes_for(:user)
   		 post "/users.json", { :user => user }.to_json, headers
-  		expect(response).to have_http_status(200)
+  		expect(response).to have_http_status(201)
   	end
 end

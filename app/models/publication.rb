@@ -24,6 +24,7 @@ class Publication < ActiveRecord::Base
 
   def default_values
     self.is_on_air ||= true if self.is_on_air.nil?
+    self.audience = 0 if self.audience.nil?
   end
 
   def set_user_name

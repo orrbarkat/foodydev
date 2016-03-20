@@ -33,10 +33,11 @@ RSpec.describe User, type: :model do
   		expect(@user).to_not be_valid
   	end
   	it "parses the phone_number correctly" do
-  		phone = @user.phone_number
-  		expect(@user.normalize_phone).to eq("546684685")
+      @user.save!
+  		expect(@user.uniphone).to eq("546684680")
   		@user.phone_number = "abcd0987654567"
-  		expect(@user.normalize_phone).to eq("987654567")
+      @user.save!
+  		expect(@user.uniphone).to eq("987654567")
   	end
   	
   	it "uses a valid oauth token" 

@@ -1,6 +1,14 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:get_members, :show, :edit, :update, :destroy]
   before_action :group_params, only: [:create]
+  
+  #GET /groups/<group_id>/group_members 
+  #GET /groups/<group_id>/group_members.json
+  def get_members
+    members = GroupMember.where(Group_id: params[:id])
+    render json: {members: members}.to_json
+  end 
+
   # GET /groups
   # GET /groups.json
   def index
