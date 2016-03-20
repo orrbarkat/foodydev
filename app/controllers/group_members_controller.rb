@@ -67,23 +67,29 @@ class GroupMembersController < ApplicationController
   # DELETE /group_members/1
   # DELETE /group_members/1.json
   def destroy
-    groupd_id = 0
+    group_id = 0
     if (@group_member.is_admin)
-      group_id = Group.find(@group_member.Group_id)
+      group_id = Group.find(@group_member.Group_id).id
     end
     
-    @group_member.destroy
-    
-    if(group_id > 0)
-      @new_admin = GroupMember.find_by_Group_id(group_id)
-      @new_admin.is_admin = true
-      @new_admin.update!
-      render json: @new_admin
-    else
+    if(@group_member)
+      @group_member.destroy
+      
+      if(group_id > 0)
+        temp = GroupMember.find_by_Group_id(group_id)
+        para= Hash.new
+        para["Group_id"] = temp.Group_id
+        para["user_id"] = temp.user_id
+        para["phone_number"]= temp.phone_number
+        para["name"] = temp.name
+        para["is_admin"] = true
+        temp.update(para)  
+      end
+      
       render json: "OK"  
+    else
+      render json: "no group_member with this ID"
     end
-    
-    
     # respond_to do |format|
     #   format.html { redirect_to group_members_url, notice: 'Group member was successfully destroyed.' }
     #   format.json { head :no_content }
