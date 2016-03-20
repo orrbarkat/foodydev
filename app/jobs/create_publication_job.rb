@@ -11,7 +11,7 @@ class CreatePublicationJob < ActiveJob::Base
 protected
   def pushCreate
     push = Push.new(@publication)
-     puts push.create
+    Rails.logger.debug push.create
   rescue => e
     Rails.logger.warn "Unable to push, will ignore: #{e}"
   end

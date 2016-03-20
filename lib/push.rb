@@ -89,12 +89,16 @@ class Apn
   		nots=[]
   		devices.uniq.each do |token|
   			notification = Houston::Notification.new(device: token)
-  			notification.alert = "New event around you #{@publication.title}" 
-            #notification.badge = 1
-	        notification.sound = "default"
-	        notification.category = "ARRIVED_CATEGORY"
-	        notification.content_available = true
-	        notification.custom_data = {type:"new_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+  			notification.sound = ""
+			notification.category = 'ARRIVED_CATEGORY'
+			notification.content_available = true
+			notification.custom_data = {type:'new_publication',data:{ 
+				id: @publication.id, 
+				version:@publication.version, 
+				title:@publication.title,
+				latitude:@publication.latitude,
+				longitude: @publication.longitude
+				}}
 	        nots<<notification 
 	    end
 	    @APN.push(nots)
@@ -110,30 +114,38 @@ class Apn
     end
 
     def delete
-    	begin
-	      tokens= getTokens()
-	      nots=[]
-	      tokens.each do |token|
-	        notification = Houston::Notification.new(device: token)
-	        #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
-	        notification.alert = "Event finished around you #{@publication.title}" 
-	        #notification.badge = 1
-	        notification.sound = "default"
-	        notification.category = "ARRIVED_CATEGORY"
-	        notification.content_available = true
-	        notification.custom_data = {type:"deleted_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
-	        nots<<notification
-	      end
-	      @APN.push(nots)
-	      puts nots.map {|n| n.sent?}
-        rescue => e
-	    	broken = @APN.devices
-	    	broken.each do |token|
-	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
-	    		puts dev.update!(:remote_notification_token=>"no")
-	    	end
-	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
-	    end
+      tokens= getTokens()
+      nots=[]
+      tokens.each do |token|
+        notification = Houston::Notification.new(device: token)
+  			notification.sound = ""
+			notification.category = 'ARRIVED_CATEGORY'
+			notification.content_available = true
+			notification.custom_data = {type:"deleted_publication",data:{ 
+				id:@publication.id,
+				version:@publication.version,
+				title:@publication.title,
+				latitude:@publication.latitude,
+				longitude: @publication.longitude
+				}}
+        #"909cb3d2629c81fd703e35a026d025b1f325e6174b4cb5955aa18dcbe87c3cbf"
+        # notification.alert = "Event finished around you #{@publication.title}" 
+        # #notification.badge = 1
+        # notification.sound = "default"
+        # notification.category = "ARRIVED_CATEGORY"
+        # notification.content_available = true
+        # notification.custom_data = {type:"deleted_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
+        nots<<notification
+      end
+      @APN.push(nots)
+      return nots.map {|n| n.sent?}
+    rescue => e
+    	broken = @APN.devices
+    	broken.each do |token|
+    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+    		puts dev.update!(:remote_notification_token=>"no")
+    	end
+    	Rails.logger.warn "Unable to push, will ignore: #{e}"
     end
 
     def register

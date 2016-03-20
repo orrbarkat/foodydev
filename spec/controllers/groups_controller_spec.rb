@@ -36,12 +36,16 @@ RSpec.describe GroupsController, type: :controller do
   # GroupsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:json) { JSON.parse(response.body) }
+
+
   describe "GET #get_members" do
     it "returns all members of a group" do
       group = Group.create! valid_attributes
       create_list(:group_member, 5)
-      get :get_members, {:id=>Group.last.id}, valid_session
-      expect(Json.parse(response.body).members).to eq(GroupMember.where(Group_id: Group.last.id))
+      get :get_members, {:id=>group.to_param}, valid_session,format: :json
+      expect(json['members'].size).to eq(GroupMember.where(Group_id: Group.last.id).size)
+      expect(json['members'][0]['id']).to eq(GroupMember.where(Group_id: Group.last.id).first.id)
     end
   end
 
@@ -156,12 +160,6 @@ RSpec.describe GroupsController, type: :controller do
       expect {
         delete :destroy, {:id => group.to_param}, valid_session
       }.to change(Group, :count).by(-1)
-    end
-
-    it "redirects to the groups list" do
-      group = Group.create! valid_attributes
-      delete :destroy, {:id => group.to_param}, valid_session
-      expect(response).to have_http_status( 200)
     end
   end
 
