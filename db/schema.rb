@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160306121207) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string   "active_device_dev_uuid",                                 null: false
+    t.string   "active_device_dev_uuid"
     t.string   "reporter_name",          limit: 100, default: "no_name"
     t.string   "report",                 limit: 500,                     null: false
     t.datetime "created_at",                                             null: false
