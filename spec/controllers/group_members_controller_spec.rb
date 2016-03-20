@@ -24,11 +24,11 @@ RSpec.describe GroupMembersController, type: :controller do
   # GroupMember. As you add validations to GroupMember, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:group_member)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { :Group_id=> nil, :name=>nil}
   }
 
   # This should return the minimal set of values that should be in the session

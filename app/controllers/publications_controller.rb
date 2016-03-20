@@ -1,7 +1,7 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:update, :destroy]
   before_action :set_date, only: [:create]
-  after_action :pushCreate, only: [:create]
+  # after_action :pushCreate, only: [:create]
   after_action :pushDelete, only: [:destroy] 
 
   require ENV["push_path"]
@@ -23,6 +23,8 @@ class PublicationsController < ApplicationController
     @publication = Publication.new(publication_params)
     use_date
     @publication.save!
+    byebug
+    CreatePublicationJob.perform_later
     render json: @publication, only: [:id, :version]
   rescue
     render json: @publication.errors, status: :unprocessable_entity
