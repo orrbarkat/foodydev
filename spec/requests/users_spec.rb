@@ -25,7 +25,16 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  
+  describe "GET/ publication for user" do
+    it "gets publications" do
+      create(:user)
+      create(:group, :user_id => User.last.id)
+      create(:group_member, :user_id => User.last.id, :phone_number => User.last.phone_number)
+      create(:publication, :audience => Group.last.id)
+      get get_publications_path(User.last.id)
+      expect(response.body).to eq Publication.last
+    end
+  end
 
   it "successfuly creates a user" do
   		 headers = {

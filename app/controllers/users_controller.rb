@@ -44,9 +44,9 @@ class UsersController < ApplicationController
   # GET /users/1/publications
 
   def get_publications_for_user
-    group_member_db_line = GroupMember.where("user_id = ?", params[:id])
-    groups_id = Array.new
-    @publications_to_send = Array.new
+   group_member_db_line = GroupMember.where(:user_id => params[:id])
+   groups_id = Array.new
+   @publications_to_send = Array.new
     
     if (group_member_db_line)
       group_member_db_line.each do |x|
@@ -57,13 +57,12 @@ class UsersController < ApplicationController
     if(groups_id)
      groups_id.uniq!
       groups_id.each do |g|
-        temp = Publication.where(:audience => g)
+        temp = Publication.where("audience = ?",g)
         @publications_to_send << temp
       end
     end
     
-    render json: @publications_to_send
-  
+    render json: @publications_to_send  
   end
 
 
