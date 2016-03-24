@@ -40,8 +40,8 @@ class PublicationsController < ApplicationController
   end
 
   def destroy
-    @publication.destroy
-    DeletePublicationJob.perform_later(@publication)
+    @publication.update!(is_on_air:false, ending_date:0)
+    DeletePublicationJob.perform_later(@publication.id)
     render json: "OK"
   end
 

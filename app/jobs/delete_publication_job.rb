@@ -2,9 +2,13 @@ class DeletePublicationJob < ActiveJob::Base
   queue_as :default
   require ENV['push_path']
 
-  def perform(pub)
-    Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
-    pushDelete(pub)
+  def perform(pub_id)
+    pub = Publication.find(pub_id)
+    unless pub.nil?
+      Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
+      pushDelete(pub)
+      pub.destroy if pub.ending_date==0
+    end
   end
 
 protected

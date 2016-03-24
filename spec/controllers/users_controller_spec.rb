@@ -82,7 +82,7 @@ RSpec.describe UsersController, type: :controller do
     context "with valid params" do
       it "creates a new User" do
         expect {
-          post :create, {:user => valid_attributes}, valid_session
+          post :create, {:user => attributes_for(:user)}, valid_session
         }.to change(User, :count).by(1)
       end
 
@@ -94,7 +94,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "redirects to the created user" do
         post :create, {:user => valid_attributes}, valid_session
-        expect(response.status).to eq(200)
+        expect(response.status).to eq((200||201))
       end
     end
 

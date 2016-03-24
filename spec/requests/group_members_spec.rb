@@ -17,7 +17,7 @@ RSpec.describe "GroupMembers", type: :request do
       create(:user)
       create(:group_member, :is_admin => true)
       count = GroupMember.count
-      delete delete_member_path(GroupMember.last.id)
+      delete group_member_path(GroupMember.last.id)
       expect(GroupMember.last.is_admin).to eq true 
       expect(GroupMember.count).to eq (count - 1)
  
@@ -29,7 +29,7 @@ RSpec.describe "GroupMembers", type: :request do
         create(:user)
         create(:group_member, :is_admin => false)
         count = GroupMember.count
-        delete delete_member_path(GroupMember.last.id)
+        delete group_member_path(GroupMember.last.id)
         expect(GroupMember.last.is_admin).to eq true 
         expect(GroupMember.count).to eq (count - 1)     
     end

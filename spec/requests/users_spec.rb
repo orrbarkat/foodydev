@@ -43,6 +43,6 @@ RSpec.describe "Users", type: :request do
   		 }
   		 user = attributes_for(:user)
   		 post "/users.json", { :user => user }.to_json, headers
-  		expect(response).to have_http_status(201)
+  		expect(response).to have_http_status(200)
   	end
 end
