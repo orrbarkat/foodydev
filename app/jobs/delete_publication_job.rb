@@ -4,11 +4,11 @@ class DeletePublicationJob < ActiveJob::Base
 
   def perform(pub_id)
     pub = Publication.find(pub_id)
-    unless pub.nil?
-      Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
-      pushDelete(pub)
-      pub.destroy if pub.ending_date==0
-    end
+    Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
+    pushDelete(pub)
+    pub.destroy if pub.ending_date==0
+  rescue
+    Rails.logger.warn "Unable to find publication, will ignore: #{e}"
   end
 
 protected
