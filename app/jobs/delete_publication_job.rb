@@ -3,11 +3,12 @@ class DeletePublicationJob < ActiveJob::Base
   require ENV['push_path']
 
   def perform(pub_id)
+    sleep(1) while !Publication.exists?(pub_id)
     pub = Publication.find(pub_id)
     Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
     pushDelete(pub)
     pub.destroy if pub.ending_date==0
-  rescue
+  rescue => e
     Rails.logger.warn "Unable to find publication, will ignore: #{e}"
   end
 

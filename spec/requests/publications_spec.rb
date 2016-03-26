@@ -11,7 +11,7 @@ RSpec.describe "Publications", type: :request do
   		 	"CONTENT_TYPE" => "application/json"
   		 }
        #{ :publication => attributes_for(:publication) }.to_json
-  		 post "/publications.json", {:publication=>{:address=>"ישעיהו 30-46,תל אביב יפו", :photo_url=>"", :ending_date=>1458891983, :title=>"test create job", :active_device_dev_uuid=>"a0912a2f2c1a31fc", :longitude=>34.7797807, :starting_date=>1458809183, :latitude=>32.0933729, :is_on_air=>true, :subtitle=>"", :type_of_collecting=>2, :contact_info=>"0547524401"}}.to_json, headers
+  		 post "/publications.json", {:publication=> attributes_for(:publication, :address=>"ישעיהו 30-46,תל אביב יפו", :photo_url=>"", :ending_date=>1458891983, :title=>"test create job", :active_device_dev_uuid=>"a0912a2f2c1a31fc", :longitude=>34.7797807, :starting_date=>1458809183, :latitude=>32.0933729, :is_on_air=>true, :subtitle=>"", :type_of_collecting=>2, :contact_info=>"0547524401")}.to_json, headers
   		expect(response).to have_http_status(200)
   	end
   end
@@ -28,5 +28,21 @@ RSpec.describe "Publications", type: :request do
       expect(Publication.find(pub.id).is_on_air).to be_falsey
     end
   end
+
+  describe 'DELETE /publications/:id.json' do
+    it "updates a publication successfuly" do
+      pub = create(:publication)
+      headers = {
+        "ACCEPT" => "application/json",
+        "CONTENT_TYPE" => "application/json"
+       }
+      delete "/publications/#{pub.id}.json", {}, headers
+      expect(response).to have_http_status(200)
+      expect(Publication.find(pub.id).is_on_air).to be_falsey
+      expect(Publication.find(pub.id).ending_date).to eq 0
+    end
+  end
+
+
 
 end
