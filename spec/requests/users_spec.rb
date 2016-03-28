@@ -41,7 +41,7 @@ RSpec.describe "Users", type: :request do
   		 	"ACCEPT" => "application/json",
   		 	"CONTENT_TYPE" => "application/json"
   		 }
-  		 user = attributes_for(:user, email: rand(1...9999999999).to_s + "@example.co.il")
+  		 user = attributes_for(:user, identity_provider_email: rand(1...9999999999).to_s + "@example.co.il")
   		 post "/users.json", { :user => user }.to_json, headers
   		expect(response).to have_http_status(201)
   	end
