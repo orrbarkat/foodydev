@@ -94,7 +94,7 @@ RSpec.describe UsersController, type: :controller do
 
       it "redirects to the created user" do
         post :create, {:user => valid_attributes}, valid_session
-        expect(response.status).to eq((200||201))
+        expect(response.status).to eq(201)
       end
     end
 

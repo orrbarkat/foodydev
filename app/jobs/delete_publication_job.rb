@@ -3,7 +3,11 @@ class DeletePublicationJob < ActiveJob::Base
   require ENV['push_path']
 
   def perform(pub_id)
-    sleep(1) while !Publication.exists?(pub_id)
+    i=0
+    while (!Publication.exists?(pub_id) && i<10)
+      sleep(2) 
+      i+=1
+    end
     pub = Publication.find(pub_id)
     Rails.logger.debug "#{self.class.name}: I'm performing my job with arguments: #{pub}"
     pushDelete(pub)
