@@ -57,15 +57,15 @@ ActiveRecord::Schema.define(version: 20160306121207) do
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                    null: false
-    t.integer  "publication_version",               null: false
+    t.integer  "publication_id",                     null: false
+    t.integer  "publication_version",                null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
-    t.string   "report_user_name"
-    t.string   "report_contact_info"
+    t.string   "report_user_name",       limit: 255
+    t.string   "report_contact_info",    limit: 255
     t.integer  "reporter_user_id"
   end
 
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20160306121207) do
     t.string   "contact_info",                limit: 100
     t.boolean  "is_on_air"
     t.string   "active_device_dev_uuid",      limit: 64,  null: false
-    t.string   "photo_url"
+    t.string   "photo_url",                   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "publisher_id"

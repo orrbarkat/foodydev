@@ -1,6 +1,6 @@
 <% if cookies.signed[:user] %>
   <h1 class="page-header">admin panel</h1>
-
+  <div class="jumbotron">
   <div class="table-responsive">          
     <table class="table">
       <thead>
@@ -24,6 +24,7 @@
       </tbody>
     </table>
     </div>
+  </div>
   <% else %>
     <%= render 'form' %>
   <% end %>
