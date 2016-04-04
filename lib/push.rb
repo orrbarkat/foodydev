@@ -105,10 +105,11 @@ class Apn
 	    return nots.map {|n| n.sent?}
         puts @APN.devices
     rescue => e
+    	puts e
     	broken = @APN.devices
     	broken.each do |token|
     		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
-    		puts dev.update!(:remote_notification_token=>"no")
+    		puts dev.update!(:remote_notification_token=>"no") unless dev.nil?
     	end
     	Rails.logger.warn "Unable to push, will ignore: #{e}"
     end
