@@ -88,6 +88,7 @@ class Apn
   		end
   		nots=[]
   		devices.uniq.each do |token|
+  			puts token
   			notification = Houston::Notification.new(device: token)
   			notification.sound = ""
 			notification.category = 'ARRIVED_CATEGORY'
