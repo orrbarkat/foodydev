@@ -81,7 +81,7 @@ class Apn
 
   	def create
 		if @publication.audience == 0
-  			devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no").to_a
+  			devices = ActiveDevice.where(is_ios: true).where.not(remote_notification_token: "no").to_a.reverse
   			devices.map!{|d| d.remote_notification_token} unless devices.empty?
   		else
   			devices = getTokens
