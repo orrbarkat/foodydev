@@ -138,15 +138,11 @@ class Apn
         # notification.content_available = true
         # notification.custom_data = {type:"deleted_publication",data:{ id:@publication.id,version:@publication.version,title:@publication.title}}
         nots<<notification
+        nots = push(nots) if nots.size == 20
       end
-      @APN.push(nots)
+      push(nots)
       return nots.map {|n| n.sent?}
     rescue => e
-    	broken = @APN.devices
-    	broken.each do |token|
-    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
-    		puts dev.update!(:remote_notification_token=>"no")
-    	end
     	Rails.logger.warn "Unable to push, will ignore: #{e}"
     end
 
