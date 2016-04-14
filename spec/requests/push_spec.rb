@@ -16,6 +16,14 @@ RSpec.describe Push do
 		expect(push.user_report).to_not eq(nil)
 		push.gcm.report
 	end
+
+	it "deals with member with no user_id" do
+		group = create(:group)
+		members = []
+		10.times{|i| members<< create(:group_member, Group_id: group.id)}
+		apn = Apn.new(nil,nil,nil)
+		expect(apn.send(:getMembers, group.id)).to eq([])
+	end
 	
 
 end
