@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe DeletePublicationJob, type: :job do
+  before(:each) do
+    Resque::Failure.clear
+  end
+
   it 'enqueues in resque' do
   	pub = create(:publication)
   	size = Resque.size("default")

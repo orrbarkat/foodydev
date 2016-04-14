@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AddMemberNotificationJob, type: :job do
+  before(:each) do
+    Resque::Failure.clear
+  end
   it 'enqueues in resque' do
   	group = create(:group)
   	create(:group_member, phone_number: create(:user).phone_number)
