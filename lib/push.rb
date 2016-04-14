@@ -1,10 +1,11 @@
 class Push
 	attr_accessor :apn, :gcm, :publication, :user_report, :registration
 
-	def initialize(publication, report=nil, registration=nil)
+	def initialize(publication=nil, report=nil, registration=nil, params = {})
 		@publication = publication
 		@user_report=report
 	    @registration=registration
+	    @params = params
     	@apn = Apn.new(@publication,report,@registration)
     	@gcm = Gcm.new(@publication,report,@registration)
   	end
@@ -29,6 +30,12 @@ class Push
   	def report
   		@gcm.report
   		@apn.report
+  	end
+
+  	def new_member
+  		return false unless @params[:group_id]
+  		# @gcm.new_member(@params[:group_id])
+  		@apn.new_member(@params[:group_id])
   	end
 end
 
@@ -147,30 +154,24 @@ class Apn
     end
 
     def register
-    	begin
-	      tokens= getTokens()
-	      tokens<<owner()
-	      nots=[]
-	      tokens.each do |token|
-	        notification = Houston::Notification.new(device: token)
-	        notification.alert = "User comes to pick up #{@publication.title}"
-	        #notification.badge = 1
-	        notification.sound = "default"
-	        notification.category = "ARRIVED_CATEGORY"
-	        notification.content_available = true
-	        notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
-	        nots<<notification
-	      end
-	      @APN.push(nots)
-	      puts nots.map {|n| n.sent?}
-      	rescue => e
-	    	broken = @APN.devices
-	    	broken.each do |token|
-	    		dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
-	    		puts dev.update!(:remote_notification_token=>"no")
-	    	end
-	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
-	  	end
+      tokens= getTokens()
+      tokens<<owner()
+      nots=[]
+      tokens.each do |token|
+        notification = Houston::Notification.new(device: token)
+        notification.alert = "User comes to pick up #{@publication.title}"
+        #notification.badge = 1
+        notification.sound = "default"
+        notification.category = "ARRIVED_CATEGORY"
+        notification.content_available = true
+        notification.custom_data = {type:"registration_for_publication",data:{ id:@publication.id,version:@publication.version,date:@registration.date_of_registration}}
+        nots<<notification
+        nots = push(nots) if nots.size == 20
+      end
+      push(nots)
+      return nots.map {|n| n.sent?}
+    rescue => e
+    	Rails.logger.warn "Unable to push, will ignore: #{e}"
     end
 
     def report
@@ -199,6 +200,29 @@ class Apn
 	    	Rails.logger.warn "Unable to push, will ignore: #{e}"
 	  end
     end
+
+    def new_member(id)
+      tokens= getMembers(id)
+      group_name = Group.find(id).name
+      nots=[]
+      tokens.each do |token|
+        notification = Houston::Notification.new(device: token)
+        notification.sound = "" 
+		notification.category = 'ARRIVED_CATEGORY'
+		notification.content_available = true 
+		notification.custom_data = {type:"group_members",data:{ 
+			id: id,
+	 	 	title:group_name
+	 	}}
+        nots<<notification
+        nots = push(nots) if nots.size == 20
+      end
+      push(nots)
+      return nots.map {|n| n.sent?}
+    # rescue => e
+    # 	Rails.logger.warn "Unable to push, will ignore: #{e}"
+    end
+
 
 protected
 	def push(nots)
@@ -245,6 +269,17 @@ protected
 	    dev.remote_notification_token="no" unless dev.nil?
 	    dev.save!
 	    puts dev.remote_notification_token
+	end
+
+	def getMembers(group_id)
+		registered = GroupMember.where(Group_id: group_id)
+		tokens = []
+		registered.each do |r|
+			next if r.is_admin
+			r = r.token
+			tokens << r[:remote] if (r[:ios]==true && r[:remote]!= "no")
+		end
+		return tokens
 	end
 end
 
