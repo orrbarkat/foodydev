@@ -16,6 +16,6 @@ RSpec.describe AddMemberNotificationJob, type: :job do
   	group = create(:group)
   	create(:group_member, phone_number: create(:user).phone_number)
   	AddMemberNotificationJob.perform_now(group.id)
-  	expect(Resque::Failure.all).to be_empty
+  	expect(Resque::Failure.all).to be_nil
   end
 end
