@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   
+  get 'pages/home'
+
+  get 'pages/about'
+
+  get 'pages/connect_us'
+
+  get 'pages/sign_in'
+
   get 'admin/' => 'admin#index', as: :admin
   get 'admin/login' => 'admin#login', as: :login
   get 'admin/logout' => 'admin#logout', as: :logout
