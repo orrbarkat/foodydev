@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CreatePublicationJob, type: :job do
+  before(:each) do
+    Resque::Failure.clear
+  end
   it 'enqueues in resque' do
   	pub = create(:publication)
   	CreatePublicationJob.perform_now(pub.id)

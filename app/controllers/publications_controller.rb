@@ -32,7 +32,7 @@ class PublicationsController < ApplicationController
   def update
     @publication.update!(publication_params)
     if @publication.is_on_air == false
-      DeletePublicationJob.perform_later(@publication)
+      DeletePublicationJob.perform_later(@publication.id)
     end
     render json: @publication, only: [:id, :version] 
   rescue

@@ -56,7 +56,7 @@ FactoryGirl.define do
     identity_provider_user_id "facebookuseridkeyisverylong"
     identity_provider_token "facebooktokenkey"
     phone_number "0546684680"
-    identity_provider_email "#{Time.now.to_i}@mail.com"
+    identity_provider_email {Time.now.to_i.to_s + "@mail.com"} 
     identity_provider_user_name "guy free"
     is_logged_in true
     active_device_dev_uuid "justOnethatdoesnotexist"

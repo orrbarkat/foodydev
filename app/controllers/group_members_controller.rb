@@ -42,7 +42,8 @@ class GroupMembersController < ApplicationController
           @send_group_members << "440"
         end
       end
-      
+      #notify group members
+      AddMemberNotificationJob.perform_later(members_params.first[:Group_id])
       respond_to do |format|
       
         format.html { redirect_to @send_group_members, notice: 'Group members was successfully created.' }
