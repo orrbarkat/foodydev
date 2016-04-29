@@ -37,6 +37,13 @@ class Push
   		# @gcm.new_member(@params[:group_id])
   		@apn.new_member(@params[:group_id])
   	end
+
+  	def remove_member
+  		return false unless @params[:group_id]
+  		# @gcm.new_member(@params[:group_id])
+  		@apn.remove_member(@params[:group_id])
+  	end
+
 end
 
 class Apn
@@ -202,6 +209,28 @@ class Apn
     end
 
     def new_member(id)
+      tokens= getMembers(id)
+      group_name = Group.find(id).name
+      nots=[]
+      tokens.each do |token|
+        notification = Houston::Notification.new(device: token)
+        notification.sound = "" 
+		notification.category = 'ARRIVED_CATEGORY'
+		notification.content_available = true 
+		notification.custom_data = {type:"group_members",data:{ 
+			id: id,
+	 	 	title:group_name
+	 	}}
+        nots<<notification
+        nots = push(nots) if nots.size == 20
+      end
+      push(nots)
+      return nots.map {|n| n.sent?}
+    # rescue => e
+    # 	Rails.logger.warn "Unable to push, will ignore: #{e}"
+    end
+
+   def remove_member(id)
       tokens= getMembers(id)
       group_name = Group.find(id).name
       nots=[]
