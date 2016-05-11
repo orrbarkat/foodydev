@@ -87,7 +87,7 @@ class GroupMembersController < ApplicationController
         temp.update(para)  
       end
       #notify group members
-      RemoveMemberNotificationJob.perform_later(group_id)
+      AddMemberNotificationJob.perform_later(group_id)
       render json: "OK"  
     else
       render json: "no group_member with this ID"
