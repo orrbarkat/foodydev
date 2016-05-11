@@ -246,7 +246,9 @@ class Apn
         nots<<notification
         nots = push(nots) if nots.size == 20
       end
+      Rails.logger.warn "arived to push"
       push(nots)
+
       return nots.map {|n| n.sent?}
     # rescue => e
     # 	Rails.logger.warn "Unable to push, will ignore: #{e}"
