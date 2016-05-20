@@ -14,6 +14,15 @@
   def create
     @report = PublicationReport.new(publication_report_params)
     @report.save!
+    if(@report.rating != 0)
+      @rating = Rating.new()
+      @rating.publication_id = @report.publication_id
+      @rating.publication_version  = @report.publication_version
+      @rating.rate = @report.rate
+      @rating.publisher_user_id = Publication.find(@report.publication_id).publisher_id
+      @rating.reporter_user_id  = @report.reporter_user_id
+      @rating.save!
+    end
     render json:  @report
   rescue
     render json: @report.errors, status: :unprocessable_entity 
