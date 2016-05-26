@@ -1,4 +1,6 @@
 class Publication < ActiveRecord::Base
+  @@WEB_USER_ID = User.find_by_identity_provider_email("foodonet@web.com").id
+
   belongs_to :active_device
   has_many :publication_report
   has_many :registered_user_for_publication, foreign_key: :publication_id, primary_key: :id
@@ -28,7 +30,7 @@ class Publication < ActiveRecord::Base
   end
 
   def set_user_name
-    user = User.find(self.publisher_id)
+    user = self.publisher_id.nil? ? User.find(@@WEB_USER_ID) : User.find(self.publisher_id)
     self.identity_provider_user_name = user.identity_provider_user_name unless user.nil?
   end
 

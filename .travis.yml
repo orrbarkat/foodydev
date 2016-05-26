@@ -9,6 +9,7 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
+  - bundle exec rake db:seed
 
 script: 
   - bundle exec rspec --exclude-pattern "spec/{routing,views/**}/*_spec.rb"
