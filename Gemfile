@@ -25,6 +25,9 @@ gem 'pushmeup'
 #http requests
 gem 'json'
 
+#cross site reqs
+gem 'rack-cors', :require => 'rack/cors'
+
 #delayed jobs
 # gem 'delayed_job_active_record'
 gem 'resque', "~> 1.22.0"
