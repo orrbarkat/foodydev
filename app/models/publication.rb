@@ -16,7 +16,7 @@ class Publication < ActiveRecord::Base
   validates :contact_info, presence: true, length: { maximum: 100 }
   validates :active_device_dev_uuid, presence: true, length: { maximum: 64 }
 
-  before_validation :set_version, :set_user_name
+  before_validation :set_version, :set_user_name, :set_user_rating
  
   before_save :default_values
 
@@ -27,6 +27,10 @@ class Publication < ActiveRecord::Base
   def default_values
     self.is_on_air ||= true if self.is_on_air.nil?
     self.audience = 0 if self.audience.nil?
+  end
+
+  def set_user_rating
+    self.user_rating = User.find(self.publisher_id).ratings
   end
 
   def set_user_name

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   get 'users/:id/groups' => 'users#get_groups_for_user', as: :get_groups
   post 'users' => 'users#create'
+  put 'users/:id' => 'users#update'
   get 'users/:id/publications' => 'users#get_publications_for_user', as: :get_publications
   #post 'group_members' => 'group_members#create', as: :create_group_member 
   resources :active_devices
