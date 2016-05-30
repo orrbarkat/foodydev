@@ -18,7 +18,7 @@
       @rating = Rating.new()
       @rating.publication_id = @report.publication_id
       @rating.publication_version  = @report.publication_version
-      @rating.rate = @report.rate
+      @rating.rate = @report.rating
       @rating.publisher_user_id = Publication.find(@report.publication_id).publisher_id
       @rating.reporter_user_id  = @report.reporter_user_id
       @rating.save!
