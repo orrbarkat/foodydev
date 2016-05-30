@@ -15,7 +15,7 @@
     @report = PublicationReport.new(publication_report_params)
     @report.save!
     if(@report.rating != 0)
-      @rating = Rating.new
+      @rating = Rating.new()
       @rating.publication_id = @report.publication_id
       @rating.publication_version  = 1 #@report.publication_version
       @rating.rate = @report.rating
