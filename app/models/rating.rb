@@ -1,4 +1,4 @@
-class Ratings < ActiveRecord::Base
+class Rating < ActiveRecord::Base
 	belongs_to :publication
 
 	validates :publication_id, null:false
