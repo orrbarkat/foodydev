@@ -17,10 +17,10 @@
     if(@report.rating != 0)
       @rating = Rating.new()
       @rating.publication_id = @report.publication_id
-      @rating.publication_version  = 1 #@report.publication_version
+      @rating.publication_version  = @report.publication_version
       @rating.rate = @report.rating
-      @rating.publisher_user_id = 3 #Publication.find(@report.publication_id).publisher_id
-      @rating.reporter_user_id  = 8 #@report.reporter_user_id
+      @rating.publisher_user_id = Publication.find(@report.publication_id).publisher_id
+      @rating.reporter_user_id  = @report.reporter_user_id
       @rating.save!
     end
     render json:  @report
