@@ -33,7 +33,7 @@ protected
   end
 
    def set_publication
-    @publication = Publication.find(params['s3']['id'])
+    @publication = Publication.find(s3_uploader_params[:id])
   end
 
   def s3_uploader_params
