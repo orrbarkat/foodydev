@@ -1,9 +1,9 @@
 class ChangesInTablesForRatings < ActiveRecord::Migration
   def up
   	add_column :users , :ratings_count, :integer, default: 0
-    change_column :users, :ratings, :float 
-  	add_column :publication_reports, :rating, :integer
-  	add_column :publications, :user_rating, :integer
+    change_column :users, :ratings, :float, default: 0.0
+  	add_column :publication_reports, :rating, :integer, default: 0
+  	add_column :publications, :user_rating, :integer, default: 0
   end
   def down
   	remove_column :users , :ratings_count, :integer
