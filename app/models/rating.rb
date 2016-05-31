@@ -15,6 +15,5 @@ class Rating < ActiveRecord::Base
 			@user.ratings_count = @user.ratings_count + 1
   		@user.ratings = (@user.ratings*(@user.ratings_count) + self.rate)/(@user.ratings_count)
   		@user.save!
-      end
   	end
 end
