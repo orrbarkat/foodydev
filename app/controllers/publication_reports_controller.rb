@@ -24,8 +24,8 @@
       @rating.save!
     end
     render json:  @report
-  rescue
-    render json: @report.errors, status: :unprocessable_entity 
+  # rescue
+  #   render json: @report.errors, status: :unprocessable_entity
   end
 
 private
