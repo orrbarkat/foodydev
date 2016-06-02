@@ -41,3 +41,11 @@ dump.rdb
 .idea/vcs.xml
 
 .idea/workspace.xml
+
+.idea/runConfigurations/Development__foodydev.xml
+
+.idea/runConfigurations/Production__foodydev.xml
+
+.idea/runConfigurations/spec__foodydev.xml
+
+.idea/runConfigurations/test__foodydev.xml
