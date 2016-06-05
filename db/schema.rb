@@ -57,17 +57,17 @@ ActiveRecord::Schema.define(version: 20160605170332) do
   add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "publication_reports", force: :cascade do |t|
-    t.integer  "publication_id",                    null: false
-    t.integer  "publication_version",               null: false
+    t.integer  "publication_id",                                null: false
+    t.integer  "publication_version",                           null: false
     t.integer  "report"
-    t.string   "active_device_dev_uuid", limit: 64, null: false
+    t.string   "active_device_dev_uuid", limit: 64,             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "date_of_report"
     t.string   "report_user_name"
     t.string   "report_contact_info"
     t.integer  "reporter_user_id"
-    t.integer  "rating"
+    t.integer  "rating",                            default: 0
   end
 
   create_table "publications", force: :cascade do |t|
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20160605170332) do
     t.integer  "publisher_id"
     t.integer  "audience",                                default: 0
     t.text     "identity_provider_user_name"
-    t.integer  "user_rating"
+    t.integer  "user_rating",                             default: 0
     t.float    "price"
     t.string   "price_description"
   end
@@ -125,13 +125,13 @@ ActiveRecord::Schema.define(version: 20160605170332) do
     t.string   "identity_provider_user_name",                null: false
     t.boolean  "is_logged_in",                default: true
     t.string   "active_device_dev_uuid",                     null: false
-    t.float    "ratings"
+    t.float    "ratings",                     default: 0.0
     t.float    "cradits",                     default: 0.0
     t.integer  "foodies",                     default: 0
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.text     "uniphone"
-    t.integer  "ratings_count"
+    t.integer  "ratings_count",               default: 0
   end
 
 end
