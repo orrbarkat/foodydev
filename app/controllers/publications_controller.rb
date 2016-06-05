@@ -7,12 +7,12 @@ class PublicationsController < ApplicationController
   require ENV["push_path"]
 
   def home
-    @publications = Publication.all
+    @publications = Publication.where("audience=?",0)
   end
   
   def index
     dti=(Time.now).to_i
-    render json: Publication.where( "is_on_air=? AND starting_date<=? AND ending_date>=?", true, dti, dti)
+    render json: Publication.where( "is_on_air=? AND starting_date<=? AND ending_date>=? AND audience=?", true, dti, dti, 0)
   end
 
   def new
