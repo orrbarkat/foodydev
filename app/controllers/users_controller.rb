@@ -44,19 +44,12 @@ class UsersController < ApplicationController
   # GET /users/1/publications
 
   def get_publications_for_user
-   group_member_db_line = GroupMember.where(:user_id => params[:id])
-   groups_id = Array.new
-   @publications_to_send = Array.new
+   groups_ids = User.find(params[:id]).group_members.select(:Group_id).map{|member| member.Group_id} #GroupMember.where(:user_id => params[:id]).select(:Group_id)
+   @publications_to_send = []
     
-    if (group_member_db_line)
-      group_member_db_line.each do |x|
-        groups_id << x[:Group_id]
-      end
-    end
-    
-    if(groups_id)
-     groups_id.uniq!
-      groups_id.each do |g|
+    if(groups_ids)
+      groups_ids.uniq!
+      groups_ids.each do |g|
         temp = Publication.where("audience = ?",g)
         @publications_to_send << temp
       end
