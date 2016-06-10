@@ -51,13 +51,14 @@ class UsersController < ApplicationController
     publications_to_send = Array.new
     group_ids = Array.new
     user_id = params[:id]
-    publications_to_send << user_id
 
-      render json: publications_to_send
-    end
+
 
     
-#    group_members = GroupMember.where("user_id = ?" , user_id)
+   group_members = GroupMember.where("user_id = ?" , user_id)
+   render json: group_members
+    end
+
 #    group_members.each do |member| 
 #      group_ids << member.Group_id
 #    end
