@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/groups
   def get_groups_for_user
-<<<<<<< HEAD
     group_ids = GroupMember.where(user_id: @user.id).map{|member| member.Group_id} 
     groups = (@user.groups + Group.where(id: group_ids)) 
     groups_with_members = []
@@ -46,25 +45,24 @@ class UsersController < ApplicationController
     #     end
     # end
     # render json: @array_to_send
-=======
-    group_members = GroupMember.where("user_id = ?", params[:id])
-    array_to_send = Array.new
+    # group_members = GroupMember.where("user_id = ?", params[:id])
+    # array_to_send = Array.new
 
-    group_members.each do |member|
-        temp_id = member[:Group_id]
-        temp = Hash.new
-        group = Group.find_by_id(temp_id)
-        if(group)
-          temp["group_id"] = temp_id
-          temp["group_name"] = group[:name]
-          temp["user_id"] = group[:user_id]
+    # group_members.each do |member|
+    #     temp_id = member[:Group_id]
+    #     temp = Hash.new
+    #     group = Group.find_by_id(temp_id)
+    #     if(group)
+    #       temp["group_id"] = temp_id
+    #       temp["group_name"] = group[:name]
+    #       temp["user_id"] = group[:user_id]
           
-          temp["members"] = GroupMember.where(:Group_id => temp_id)
-          array_to_send << temp
-        end
-    end
-    render json: array_to_send
->>>>>>> origin/master
+    #       temp["members"] = GroupMember.where(:Group_id => temp_id)
+    #       array_to_send << temp
+    #     end
+    # end
+    # render json: array_to_send
+
    
     # respond_to do |format|
       
