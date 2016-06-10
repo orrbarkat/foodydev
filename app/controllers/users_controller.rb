@@ -50,9 +50,10 @@ class UsersController < ApplicationController
     
     publications_to_send = Array.new
     group_ids = Array.new
-
     user_id = params[:id]
-      render json: user_id
+    publications_to_send << user_id
+
+      render json: publications_to_send
     end
 
     
