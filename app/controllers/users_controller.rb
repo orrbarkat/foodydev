@@ -56,9 +56,24 @@ class UsersController < ApplicationController
     group_members.each do |member| 
       group_ids << member.Group_id
     end
+    
 
-    render json: group_ids
+    group_ids.each do |group_id|
+       temp = Publication.where("audiance = ? " , group_id)
+        temp.each do |publication|
+          publications_to_send << publication
+        end
+     end
+     
+    render json: publications_to_send
     end
+
+#       temp.each do |publication|
+#         publications_to_send << publication
+#       end
+#     end
+#    render json: group_ids
+#    end
 
     
 #    if (group_ids)
