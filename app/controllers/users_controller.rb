@@ -52,16 +52,14 @@ class UsersController < ApplicationController
     group_ids = Array.new
     user_id = params[:id]
 
-
-
-    
-   group_members = GroupMember.where("user_id = ?" , user_id)
-   render json: group_members
+    group_members = GroupMember.where("user_id = ?" , user_id)
+    group_members.each do |member| 
+      group_ids << member.Group_id
     end
 
-#    group_members.each do |member| 
-#      group_ids << member.Group_id
-#    end
+    render json: group_ids
+    end
+
     
 #    if (group_ids)
 #     group_ids.each do |group_id|
