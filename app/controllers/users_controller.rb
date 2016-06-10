@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :get_groups_for_user]
   before_action :user_params, only: [:create]
 
   # GET /users
@@ -15,23 +15,36 @@ class UsersController < ApplicationController
 
   # GET /users/1/groups
   def get_groups_for_user
-    @group_member_db_line = GroupMember.where("user_id = ?", params[:id])
-    @array_to_send = Array.new
-
-    @group_member_db_line.each do |m|
-        temp_id = m[:Group_id]
-        temp = Hash.new
-        group = Group.find_by_id(temp_id)
-        if(group)
-          temp["group_id"] = temp_id
-          temp["group_name"] = group[:name]
-          temp["user_id"] = group[:user_id]
-          
-          temp["members"] = GroupMember.where(:Group_id => temp_id)
-          @array_to_send << temp
-        end
+    group_ids = GroupMember.where(user_id: @user.id).map{|member| member.Group_id} 
+    groups = (@user.groups + Group.where(id: group_ids)) 
+    groups_with_members = []
+    groups.each do |group|
+      members = group.group_members.to_a
+      temp = group.attributes
+      temp[:members] = members
+      groups_with_members << temp
     end
-    render json: @array_to_send
+    render json: groups_with_members
+
+
+
+    # @group_member_db_line = GroupMember.where("user_id = ?", params[:id])
+    # @array_to_send = Array.new
+
+    # @group_member_db_line.each do |m|
+    #     temp_id = m[:Group_id]
+    #     temp = Hash.new
+    #     group = Group.find_by_id(temp_id)
+    #     if(group)
+    #       temp["group_id"] = temp_id
+    #       temp["group_name"] = group[:name]
+    #       temp["user_id"] = group[:user_id]
+          
+    #       temp["members"] = GroupMember.where(:Group_id => temp_id)
+    #       @array_to_send << temp
+    #     end
+    # end
+    # render json: @array_to_send
    
     # respond_to do |format|
       
