@@ -21,6 +21,10 @@ class UsersController < ApplicationController
     groups.each do |group|
       members = group.group_members.to_a
       temp = group.attributes
+      temp[:group_id] = temp[:id]
+      temp.delete(:id)
+      temp[:group_name] = temp[:name]
+      temp.delete(:name)
       temp[:members] = members
       groups_with_members << temp
     end
