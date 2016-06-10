@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @group_member_db_line.each do |m|
         temp_id = m[:Group_id]
         temp = Hash.new
-        group = Group.find_by_id(temp_id)
+        group = Group.where("id = ?" , temp_id)
         if(group)
           temp["group_id"] = temp_id
           temp["group_name"] = group[:name]
