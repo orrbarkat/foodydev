@@ -60,11 +60,14 @@ class UsersController < ApplicationController
     
     if (group_ids)
      group_ids.each do |group_id|
-       publications_to_send << Publication.where("audiance = ? " , group_id)
+       temp = Publication.where("audiance = ? " , group_id)
+       temp.each do |publication|
+         publications_to_send << publication
+       end
      end
    end
   
-  render json: @publications_to_send  
+  render json: publications_to_send  
 end
 #end adding
 
