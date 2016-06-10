@@ -44,19 +44,36 @@ class UsersController < ApplicationController
   # GET /users/1/publications
 
   def get_publications_for_user
-   groups_ids = User.find(params[:id]).group_members.select(:Group_id).map{|member| member.Group_id} #GroupMember.where(:user_id => params[:id]).select(:Group_id)
-   @publications_to_send = []
+   #start adding
+   #groups_ids = User.find(params[:id]).group_members.select(:Group_id).map{|member| member.Group_id} #GroupMember.where(:user_id => params[:id]).select(:Group_id)
+   #@publications_to_send = []
     
-    if(groups_ids)
-      groups_ids.uniq!
-      groups_ids.each do |g|
-        temp = Publication.where("audience = ?",g)
-        @publications_to_send << temp
-      end
-    end
+    user_id = User.find(params[:id])
+    group_members = GroupMember.where("user_id = ?" , user_id)
+    group_ids = group_members.map {|member| member.Group_id}
     
-    render json: @publications_to_send  
-  end
+    if (group_ids)
+     group_ids.each do |group_id|
+       @publications_to_send << Publication.where("audiance = ? " , group_id)
+     end
+   end
+  
+  render json: @publications_to_send  
+end
+#end adding
+
+       
+    
+#    if(groups_ids)
+#      groups_ids.uniq!
+#      groups_ids.each do |g|
+#        temp = Publication.where("audience = ?",g)
+#        @publications_to_send << temp
+#      end
+#    end
+    
+#    render json: @publications_to_send  
+#  end
 
 
   # GET /users/new
