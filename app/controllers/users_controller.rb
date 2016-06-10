@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     publications_to_send = Array.new
     group_ids = Array.new
 
-    user_id = User.find(params[:id])
+    user_id = params[:id]
     
     group_members = GroupMember.where("user_id = ?" , user_id)
     group_members.each do |member| 
