@@ -58,8 +58,8 @@ class UsersController < ApplicationController
     end
     
 
-    group_ids.each do |group_id|
-       temp = Publication.where("audiance = ? " , group_id)
+    group_ids.each do |id|
+       temp = Publication.where("audience = ? " , id)
         temp.each do |publication|
           publications_to_send << publication
         end
