@@ -52,23 +52,26 @@ class UsersController < ApplicationController
     group_ids = Array.new
 
     user_id = params[:id]
-    
-    group_members = GroupMember.where("user_id = ?" , user_id)
-    group_members.each do |member| 
-      group_ids << member.Group_id
+      render json: user_id
     end
+
     
-    if (group_ids)
-     group_ids.each do |group_id|
-       temp = Publication.where("audiance = ? " , group_id)
-       temp.each do |publication|
-         publications_to_send << publication
-       end
-     end
-   end
+#    group_members = GroupMember.where("user_id = ?" , user_id)
+#    group_members.each do |member| 
+#      group_ids << member.Group_id
+#    end
+    
+#    if (group_ids)
+#     group_ids.each do |group_id|
+#       temp = Publication.where("audiance = ? " , group_id)
+#       temp.each do |publication|
+#         publications_to_send << publication
+#       end
+#     end
+#   end
   
-  render json: publications_to_send  
-end
+#  render json: publications_to_send  
+#end
 #end adding
 
        
