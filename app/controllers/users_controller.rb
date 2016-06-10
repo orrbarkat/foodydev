@@ -46,15 +46,21 @@ class UsersController < ApplicationController
   def get_publications_for_user
    #start adding
    #groups_ids = User.find(params[:id]).group_members.select(:Group_id).map{|member| member.Group_id} #GroupMember.where(:user_id => params[:id]).select(:Group_id)
-   @publications_to_send = []
+   #@publications_to_send = []
     
+    publications_to_send = Array.new
+    group_ids = Array.new
+
     user_id = User.find(params[:id])
+    
     group_members = GroupMember.where("user_id = ?" , user_id)
-    group_ids = group_members.map {|member| member.Group_id}
+    group_members.each do |member| 
+      group_ids << member.Group_id
+    end
     
     if (group_ids)
      group_ids.each do |group_id|
-       @publications_to_send << Publication.where("audiance = ? " , group_id)
+       publications_to_send << Publication.where("audiance = ? " , group_id)
      end
    end
   
