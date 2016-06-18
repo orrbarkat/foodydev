@@ -1,11 +1,11 @@
 class S3UploaderController < ApplicationController
-  before_action :set_publication
+  # before_action :set_publication
 
   def s3_access_token
     render json: {
       policy:    s3_upload_policy,
       signature: s3_upload_signature,
-      key:       "#{@publication.id}.#{@publication.version}.jpg"#ENV['aws_key']
+      key:       "#{params['id']}.#{params['version']}.jpg"#ENV['aws_key']
     } 
   end
 protected
@@ -33,7 +33,7 @@ protected
   end
 
    def set_publication
-    @publication = Publication.find(params[:id])
+    @publication = Publication.find(s3_uploader_params[:id])
   end
 
   def s3_uploader_params
