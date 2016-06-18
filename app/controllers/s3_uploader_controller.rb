@@ -5,7 +5,7 @@ class S3UploaderController < ApplicationController
     render json: {
       policy:    s3_upload_policy,
       signature: s3_upload_signature,
-      key:       "#{params['id']}.#{params['version']}.jpg"#ENV['aws_key']
+      key:       "#{s3_uploader_params['id']}.#{s3_uploader_params['version']}.jpg"#ENV['aws_key']
     } 
   end
 protected
