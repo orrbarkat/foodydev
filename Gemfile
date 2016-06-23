@@ -28,6 +28,11 @@ gem 'json'
 #cross site reqs
 gem 'rack-cors', :require => 'rack/cors'
 
+#heroku s3
+gem 'aws-sdk', '~> 2.3'
+gem "mini_magick"
+
+
 #delayed jobs
 # gem 'delayed_job_active_record'
 gem 'resque', "~> 1.22.0"

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   get 's3/policy' => 's3_uploader#s3_access_token'
+  post 's3/image' => 's3_uploader#image'
 
   get 'pages/home'
 

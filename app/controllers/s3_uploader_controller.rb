@@ -1,6 +1,17 @@
 class S3UploaderController < ApplicationController
   # before_action :set_publication
 
+  def image
+    file = params['file']
+    byebug
+    image = MiniMagick::Image.new(file.tempfile.path)
+    image.resize "100x100"
+    image.format "png"
+    pic = S3_BUCKET.object("#{s3_uploader_params['id']}.#{s3_uploader_params['version']}.jpg")
+    pic.put(body: file)
+    render json: 'ok'
+  end
+
   def s3_access_token
     render json: {
       policy:    s3_upload_policy,
@@ -19,7 +30,7 @@ protected
       {
         "expiration" => 1.hour.from_now.utc.xmlschema,
         "conditions" => [
-          { "bucket" =>  ENV['aws_bucket'] },
+          { "bucket" =>  ENV['S3_BUCKET'] },
           [ "starts-with", "$key", "" ],
           { "acl" => "public-read" },
           [ "starts-with", "$Content-Type", "" ],
@@ -29,10 +40,10 @@ protected
   end
 
   def s3_upload_signature
-    Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), ENV['aws_secret'], s3_upload_policy)).gsub("\n","")
+    Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), ENV['AWS_SECRET_ACCESS_KEY'], s3_upload_policy)).gsub("\n","")
   end
 
-   def set_publication
+  def set_publication
     @publication = Publication.find(s3_uploader_params[:id])
   end
 
