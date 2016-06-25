@@ -3,7 +3,6 @@ class S3UploaderController < ApplicationController
 
   def image
     file = params['file']
-    byebug
     image = MiniMagick::Image.new(file.tempfile.path)
     image.resize "100x100"
     image.format "png"
