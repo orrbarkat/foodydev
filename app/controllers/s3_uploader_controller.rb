@@ -4,11 +4,11 @@ class S3UploaderController < ApplicationController
   def image
     file = params['file']
     image = MiniMagick::Image.new(file.tempfile.path)
-    image.resize "100x100"
     image.format "png"
-    pic = S3_BUCKET.object("#{s3_uploader_params['id']}.#{s3_uploader_params['version']}.jpg")
+    image.resize "100x100"
+    pic = S3_BUCKET.object("#{params['id']}.#{params['version']}.jpg")
     pic.put(body: file)
-    render json: 'ok'
+    render json: "OK", status: :ok
   end
 
   def s3_access_token
