@@ -50,7 +50,7 @@ class Apn
 	require 'houston'
 
 	def self.client()	
-		if ENV["password"]=="g334613f@@@"
+		if ENV["S3_BUCKET"]=="foodcollectordev"
 			return Houston::Client.development
 		else
 			return Houston::Client.production
@@ -58,7 +58,7 @@ class Apn
 	end
 
 	def self.gateway()	
-		if ENV["password"]=="g334613f@@@"
+		if ENV["S3_BUCKET"]=="foodcollectordev"
 			return Houston::APPLE_DEVELOPMENT_GATEWAY_URI
 		else
 			return Houston::APPLE_PRODUCTION_GATEWAY_URI
