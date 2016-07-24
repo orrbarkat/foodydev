@@ -3,7 +3,7 @@ class Gcm
   require "uri"
   require 'json'
 
-  AUTH = "key=AIzaSyCJbsdVaI0yajvOgrQRiUkbuC-s7XFWZhk"
+  AUTH = "key=AIzaSyAwyWkcnD_QEGBuhdzZMjrUgzm-oNw3GcA"
 
   attr_accessor :publication, :user_report, :registration
 
