@@ -49,3 +49,5 @@ dump.rdb
 .idea/runConfigurations/spec__foodydev.xml
 
 .idea/runConfigurations/test__foodydev.xml
+
+db/schema.rb
