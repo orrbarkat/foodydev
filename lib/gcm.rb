@@ -87,7 +87,7 @@ class Gcm
         :type => "group_members",
         :id => id,
         :title => Group.find(id).name
-    }}
+    }}}
     push(body) unless tokens.empty?
   end
 
