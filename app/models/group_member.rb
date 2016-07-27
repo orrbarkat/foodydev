@@ -6,7 +6,7 @@ class GroupMember < ActiveRecord::Base
 
 	validates :name, presence: true
 	validates :Group_id, presence: true
-	validates :phone_number, length: { in: 9..15 }
+	validates :phone_number, length: { in: 9..15 }, presence: true
 
 	before_validation :set_user
 	# after_validation :normalize_phone
