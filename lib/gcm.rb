@@ -105,15 +105,15 @@ private
         end
       end
     else
-      registered = GroupMember.where(Group_id: @publication.audience)
+      registered = GroupMember.where(Group_id: @publication.audience) 
       registered.each do |r|
         r = r.token
         tokens << r.remote if (r.ios!=true && r.remote!= "no")
       end
     end
     tokens = tokens.uniq
-    tokens.delete(ActiveDevice.find_by_dev_uuid(@registration.active_device_dev_uuid).remote_notification_token) unless @registration.nil?
-    tokens.delete(ActiveDevice.find_by_dev_uuid(@user_report.active_device_dev_uuid).remote_notification_token) unless @user_report.nil?
+    # tokens.delete(ActiveDevice.find_by_dev_uuid(@registration.active_device_dev_uuid).remote_notification_token) unless @registration.nil?
+    # tokens.delete(ActiveDevice.find_by_dev_uuid(@user_report.active_device_dev_uuid).remote_notification_token) unless @user_report.nil?
     return tokens
   end
 
