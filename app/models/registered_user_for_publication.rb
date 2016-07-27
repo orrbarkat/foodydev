@@ -12,7 +12,8 @@ class RegisteredUserForPublication < ActiveRecord::Base
   
   
   def token
-  ActiveDevice.find_by_dev_uuid(active_device_dev_uuid).remote_notification_token
+    res = ActiveDevice.find_by_dev_uuid(active_device_dev_uuid)
+    return res.nil? ? "" : res.remote_notification_token  
   end
 
   def is_real
