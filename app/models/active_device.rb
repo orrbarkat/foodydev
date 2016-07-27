@@ -11,7 +11,7 @@ class ActiveDevice < ActiveRecord::Base
   validates :dev_uuid, presence: true, length: { maximum: 64 }, uniqueness: true
 
   def is_android
-  	 remote_notification_token!="no" && is_ios==false
+  	 (self!=nil && remote_notification_token!="no" && is_ios==false)
   end
   
   def is_iphone

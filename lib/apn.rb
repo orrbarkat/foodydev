@@ -153,7 +153,7 @@ class Apn
     rescue => e
       broken = @APN.devices
       broken.each do |token|
-        dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, ""))
+        dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, "")) unless token.nil?
         puts dev.update!(:remote_notification_token=>"no")
       end
       Rails.logger.warn "Unable to push, will ignore: #{e}"

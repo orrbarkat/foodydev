@@ -35,7 +35,7 @@ private
     push = Push.new(pub,nil,@registered_user_for_publication)
     push.register
   rescue => e
-    logger.warn "Unable to push, will ignore: #{e}"
+    logger.warn "Unable to push from register, will ignore: #{e}"
   end
 
   # Use callbacks to share common setup or constraints between actions.
