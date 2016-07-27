@@ -34,8 +34,8 @@ class Apn
       end
     end
     tokens = tokens.uniq
-    tokens.delete(ActiveDevice.find_by_dev_uuid(@registration.active_device_dev_uuid).remote_notification_token) unless @registration.nil?
-    tokens.delete(ActiveDevice.find_by_dev_uuid(@user_report.active_device_dev_uuid).remote_notification_token) unless @user_report.nil?
+    # tokens.delete(ActiveDevice.find_by_dev_uuid(@registration.active_device_dev_uuid).remote_notification_token) unless @registration.nil?
+    # tokens.delete(ActiveDevice.find_by_dev_uuid(@user_report.active_device_dev_uuid).remote_notification_token) unless @user_report.nil?
     return tokens
   end
 
@@ -130,7 +130,7 @@ class Apn
     push(nots)
     return nots.map {|n| n.sent?}
   rescue => e
-    Rails.logger.warn "Unable to push, will ignore: #{e}"
+    Rails.logger.warn "Unable to push ios register, will ignore: #{e}"
   end
 
   def report
@@ -156,7 +156,7 @@ class Apn
         dev = ActiveDevice.find_by_remote_notification_token(token.gsub(/\s+/, "")) unless token.nil?
         puts dev.update!(:remote_notification_token=>"no")
       end
-      Rails.logger.warn "Unable to push, will ignore: #{e}"
+      Rails.logger.warn "Unable to push ios report, will ignore: #{e}"
     end
   end
 
