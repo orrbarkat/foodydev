@@ -60,7 +60,7 @@ class Gcm
     tokens = getTokens
     tokens << owner
     body = {:registration_ids=>tokens, :data=>{ :message => {
-        type: "registeration_for_publication",
+        type: "registration_for_publication",
         id:@publication.id,
         version: @publication.version,
         date:@registration.date_of_registration
