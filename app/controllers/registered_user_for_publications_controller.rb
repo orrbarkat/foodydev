@@ -33,9 +33,16 @@ private
     puts "woohoo"
     pub = Publication.find(@registered_user_for_publication.publication_id)
     push = Push.new(pub,nil,@registered_user_for_publication)
-    push.register
+    push.gcm.register
+    ioSucks(push)
   rescue => e
     logger.warn "Unable to push from register, will ignore: #{e}"
+  end
+
+  def ioSucks(push)
+    push.apn.register
+  rescue => e
+    logger.warn "Unable to push from register ios , will ignore: #{e}"
   end
 
   # Use callbacks to share common setup or constraints between actions.

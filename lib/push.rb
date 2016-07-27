@@ -27,6 +27,7 @@ class Push
 
   def register
     @gcm.register
+    puts "finished Gcm"
     @apn.register
   end
 
