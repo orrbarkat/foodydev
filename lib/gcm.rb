@@ -10,7 +10,7 @@ class Gcm
   class << self
 
     def group
-      if ENV["S3_BUCKET"]=="foodcollectordev"
+      if ENV["S3_BUCKET"] == "foodcollectordev"
         return "/topics/dev"
       else
         return "/topics/prod"
@@ -85,15 +85,15 @@ class Gcm
     tokens= getMembers(id)
     title = id ? 'public' : Group.find(id).name 
     body = { :registration_ids => tokens, :data => {:message => {
-        :type => "group_members",
-        :id => id,
-        :title => title
-    }}}
+      :type => "group_members",
+      :id => id,
+      :title => title
+      }}}
     push(body) unless tokens.empty?
   end
 
 
-  private
+private
 
   def getTokens()
     tokens = Array.new
