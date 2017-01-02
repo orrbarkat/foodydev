@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
     has_many :registered_user_for_publications, foreign_key: :user_id, primary_key: :id
 
 
-	validates :identity_provider_token, presence: true
+	    validates :identity_provider_token, presence: true
       validates :phone_number, presence: true, length: { in: 9...15 }
       validates :identity_provider_email, presence: true
       validates :identity_provider, inclusion: {in: ["facebook","google"]}

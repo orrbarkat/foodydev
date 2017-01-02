@@ -8,8 +8,7 @@ class Rating < ActiveRecord::Base
   	before_save :update_user
 
   	def update_user
-  		user_id  = Publication.find(publication_id).publisher_id
-  		@user = User.find(user_id)
+  		@user = User.find(Publication.find(publication_id).publisher_id)
 			@user.ratings=0 if @user.ratings.nil?
 			@user.ratings_count=0 if @user.ratings_count.nil?
 			@user.ratings_count += 1

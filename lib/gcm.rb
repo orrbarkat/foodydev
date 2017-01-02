@@ -3,7 +3,7 @@ class Gcm
   require "uri"
   require 'json'
 
-  AUTH = "key=AIzaSyAwyWkcnD_QEGBuhdzZMjrUgzm-oNw3GcA"
+  AUTH = ENV['GCM_KEY']
 
   attr_accessor :publication, :user_report, :registration
 
@@ -83,7 +83,7 @@ class Gcm
 
   def new_member(id)
     tokens= getMembers(id)
-    title = id ? 'public' : Group.find(id).name 
+    title = id ? 'public' : Group.find(id).name
     body = { :registration_ids => tokens, :data => {:message => {
       :type => "group_members",
       :id => id,
@@ -105,7 +105,7 @@ private
         end
       end
     else
-      registered = GroupMember.where(Group_id: @publication.audience) 
+      registered = GroupMember.where(Group_id: @publication.audience)
       registered.each do |r|
         r = r.token
         tokens << r.remote if (r.ios!=true && r.remote!= "no")
