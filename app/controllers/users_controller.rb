@@ -151,11 +151,14 @@ class UsersController < ApplicationController
     op=0
     @user = User.new(user_params)
     @user.identity_provider_email.downcase!
+    @user.uniphone = @user.normalize_phone
     
-      if (User.find_by_identity_provider_email(@user.identity_provider_email))
-        @user = User.find_by_identity_provider_email(@user.identity_provider_email)
+    @usertemp = User.find_by_uniphone(@user.uniphone)
+     
+    if(@usertemp)
+        @user = @usertemp
         op=1
-      end
+    end
 
     if (op==0)
  
